@@ -13,8 +13,8 @@
 </head>
 <body id="body" style="font-size: 12px;">
 <div class="container" id="container">
-<div id="container1" style="width: 2300px; height: 2300px;">
-<svg class="svg" id="svg" width="2300" height="2300">
+<div id="container1" style="width: 1000px; height: 1000px;">
+<svg class="svg" id="svg" width="1000" height="1000">
 <path d="M1133,560 L1133,596 L1133,631 L1133,666 L1133,701 L1133,737 L1133,772 L1133,807 L1133,843 L1133,878 L1133,913 L1133,948 L1133,998 L1133,1059 L1175,1091 L1215,1122 L1215,1165 Q1204,1190 1174,1195 L1133,1195 L1076,1195 L1066,1195 L1036,1225 L1002,1260 L957,1303 L881,1378 L881,1488 L850,1520 L818,1552 L785,1584 L752,1619" fill="none" stroke-width="6" stroke="#EE1822"></path>
 <text x="1148" y="759" font-size="12px" font-family="宋体" fill="#EE1822">1号线</text>
 <path d="M470,1122 L530,1122 L610,1122 L679,1122 L737,1122 L795,1122 L854,1122 L909,1122 L1003,1122 L1074,1122 L1133,1122 L1215,1122 L1298,1122 L1353,1122 L1390,1160 L1429,1196 L1483,1254 L1483,1312 Q1492,1345 1519,1355 L1604,1355 L1653,1355 L1703,1355 L1753,1355" fill="none" stroke-width="6" stroke="#85C73F"></path>
@@ -659,94 +659,117 @@
 <image x="1290" y="1056" width="16" height="16" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="data:image/png;base64,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" data-id="天潼路"></image>
 <image x="1207" y="1056" width="16" height="16" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="data:image/png;base64,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" data-id="曲阜路"></image>
 <image x="1596" y="1707" width="16" height="16" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="data:image/png;base64,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" data-id="罗山路">
-    </image>
+</image>
+</svg>
+</div>
 
-    </svg>
+<div id="container2" style="display: none; z-index: 100; position: absolute; top: 0px; left: 0px; width: 2300px; height: 2300px;">
+<div id="上海火车站" name="上海火车站" style="position: absolute; left:1125px; top:993px; width: 16px; height: 16px;"></div>
+<div id="汉中路" name="汉中路" style="position: absolute; left:1125px; top:1056px; width: 16px; height: 16px;"></div>
+<div id="人民广场" name="人民广场" style="position: absolute; left:1207px; top:1114px; width: 16px; height: 16px;"></div>
+<div id="陕西南路" name="陕西南路" style="position: absolute; left:1122px; top:1190px; width: 16px; height: 16px;"></div>
+<div id="常熟路" name="常熟路" style="position: absolute; left:1068px; top:1190px; width: 16px; height: 16px;"></div>
+<div id="徐家汇" name="徐家汇" style="position: absolute; left:994px; top:1252px; width: 16px; height: 16px;"></div>
+<div id="上海体育馆" name="上海体育馆" style="position: absolute; left:949px; top:1295px; width: 16px; height: 16px;"></div>
+<div id="漕宝路" name="漕宝路" style="position: absolute; left:873px; top:1370px; width: 16px; height: 16px;"></div>
+<div id="上海南站" name="上海南站" style="position: absolute; left:873px; top:1480px; width: 16px; height: 16px;"></div>
+<div id="莘庄" name="莘庄" style="position: absolute; left:744px; top:1611px; width: 16px; height: 16px;"></div>
+<div id="虹桥火车站" name="虹桥火车站" style="position: absolute; left:522px; top:1117px; width: 16px; height: 16px;"></div>
+<div id="虹桥2号航站楼" name="虹桥2号航站楼" style="position: absolute; left:602px; top:1117px; width: 16px; height: 16px;"></div>
+<div id="中山公园" name="中山公园" style="position: absolute; left:904px; top:1114px; width: 16px; height: 16px;"></div>
+<div id="江苏路" name="江苏路" style="position: absolute; left:995px; top:1114px; width: 16px; height: 16px;"></div>
+<div id="静安寺" name="静安寺" style="position: absolute; left:1066px; top:1114px; width: 16px; height: 16px;"></div>
+<div id="南京西路" name="南京西路" style="position: absolute; left:1125px; top:1114px; width: 16px; height: 16px;"></div>
+<div id="南京东路" name="南京东路" style="position: absolute; left:1290px; top:1114px; width: 16px; height: 16px;"></div>
+<div id="世纪大道" name="世纪大道" style="position: absolute; left:1421px; top:1188px; width: 16px; height: 16px;"></div>
+<div id="龙阳路" name="龙阳路" style="position: absolute; left:1596px; top:1347px; width: 16px; height: 16px;"></div>
+<div id="广兰路" name="广兰路" style="position: absolute; left:1745px; top:1347px; width: 16px; height: 16px;"></div>
+<div id="浦东国际机场" name="浦东国际机场" style="position: absolute; left:1822px; top:1582px; width: 16px; height: 16px;"></div>
+<div id="虹口足球场" name="虹口足球场" style="position: absolute; left:1317px; top:881px; width: 16px; height: 16px;"></div>
+<div id="宝山路" name="宝山路" style="position: absolute; left:1167px; top:993px; width: 16px; height: 16px;"></div>
+<div id="中潭路" name="中潭路" style="position: absolute; left:1037px; top:993px; width: 16px; height: 16px;"></div>
+<div id="镇坪路" name="镇坪路" style="position: absolute; left:945px; top:993px; width: 16px; height: 16px;"></div>
+<div id="曹杨路" name="曹杨路" style="position: absolute; left:904px; top:1019px; width: 16px; height: 16px;"></div>
+<div id="金沙江路" name="金沙江路" style="position: absolute; left:904px; top:1056px; width: 16px; height: 16px;"></div>
+<div id="延安西路" name="延安西路" style="position: absolute; left:904px; top:1157px; width: 16px; height: 16px;"></div>
+<div id="虹桥路" name="虹桥路" style="position: absolute; left:904px; top:1195px; width: 16px; height: 16px;"></div>
+<div id="宜山路" name="宜山路" style="position: absolute; left:904px; top:1252px; width: 16px; height: 16px;"></div>
+<div id="龙漕路" name="龙漕路" style="position: absolute; left:954px; top:1405px; width: 16px; height: 16px;"></div>
+<div id="东安路" name="东安路" style="position: absolute; left:1068px; top:1356px; width: 16px; height: 16px;"></div>
+<div id="大木桥路" name="大木桥路" style="position: absolute; left:1122px; top:1356px; width: 16px; height: 16px;"></div>
+<div id="西藏南路" name="西藏南路" style="position: absolute; left:1242px; top:1356px; width: 16px; height: 16px;"></div>
+<div id="蓝村路" name="蓝村路" style="position: absolute; left:1379px; top:1320px; width: 16px; height: 16px;"></div>
+
+<div id="海伦路" name="海伦路" style="position: absolute; left:1342px; top:970px; width: 16px; height: 16px;"></div>
+
+<div id="高科西路" name="高科西路" style="position: absolute; left:1352px; top:1477px; width: 16px; height: 16px;"></div>
+
+<div id="东方体育中心" name="东方体育中心" style="position: absolute; left:1069px; top:1670px; width: 16px; height: 16px;"></div>
+
+<div id="长寿路" name="长寿路" style="position: absolute; left:1006px; top:1056px; width: 16px; height: 16px;"></div>
+
+<div id="肇嘉浜路" name="肇嘉浜路" style="position: absolute; left:1067px; top:1252px; width: 16px; height: 16px;"></div>
+
+<div id="龙华中路" name="龙华中路" style="position: absolute; left:1068px; top:1421px; width: 16px; height: 16px;"></div>
+
+<div id="耀华路" name="耀华路" style="position: absolute; left:1242px; top:1475px; width: 16px; height: 16px;"></div>
+
+<div id="四平路" name="四平路" style="position: absolute; left:1435px; top:824px; width: 16px; height: 16px;"></div>
+
+<div id="老西门" name="老西门" style="position: absolute; left:1242px; top:1209px; width: 16px; height: 16px;"></div>
+
+<div id="陆家浜路" name="陆家浜路" style="position: absolute; left:1242px; top:1252px; width: 16px; height: 16px;"></div>
+
+<div id="马当路" name="马当路" style="position: absolute; left:1187px; top:1252px; width: 16px; height: 16px;"></div>
+
+<div id="嘉善路" name="嘉善路" style="position: absolute; left:1122px; top:1252px; width: 16px; height: 16px;"></div>
+
+<div id="新天地" name="新天地" style="position: absolute; left:1168px; top:1209px; width: 16px; height: 16px;"></div>
+
+<div id="交通大学" name="交通大学" style="position: absolute; left:955px; top:1195px; width: 16px; height: 16px;"></div>
+
+<div id="龙华" name="龙华" style="position: absolute; left:994px; top:1421px; width: 16px; height: 16px;"></div>
+
+<div id="隆德路" name="隆德路" style="position: absolute; left:940px; top:1056px; width: 16px; height: 16px;"></div>
+
+<div id="巨峰路" name="巨峰路" style="position: absolute; left:1718px; top:892px; width: 16px; height: 16px;"></div>
+
+<div id="大连路" name="大连路" style="position: absolute; left:1421px; top:1023px; width: 16px; height: 16px;">
+</div>
+
+<div id="天潼路" name="天潼路" style="position: absolute; left:1290px; top:1056px; width: 16px; height: 16px;">
+</div>
+
+<div id="曲阜路" name="曲阜路" style="position: absolute; left:1207px; top:1056px; width: 16px; height: 16px;"></div>
+
+<div id="罗山路" name="罗山路" style="position: absolute; left:1596px; top:1707px; width: 16px; height: 16px;"></div>
+
     </div>
-    <div id="container2" style="display: none; z-index: 100; position: absolute; top: 0px; left: 0px; width: 2300px; height: 2300px;"><div id="上海火车站" name="上海火车站" style="position: absolute; left:1125px; top:993px; width: 16px; height: 16px;"></div><div id="汉中路" name="汉中路" style="position: absolute; left:1125px; top:1056px; width: 16px; height: 16px;"></div><div id="人民广场" name="人民广场" style="position: absolute; left:1207px; top:1114px; width: 16px; height: 16px;"></div><div id="陕西南路" name="陕西南路" style="position: absolute; left:1122px; top:1190px; width: 16px; height: 16px;"></div><div id="常熟路" name="常熟路" style="position: absolute; left:1068px; top:1190px; width: 16px; height: 16px;"></div><div id="徐家汇" name="徐家汇" style="position: absolute; left:994px; top:1252px; width: 16px; height: 16px;"></div><div id="上海体育馆" name="上海体育馆" style="position: absolute; left:949px; top:1295px; width: 16px; height: 16px;"></div><div id="漕宝路" name="漕宝路" style="position: absolute; left:873px; top:1370px; width: 16px; height: 16px;"></div><div id="上海南站" name="上海南站" style="position: absolute; left:873px; top:1480px; width: 16px; height: 16px;"></div>
-    <div id="莘庄" name="莘庄" style="position: absolute; left:744px; top:1611px; width: 16px; height: 16px;"></div>
-    <div id="虹桥火车站" name="虹桥火车站" style="position: absolute; left:522px; top:1117px; width: 16px; height: 16px;"></div><div id="虹桥2号航站楼" name="虹桥2号航站楼" style="position: absolute; left:602px; top:1117px; width: 16px; height: 16px;"></div><div id="中山公园" name="中山公园" style="position: absolute; left:904px; top:1114px; width: 16px; height: 16px;"></div><div id="江苏路" name="江苏路" style="position: absolute; left:995px; top:1114px; width: 16px; height: 16px;"></div><div id="静安寺" name="静安寺" style="position: absolute; left:1066px; top:1114px; width: 16px; height: 16px;"></div><div id="南京西路" name="南京西路" style="position: absolute; left:1125px; top:1114px; width: 16px; height: 16px;"></div><div id="南京东路" name="南京东路" style="position: absolute; left:1290px; top:1114px; width: 16px; height: 16px;"></div><div id="世纪大道" name="世纪大道" style="position: absolute; left:1421px; top:1188px; width: 16px; height: 16px;"></div><div id="龙阳路" name="龙阳路" style="position: absolute; left:1596px; top:1347px; width: 16px; height: 16px;"></div><div id="广兰路" name="广兰路" style="position: absolute; left:1745px; top:1347px; width: 16px; height: 16px;"></div><div id="浦东国际机场" name="浦东国际机场" style="position: absolute; left:1822px; top:1582px; width: 16px; height: 16px;"></div>
-    <div id="虹口足球场" name="虹口足球场" style="position: absolute; left:1317px; top:881px; width: 16px; height: 16px;"></div><div id="宝山路" name="宝山路" style="position: absolute; left:1167px; top:993px; width: 16px; height: 16px;"></div><div id="中潭路" name="中潭路" style="position: absolute; left:1037px; top:993px; width: 16px; height: 16px;"></div><div id="镇坪路" name="镇坪路" style="position: absolute; left:945px; top:993px; width: 16px; height: 16px;"></div><div id="曹杨路" name="曹杨路" style="position: absolute; left:904px; top:1019px; width: 16px; height: 16px;"></div><div id="金沙江路" name="金沙江路" style="position: absolute; left:904px; top:1056px; width: 16px; height: 16px;"></div><div id="延安西路" name="延安西路" style="position: absolute; left:904px; top:1157px; width: 16px; height: 16px;"></div><div id="虹桥路" name="虹桥路" style="position: absolute; left:904px; top:1195px; width: 16px; height: 16px;"></div><div id="宜山路" name="宜山路" style="position: absolute; left:904px; top:1252px; width: 16px; height: 16px;"></div><div id="龙漕路" name="龙漕路" style="position: absolute; left:954px; top:1405px; width: 16px; height: 16px;"></div><div id="东安路" name="东安路" style="position: absolute; left:1068px; top:1356px; width: 16px; height: 16px;"></div><div id="大木桥路" name="大木桥路" style="position: absolute; left:1122px; top:1356px; width: 16px; height: 16px;"></div><div id="西藏南路" name="西藏南路" style="position: absolute; left:1242px; top:1356px; width: 16px; height: 16px;"></div>
-    <div id="蓝村路" name="蓝村路" style="position: absolute; left:1379px; top:1320px; width: 16px; height: 16px;"></div>
-    <div id="海伦路" name="海伦路" style="position: absolute; left:1342px; top:970px; width: 16px; height: 16px;"></div>
-    <div id="高科西路" name="高科西路" style="position: absolute; left:1352px; top:1477px; width: 16px; height: 16px;"></div>
-    <div id="东方体育中心" name="东方体育中心" style="position: absolute; left:1069px; top:1670px; width: 16px; height: 16px;"></div>
-    <div id="长寿路" name="长寿路" style="position: absolute; left:1006px; top:1056px; width: 16px; height: 16px;"></div>
-    <div id="肇嘉浜路" name="肇嘉浜路" style="position: absolute; left:1067px; top:1252px; width: 16px; height: 16px;"></div>
-    <div id="龙华中路" name="龙华中路" style="position: absolute; left:1068px; top:1421px; width: 16px; height: 16px;"></div>
-    <div id="耀华路" name="耀华路" style="position: absolute; left:1242px; top:1475px; width: 16px; height: 16px;"></div>
-    <div id="四平路" name="四平路" style="position: absolute; left:1435px; top:824px; width: 16px; height: 16px;"></div>
-    <div id="老西门" name="老西门" style="position: absolute; left:1242px; top:1209px; width: 16px; height: 16px;"></div>
-    <div id="陆家浜路" name="陆家浜路" style="position: absolute; left:1242px; top:1252px; width: 16px; height: 16px;"></div>
-    <div id="马当路" name="马当路" style="position: absolute; left:1187px; top:1252px; width: 16px; height: 16px;"></div>
-    <div id="嘉善路" name="嘉善路" style="position: absolute; left:1122px; top:1252px; width: 16px; height: 16px;"></div>
-    <div id="新天地" name="新天地" style="position: absolute; left:1168px; top:1209px; width: 16px; height: 16px;"></div>
-    <div id="交通大学" name="交通大学" style="position: absolute; left:955px; top:1195px; width: 16px; height: 16px;"></div>
-    <div id="龙华" name="龙华" style="position: absolute; left:994px; top:1421px; width: 16px; height: 16px;"></div>
-    <div id="隆德路" name="隆德路" style="position: absolute; left:940px; top:1056px; width: 16px; height: 16px;"></div>
-    <div id="巨峰路" name="巨峰路" style="position: absolute; left:1718px; top:892px; width: 16px; height: 16px;"></div>
-    <div id="大连路" name="大连路" style="position: absolute; left:1421px; top:1023px; width: 16px; height: 16px;">
-    </div>
-    <div id="天潼路" name="天潼路" style="position: absolute; left:1290px; top:1056px; width: 16px; height: 16px;">
-    </div>
-    <div id="曲阜路" name="曲阜路" style="position: absolute; left:1207px; top:1056px; width: 16px; height: 16px;"></div>
-    <div id="罗山路" name="罗山路" style="position: absolute; left:1596px; top:1707px; width: 16px; height: 16px;"></div>
-    </div>
-    <div id="startFlag" class="flag" style="position: absolute; display: none;">
-        <img src="images/startFlag.png">
-        <div>起</div>
-    </div>
-    <div id="endFlag" class="flag" style="position: absolute; display: none; background-image: url(images/endFlag.png);">
-        <img src="images/endFlag.png">
-        <div>终</div>
-    </div>
-    <div id="container3" class="container3" style="display: none">
-        <div id="msgbox" class="msgbox"></div>
-        <div id="ov" class="myov"></div>
-    </div>
+
     <!--div id="container4" style="width: 100%; height: 100%;"></div-->
 </div>
+
 <div id="linesBg"></div>
+
 <!--右侧按钮-->
 <div id="buttonGroup">
     <div id="closeBtn" style="display: none; border-bottom-right-radius: 0; border: none; box-shadow: none; -webkit-box-shadow: none; ">
         <img src="images/close.png" style="width: 1.15rem; border: none; box-shadow: none; -webkit-box-shadow: none; ">
     </div>
+
     <div id="linesBtn">
         <img src="images/lines.png" style="width: 1.15rem">
     </div>
+
     <div id="lineGroup" style="position: relative">
         <div id="lineContainer">
         </div>
+
     </div>
+
     
 </div>
-<!--搜索框-->
 
-<!--步行导航按钮-->
-
-<!--路线文字-->
-<div id="desc">
-    <div style="margin-top: 0.4rem; margin-left: 10px; font-size: 0.45rem">
-        <span></span>
-        <span style="color: #ccc; margin-left: -0.22rem">→</span>
-        <span style="margin-left: -0.02rem"></span>
-    </div>
-    <div style="color: #5f5f5f; font-size: 0.35rem; margin-top: 0.27rem; margin-left: 10px; margin-bottom: 0.4rem">
-        <span></span> · <span></span><span> · </span><span></span>
-    </div>
-</div>
-<!--查询中提示-->
-<div id="loadingGroup" style="">
-    <div class="loadingIcon" style="display: inline-block; vertical-align: middle"></div>
-    <span style="line-height: 30px">查询中...</span>
-</div>
-<div id="tip">
-    <div><img src="images/icon_cry.png" style="vertical-align: middle; width: 0.7rem"></div>
-    <div style="margin: 10px 1px 15px;vertical-align: middle">请选择不同的起点和终点地铁站</div>
-</div>
-
-<div id="dialog" style="display:none; word-wrap:break-word; z-index: 20; width: 180px; height: 100px; top: 200px; margin-left: -90px; left: 50%; position: absolute; background-color: #cccccc; background-opacity: 0.5;"></div>
 
 </body>
 
