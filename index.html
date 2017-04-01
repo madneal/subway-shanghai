@@ -765,14 +765,17 @@
     <div id="lineGroup" style="position: relative">
         <div id="lineContainer">
         </div>
-
-    </div>
-
-    
+    </div>  
 </div>
-
-
+<script type="text/javascript">
+	if ('serviceworker' in navigator) {
+		navigator.serviceworker.
+			register('sw.js').
+			then(function() {
+				console.log('serviceworker registered');
+			})
+	}
+</script>
 </body>
-
 
 </html>
