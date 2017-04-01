@@ -27,10 +27,10 @@ self.addEventListener('activate', function(e) {
 
 self.addEventListener('fetch', function(e) {
 	console.log('serviceworker fetch', e.request.url);
-	e.respondWith(fetch(e.request).
-		then(function (response) {
-			return caches.open(cacheName).
-				then(function(cache) {
+	e.respondWith(fetch(e.request)
+		.then(function (response) {
+			return caches.open(cacheName)
+				.then(function(cache) {
 					cache.put(e.request.url, response.clone());
 					console.log('serviceworker fetched and cached data');
 					return response;

@@ -750,9 +750,9 @@
 
 <script type="text/javascript">
 	if ('serviceWorker' in navigator) {
-		navigator.serviceworker.
-			register('sw.js').
-			then(function() {
+		navigator.serviceWorker
+			.register('sw.js')
+			.then(function() {
 				console.log('serviceworker registered');
 			})
 	}
