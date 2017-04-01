@@ -13,8 +13,8 @@
 </head>
 <body id="body" style="font-size: 12px;">
 <div class="container" id="container">
-<div id="container1" style="width: 2300px; height: 2300px;">
-<svg class="svg" id="svg" width="2300" height="2300" viewBox="0 0 2300 2300">
+<div id="container1" style="width: 2000px; height: 2000px;">
+<svg class="svg" id="svg" width="2000" height="2000" viewBox="0 0 2000 2000" autofocus>
 <path d="M1133,560 L1133,596 L1133,631 L1133,666 L1133,701 L1133,737 L1133,772 L1133,807 L1133,843 L1133,878 L1133,913 L1133,948 L1133,998 L1133,1059 L1175,1091 L1215,1122 L1215,1165 Q1204,1190 1174,1195 L1133,1195 L1076,1195 L1066,1195 L1036,1225 L1002,1260 L957,1303 L881,1378 L881,1488 L850,1520 L818,1552 L785,1584 L752,1619" fill="none" stroke-width="6" stroke="#EE1822"></path>
 <text x="1148" y="759" font-size="12px" font-family="宋体" fill="#EE1822">1号线</text>
 <path d="M470,1122 L530,1122 L610,1122 L679,1122 L737,1122 L795,1122 L854,1122 L909,1122 L1003,1122 L1074,1122 L1133,1122 L1215,1122 L1298,1122 L1353,1122 L1390,1160 L1429,1196 L1483,1254 L1483,1312 Q1492,1345 1519,1355 L1604,1355 L1653,1355 L1703,1355 L1753,1355" fill="none" stroke-width="6" stroke="#85C73F"></path>
@@ -750,6 +750,9 @@
 
 
 <script type="text/javascript">
+	document.addEventListener("DOMContentLoaded", function(event) {
+	  window.scroll(300, 300);
+	});
 	if ('serviceWorker' in navigator) {
 		navigator.serviceWorker
 			.register('sw.js')
