@@ -6,7 +6,7 @@ var filesToCache = [
 
 self.addEventListener('install', function(e) {
 	console.log('service worker install');
-	e.waitUtill(caches.open(cacheName).then(function(cache) {
+	e.waitUntil(caches.open(cacheName).then(function(cache) {
 		console.log('serviceworker caching app shell');
 		return cache.addAll(filesToCache);
 	}));
@@ -14,7 +14,7 @@ self.addEventListener('install', function(e) {
 
 self.addEventListener('activate', function(e) {
 	console.log('serviceworker activate');
-	e.waitUtill(
+	e.waitUntil(
 		caches.keys().then(function(keyList) {
 			return Promise.all(keyList.map(function(key) {
 				console.log('serviceworker removing old cache ' + key);
