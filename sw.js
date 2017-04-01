@@ -1,8 +1,8 @@
 var cacheName = 'subway';
 var filesToCache = [
 	'/',
-	'../index.html',
-	'../image/transfer.png'
+	'index.html',
+	'image/transfer.png'
 ];
 
 self.addEventListener('install', function(e) {
