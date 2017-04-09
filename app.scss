@@ -83,7 +83,7 @@ $line16-color: #78d6cd;
     top: 476px;
     margin-top: -219px;
     z-index: 200;
-    display: block;
+    display: none;
 }
 .msgbox {
     min-width: 300px;
@@ -115,7 +115,7 @@ $line16-color: #78d6cd;
     	font-size: 13px;
     	border-bottom: 1px solid;
     	.line_div {
-    		color: #999999;
+    		color: #fff;
     		min-width: 56px;
     		text-align: center;
     		height: 26px;
