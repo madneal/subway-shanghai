@@ -1,11 +1,17 @@
 var gulp = require('gulp');
+var babel = require('gulp-babel');
 var uglify = require('gulp-uglify');
 var sass = require('gulp-sass');
 var minifycss = require('gulp-minify-css');
-
+// var gutil = require('gulp-util');
 gulp.task('script', function() {
-	gulp.src(['app.js', 'alloy_finger.js'])
-	.pipe(uglify())
+	gulp.src(['app.js'])
+	.pipe(babel({presets: ['babili']}))
+	// .pipe(gulp.dest('dist/'))
+	// .pipe(uglify())
+	.on('error', function(err) {
+		console.error(err.toString());
+	})
 	.pipe(gulp.dest('dist/'))
 });
 
