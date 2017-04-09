@@ -8,29 +8,12 @@
     <meta name="format-detection" content="email=no" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <title>地铁</title>
-    <!-- <style type="text/css" href="../dist/app.css"></style> -->
     <link rel="shortcut icon" href="favicon.ico">
-    <style type="text/css">
-        .svg {
-           font-size: 12px;
-           font-family: 微软雅黑,
-           width: 2000px;
-           height: 2000px;
-        }
-        .transfer-station {
-            width: 16px;
-            height: 16px;
-        }
-        .rect-station {
-            width: 26px;
-            height: 26px;
-        }
-    </style>
-
     <link rel="apple-touch-icon" sizes="180x180" href="image/icon/apple-touch-icon.png">
     <link rel="icon" type="image/png" href="image/icon/favicon-32x32.png" sizes="32x32">
     <link rel="icon" type="image/png" href="image/icon/favicon-16x16.png" sizes="16x16">
     <link rel="mask-icon" href="image/icon/safari-pinned-tab.svg" color="#5bbad5">
+    <link rel="stylesheet" type="text/css" href="dist/app.css">
     <link rel="manifest"  href="manifest.json">
 </head>
 <body id="body">
@@ -684,31 +667,36 @@
 <image x="1596" y="1707" class="transfer-station" data-id="罗山路" href="image/transfer.png"></image>
 </svg>
 </div>
-<div id="container3" class="container3" style="left: 1325px; margin-left: -148px; top: 476px; margin-top: -219px; z-index: 200; display: block;">
+<div id="container3" class="container3">
         <div id="msgbox" class="msgbox">
-        <div id="t_c" class="title_container">
-        <div class="title_name floatcss">江杨北路</div>
+            <div class="title_container">
+            <div class="title_name float-left">江杨北路</div>
         </div>
-        <div class="line_container" style="border-bottom: 2px solid rgb(253, 211, 3);">
-        <div class="line_div floatcss" lc="#FDD303" ch="#FDD303_3号线" style="background-color: rgb(253, 211, 3); color: rgb(255, 255, 255); font-weight: bold;">3号线</div></div><div id="#FDD303_3号线" style="margin-top: 15px; display: block;"><div class="detail_container"><div class="floatcss detail_fangxiang">上海南站方向</div><div class="floatcss detail_kuohao">(全程)</div><div class="floatcss2" style="font-size: 13px;"><div class="floatcss detail_sebg" style="background-color: rgb(116, 191, 76);">始</div><div class="floatcss detail_se">05:25
+        <div class="line_container">
+            <div class="line_div float-left">3号线</div>
         </div>
-        <div class="floatcss detail_sebg" style="background-color: rgb(230, 50, 92); margin-left: 12px;">末</div>
-        <div class="floatcss detail_se">22:35</div>
+        <div class="detail">
+            <div class="detail_container">
+                <div class="float-left detail-direction">上海南站方向</div>
+                <div class="float-left">
+                    <div class="float-left detail-start detail-background">始</div>
+                    <div class="float-left" id="start-time">05:25</div>
+                    <div class="float-left detail-end detail-background">末</div>
+                    <div class="float-left" id="end-time">22:35</div>
+                </div>
+            </div>
+            <div class="detail_container" style="margin-top: 15px;">
+                <div class="float-left detail-direction">江杨北路方向</div>
+                    <div class="float-left">
+                        <div class="float-left detail-start detail-background">始</div>
+                        <div class="float-left" id="start-time">06:32</div>
+                        <div class="float-left detail-end detail-background">末</div>
+                        <div class="float-left" id="end-time">23:37</div>
+                    </div>
+            </div>
         </div>
-        </div>
-        <div class="detail_container" style="margin-top: 15px;"><div class="floatcss detail_fangxiang">江杨北路方向</div>
-        <div class="floatcss detail_kuohao">(全程)</div><div class="floatcss2" style="font-size: 13px;"><div class="floatcss detail_sebg" style="background-color: rgb(116, 191, 76);">始</div>
-        <div class="floatcss detail_se">06:32</div>
-        <div class="floatcss detail_sebg" style="background-color: rgb(230, 50, 92); margin-left: 12px;">末</div><div class="floatcss detail_se">23:37</div>
-        </div>
-        </div>
-        <div style="height: 10px; width: 100%;"></div>
-        <div style="height: 1px; width: 106%; margin-left: -10px; background-color: rgb(204, 204, 204);"></div><div style="text-align: center; margin-top: 0.28rem;">
-        <div id="ov" class="myov" style="display: block; left: 50%;"></div>
     </div>
 </div>
-
-
 <script type="text/javascript" async>
 	document.addEventListener("DOMContentLoaded", function(event) {
 	  window.scroll(300, 300);

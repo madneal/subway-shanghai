@@ -21,7 +21,11 @@ gulp.task('sass', function() {
 })
 
 gulp.task('auto', function() {
-	gulp.watch('app.js', ['script']);
+	gulp.watch(['app.js'], ['script']);
 });
+
+gulp.task('sass-watch', function() {
+	gulp.watch('app.scss', ['sass'])
+})
 
 gulp.task('default', ['script', ,'sass', 'auto'])

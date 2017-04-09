@@ -2,13 +2,13 @@
   "name": "Subway",
   "short_name": "Subway Shanghai",
   "icons": [{
-    "src": "image/icon/subway-128.jpg",
+    "src": "image/icon/subway-128.png",
       "sizes": "128x128",
-      "type": "image/jpg"
+      "type": "image/png"
     }, {
-      "src": "image/icon/subway-144.jpg",
+      "src": "image/icon/subway-144.png",
       "sizes": "144x144",
-      "type": "image/jpg"
+      "type": "image/png"
     }, {
       "src": "image/icon/subway-192.png",
       "sizes": "192x192",

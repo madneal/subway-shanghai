@@ -4,4 +4,98 @@ let svg = document.querySelector('#svg');
 svg.addEvenetListener('click', (e) => {
 	let stationName = e.target.id || e.target.dataset.id;
 	let timesheet = allTimesheet[stationName];
+	let stationArr = timesheet[stationName];
+	let stationArrLen = stationArr.length;
+	stationArr.forEach((station) => {
+		let key = Object.keys(station)[0]；
+		let lineNum = key.match(/\d+/)[0];
+		let timesheetArr = station[key];
+		setlineColor();
+		stationArrLen -= 1;
+		if (stationArrLen > 0) {
+			let lineDiv = document.querySelector('.line_div').cloneNode(true);
+			document.querySelector('.line_container').appendChild(lineDiv);
+			let detailDiv = document.querySelectorAll('.detail').cloneNode;
+			document.querySelectorAll('.msgbox').appendChild(detailDiv);
+		}
+	})
+	setContainer3(e.target);
 })
+
+function setlineColor() {
+	let lineContainer = document.querySelector('.line_container');
+	lineContainer.className += ' ' + getLineBackground(lineNum);
+}
+
+function getLineBackground(line) {
+	let lineColorCss = '';
+	switch(line) {
+		case: '1'
+			lineColorCss = 'line1-background';
+		break;
+		case: '2'
+			lineColorCss = 'line2-background';
+		break;
+		case: '3'
+			lineColorCss = 'line3-background';
+		break;
+		case: '4'
+			lineColorCss = 'line4-background';
+		break;
+		case: '5'
+			lineColorCss = 'line5-background';
+		break;
+		case: '6'
+			lineColorCss = 'line6-background';
+		break;
+		case: '7'
+			lineColorCss = 'line7-background';
+		break;
+		case: '8'
+			lineColorCss = 'line8-background';
+		break;
+		case: '9'
+			lineColorCss = 'line9-background';
+		break;
+		case: '10'
+			lineColorCss = 'line10-background';
+		break;
+		case: '11'
+			lineColorCss = 'line11-background';
+		break;
+		case: '12'
+			lineColorCss = 'line12-background';
+		break;
+		case: '13'
+			lineColorCss = 'line13-background';
+		break;
+		case: '16'
+			lineColorCss = 'line16-background';
+		break;
+		default: 
+			lineColorCss = '';
+		break;
+	}
+	return lineColorCss;
+}
+
+function setStationText(timesheetArr, stationName) {
+	let container3 = document.querySelector('.container3');
+	container3.querySelector('.title_name').innerText = stationName;
+	let direction = container3.querySelectorAll('.detail-direction');
+	let startTime = container3.querySelectorAll('#start-time');
+	let endTime = container3.querySelectorAll('#end-time');
+	console.log(timesheetArr[0]);
+	direction[0].innerText = timesheetArr[0].name;
+	direction[1].innerText = timesheetArr[1].name;
+	startTime[0].innerText = timesheetArr[0].st;
+	startTime[1].innerText = timesheetArr[1].st;
+	endTime[0].innerText = timesheetArr[0].et;
+	endTime[1].innerText = timesheetArr[1].et;
+}
+
+function setContainer3(target) {
+	let container3 = document.querySelector('.container3');
+	container3.style.left = +target.cx.baseVal.valueAsString - 150 + 'px';
+	container3.style.display = 'block';
+}

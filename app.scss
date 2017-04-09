@@ -1,3 +1,66 @@
+$line1-color: #EE1822;
+$line2-color: #85C73F;
+$line3-color: #FDD303;
+$line4-color: #4E2C8D;
+$line5-color: #8F57A2;
+$line6-color: #D7156B;
+$line7-color: #F26F1F;
+$line8-color: #009DD7;
+$line9-color: #67CCF6;
+$line10-color: #B8A8CF;
+$line11-color: #7C1F31;
+$line12-color: #54ae11;
+$line13-color: #E77DAD;
+$line16-color: #78d6cd;
+.line1-background {
+	background: $line1-color;
+}
+.line2-background {
+	background: $line2-color;
+}
+.line3-background {
+	background: $line3-color;
+}
+.line4-background {
+	background: $line4-color;
+}
+.line5-background {
+	background: $line5-color;
+}
+.line6-background {
+	background: $line6-color;
+}
+.line7-background {
+	background: $line7-color;
+}
+.line8-background {
+	background: $line8-color;
+}
+.line9-background {
+	background: $line9-color;
+}
+.line10-background {
+	background: $line10-color;
+}
+.line11-background {
+	background: $line11-color;
+}
+.line12-background {
+	background: $line12-color;
+}
+.line13-background {
+	background: $line13-color;
+}
+.line16-background {
+	background: $line16-color;
+}
+
+.float-left {
+	float: left;
+}
+.float-right {
+	float: right;
+}
 .svg {
    font-size: 12px;
    font-family: 微软雅黑;
@@ -11,4 +74,91 @@
 .rect-station {
     width: 26px;
     height: 26px;
+}
+.container3 {
+    position: absolute;
+    background-color: transparent;
+    border: none;
+    margin-left: -148px;
+    top: 476px;
+    margin-top: -219px;
+    z-index: 200;
+    display: block;
+}
+.msgbox {
+    min-width: 300px;
+    box-sizing: border-box;
+    border-radius: 3px;
+    padding: 15px 0.2rem 10px;
+    background-color: RGB(255, 255, 255);
+    box-shadow: -3px 0px 3px #d1d1d1,
+                4px 0px 4px #d1d1d1,
+                0 -1px 1px #d1d1d1,
+                -4px 6px 6px #d1d1d1;
+    .top {
+    	height: 9px;
+    	width: 100%;
+    }
+    .title_container {
+    	padding-left: 2px;
+    	height: 20px;
+    	.title_name {
+    		font-size: 20px;
+    		color: #000;
+    		font-weight: bold;
+    	}
+    }
+    .line_container {
+    	margin-top: 12px;
+    	height: 26px;
+    	width: 100%;
+    	font-size: 13px;
+    	border-bottom: 1px solid;
+    	.line_div {
+    		color: #999999;
+    		min-width: 56px;
+    		text-align: center;
+    		height: 26px;
+    		line-height: 28px;
+    		padding: 0 5px;
+    	}
+    }
+    .detail_container {
+    	margin-top: 20px;
+    	height: 15px;
+    	line-height: 15px;
+    	width: 100%;
+    	.detail-direction {
+    		margin-right: 60px;
+    	}
+    	.detail-background {
+    		width: 15px;
+    		height: 15px;
+    		line-height: 15px;
+    		text-align: center;
+    		opacity: 0.6;
+    		color: #fff;
+    		font-size: 12px;
+    	}
+    	.detail-start {
+    		background-color: rgb(116, 191, 76);
+    	}
+    	.detail-end {
+    		background-color: rgb(230, 50, 92); 
+    		margin-left: 12px;
+    	}
+    }
+}
+.myov {
+    position: relative;
+    left: 135px;
+    margin-left: -12px;
+    overflow: hidden;
+    width: 0;
+    height: 0;
+    border-top: 14px solid #ffffff;
+    border-right: 10px solid transparent;
+    border-left: 10px solid transparent;
+    width: 0;
+    top: -1px;
 }
