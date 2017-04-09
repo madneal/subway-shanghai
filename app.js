@@ -27,6 +27,7 @@ svg.addEventListener('click', (e) => {
 			let lineNum = key.match(/\d+/)[0];
 			let timesheetArr = station[key];
 			setlineColor(lineNum);
+			setStationText(timesheetArr, stationName);
 			stationArrLen -= 1;
 			if (stationArrLen > 0) {
 				let lineDiv = document.querySelector('.line_div').cloneNode(true);
