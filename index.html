@@ -677,21 +677,21 @@
         </div>
         <div class="detail">
             <div class="detail_container">
-                <div class="float-left detail-direction">上海南站方向</div>
+                <div class="float-left detail-direction"></div>
                 <div class="float-left">
                     <div class="float-left detail-start detail-background">始</div>
-                    <div class="float-left" id="start-time">05:25</div>
+                    <div class="float-left" id="start-time"></div>
                     <div class="float-left detail-end detail-background">末</div>
-                    <div class="float-left" id="end-time">22:35</div>
+                    <div class="float-left" id="end-time"></div>
                 </div>
             </div>
             <div class="detail_container" style="margin-top: 15px;">
-                <div class="float-left detail-direction">江杨北路方向</div>
+                <div class="float-left detail-direction"></div>
                     <div class="float-left">
                         <div class="float-left detail-start detail-background">始</div>
-                        <div class="float-left" id="start-time">06:32</div>
+                        <div class="float-left" id="start-time"></div>
                         <div class="float-left detail-end detail-background">末</div>
-                        <div class="float-left" id="end-time">23:37</div>
+                        <div class="float-left" id="end-time"></div>
                     </div>
             </div>
         </div>
@@ -699,9 +699,9 @@
 </div>
 <script type="text/javascript" src="app.js"></script>
 <script type="text/javascript" async>
-	// document.addEventListener("DOMContentLoaded", function(event) {
-	//   window.scroll(300, 300);
-	// });
+	document.addEventListener("DOMContentLoaded", function(event) {
+	  window.scroll(300, 300);
+	});
 	if ('serviceWorker' in navigator) {
 		navigator.serviceWorker
 			.register('sw.js')

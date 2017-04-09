@@ -27,7 +27,7 @@ svg.addEventListener('click', (e) => {
 			let lineNum = key.match(/\d+/)[0];
 			let timesheetArr = station[key];
 			setlineColor(lineNum);
-			setStationText(timesheetArr, stationName);
+			setStationText(timesheetArr, stationName, key);
 			stationArrLen -= 1;
 			if (stationArrLen > 0) {
 				let lineDiv = document.querySelector('.line_div').cloneNode(true);
@@ -44,8 +44,17 @@ svg.addEventListener('click', (e) => {
 
 function setlineColor(lineNum) {
 	let lineContainer = document.querySelector('.line_div');
-	lineContainer.className += ' ' + getLineBackground(lineNum);
+	lineContainer.className = updateClassname(lineNum, lineContainer.className);
 	document.querySelector('.line_container').style.borderBottom = '1px solid ' + colorMap[lineNum];
+}
+
+function updateClassname(lineNum, className) {
+	if (className.indexOf('background') === -1) {
+		className = className + ' ' + getLineBackground(lineNum);
+	} else {
+		className = className.replace(/line\d\-background/, getLineBackground(lineNum));
+	}
+	return className;
 }
 
 function getLineBackground(line) {
@@ -100,15 +109,15 @@ function getLineBackground(line) {
 	return lineColorCss;
 }
 
-function setStationText(timesheetArr, stationName) {
+function setStationText(timesheetArr, stationName, line) {
 	let container3 = document.querySelector('.container3');
 	container3.querySelector('.title_name').innerText = stationName;
+	container3.querySelector('.line_div').innerText = line;
 	let direction = container3.querySelectorAll('.detail-direction');
 	let startTime = container3.querySelectorAll('#start-time');
 	let endTime = container3.querySelectorAll('#end-time');
-	console.log(timesheetArr[0]);
-	direction[0].innerText = timesheetArr[0].name;
-	direction[1].innerText = timesheetArr[1].name;
+	direction[0].innerText = timesheetArr[0].name + '方向';
+	direction[1].innerText = timesheetArr[1].name + '方向';
 	startTime[0].innerText = timesheetArr[0].st;
 	startTime[1].innerText = timesheetArr[1].st;
 	endTime[0].innerText = timesheetArr[0].et;
