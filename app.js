@@ -22,20 +22,21 @@ svg.addEventListener('click', (e) => {
 	if (isChinese(stationName)) {
 		let stationArr = allTimesheet[stationName];
 		let stationArrLen = stationArr.length;
+		for (let i = 1; i < stationArrLen; i++) {
+			let lineDiv = document.querySelector('.line_div').cloneNode(true);
+			document.querySelector('.line_container').appendChild(lineDiv);
+			let detailDiv = document.querySelector('.detail').cloneNode(true);
+			detailDiv.style.display = 'none';
+			document.querySelector('.msgbox').appendChild(detailDiv);
+		}
+
 		stationArr.forEach((station) => {
 			let key = Object.keys(station)[0];
 			let lineNum = key.match(/\d+/)[0];
 			let timesheetArr = station[key];
 			setlineColor(lineNum);
 			setStationText(timesheetArr, stationName, key);
-			stationArrLen -= 1;
-			if (stationArrLen > 0) {
-				let lineDiv = document.querySelector('.line_div').cloneNode(true);
-				document.querySelector('.line_container').appendChild(lineDiv);
-				let detailDiv = document.querySelectorAll('.detail').cloneNode;
-				document.querySelectorAll('.msgbox').appendChild(detailDiv);
-			}
-		})
+		});
 		setContainer3(e.target);
 	} else {
 		document.querySelector('.container3').style.display = 'none';
@@ -126,7 +127,8 @@ function setStationText(timesheetArr, stationName, line) {
 
 function setContainer3(target) {
 	let container3 = document.querySelector('.container3');
-	container3.style.left = +target.cx.baseVal.valueAsString - 150 + 'px';
+	let x = target.cx || target.x;
+	container3.style.left = (+x.baseVal.valueAsString || +x.baseVal.valueAsString) - 150 + 'px';
 	container3.style.display = 'block';
 }
 
