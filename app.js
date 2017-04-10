@@ -17,7 +17,9 @@ let colorMap = {
 }
 let allTimesheet = JSON.parse(timesheetStr);
 let svg = document.querySelector('.svg');
+let container3 = document.querySelector('.container3');
 svg.addEventListener('click', (e) => {
+	let activatedItem = document.querySelector('.activated');
 	let stationName = e.target.id || e.target.dataset.id;
 	if (isChinese(stationName)) {
 		let stationArr = allTimesheet[stationName];
@@ -39,7 +41,7 @@ svg.addEventListener('click', (e) => {
 		});
 		setContainer3(e.target);
 	} else {
-		document.querySelector('.container3').style.display = 'none';
+		container3.style.display = 'none';
 	}
 })
 
@@ -111,7 +113,6 @@ function getLineBackground(line) {
 }
 
 function setStationText(timesheetArr, stationName, line) {
-	let container3 = document.querySelector('.container3');
 	container3.querySelector('.title_name').innerText = stationName;
 	container3.querySelector('.line_div').innerText = line;
 	let direction = container3.querySelectorAll('.detail-direction');
@@ -126,9 +127,10 @@ function setStationText(timesheetArr, stationName, line) {
 }
 
 function setContainer3(target) {
-	let container3 = document.querySelector('.container3');
 	let x = target.cx || target.x;
-	container3.style.left = (+x.baseVal.valueAsString || +x.baseVal.valueAsString) - 150 + 'px';
+	let y = target.cy || target.y;
+	container3.style.left = (+x.baseVal.valueAsString || +x.baseVal.valueAsString) - 130 + 'px';
+	container3.style.top = (+y.baseVal.valueAsString || +y.baseVal.valueAsString) - 20 + 'px';
 	container3.style.display = 'block';
 }
 
