@@ -24,12 +24,28 @@ svg.addEventListener('click', (e) => {
 	if (isChinese(stationName)) {
 		let stationArr = allTimesheet[stationName];
 		let stationArrLen = stationArr.length;
-		for (let i = 1; i < stationArrLen; i++) {
-			let lineDiv = document.querySelector('.line_div').cloneNode(true);
-			document.querySelector('.line_container').appendChild(lineDiv);
-			let detailDiv = document.querySelector('.detail').cloneNode(true);
-			detailDiv.style.display = 'none';
-			document.querySelector('.msgbox').appendChild(detailDiv);
+
+		// if there are several lines, only keep one
+		if (container3.querySelectorAll('.line_div').length > 1) {
+			initialContainer3(container3);
+		}
+
+		for (let i = 0; i < stationArrLen; i++) {
+			let lineNum = Object.keys(stationArr[i])[0].match(/\d+/)[0];
+			let lineDiv;
+			let detailDiv;
+			if (i >= 1) {
+				lineDiv = container3.querySelector('.line_div').cloneNode(true);
+				detailDiv = container3.querySelector('.detail').cloneNode(true);
+				converLineDiv(false, lineDiv, lineNum);
+				container3.querySelector('.line_container').appendChild(lineDiv);
+				detailDiv.style.display = 'none';
+				container3.querySelector('.msgbox').appendChild(detailDiv);				
+			} else {
+				lineDiv = container3.querySelector('.line_div');
+				detailDiv = container3.querySelector('.detail');
+				converLineDiv(true, lineDiv, lineNum);
+			}
 		}
 
 		stationArr.forEach((station) => {
@@ -44,6 +60,27 @@ svg.addEventListener('click', (e) => {
 		container3.style.display = 'none';
 	}
 })
+
+function initialContainer3(container3) {
+	let lineDivs = container3.querySelectorAll('.line_div');
+	let details = container3.querySelectorAll('.detail');
+	let lineContainer = container3.querySelector('.line_container');
+	let msgbox = container3.querySelector('.msgbox');
+	for (let i = 1; i < lineDivs.length; i++) {
+		lineContainer.removeChild(lineDivs[i]);
+		msgbox.removeChild(details[i]);
+	}
+}
+
+function converLineDiv(isActivated, lineDiv, lineNum) {
+	if (isActivated) {
+		setlineColor(lineNum);
+		lineDiv.style.color = '#fff';
+	} else {
+		lineDiv.style.background = '##e8edf2';
+		lineDiv.style.color = '#777';
+	}
+}
 
 function setlineColor(lineNum) {
 	let lineContainer = document.querySelector('.line_div');
