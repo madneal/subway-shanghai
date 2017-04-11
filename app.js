@@ -37,22 +37,24 @@ svg.addEventListener('click', (e) => {
 			if (i >= 1) {
 				lineDiv = container3.querySelector('.line_div').cloneNode(true);
 				detailDiv = container3.querySelector('.detail').cloneNode(true);
-				converLineDiv(false, lineDiv, lineNum);
+				lineDiv.classList = lineDiv.classList.value.replace(/line\d+\-background/, '');
+				convertLineDiv(false, lineDiv, lineNum);
 				container3.querySelector('.line_container').appendChild(lineDiv);
 				detailDiv.style.display = 'none';
 				container3.querySelector('.msgbox').appendChild(detailDiv);				
 			} else {
 				lineDiv = container3.querySelector('.line_div');
 				detailDiv = container3.querySelector('.detail');
-				converLineDiv(true, lineDiv, lineNum);
+				convertLineDiv(true, lineDiv, lineNum);
 			}
 		}
 
+		let firstLine = true;
 		stationArr.forEach((station) => {
 			let key = Object.keys(station)[0];
 			let lineNum = key.match(/\d+/)[0];
 			let timesheetArr = station[key];
-			setlineColor(lineNum);
+			// setlineColor(lineNum);
 			setStationText(timesheetArr, stationName, key);
 		});
 		setContainer3(e.target);
@@ -72,7 +74,7 @@ function initialContainer3(container3) {
 	}
 }
 
-function converLineDiv(isActivated, lineDiv, lineNum) {
+function convertLineDiv(isActivated, lineDiv, lineNum) {
 	if (isActivated) {
 		setlineColor(lineNum);
 		lineDiv.style.color = '#fff';
