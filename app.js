@@ -51,14 +51,23 @@ svg.addEventListener('click', (e) => {
 			}
 		}
 
-		let firstLine = true;
-		stationArr.forEach((station) => {
-			let key = Object.keys(station)[0];
-			let lineNum = key.match(/\d+/)[0];
-			let timesheetArr = station[key];
-			// setlineColor(lineNum);
-			setStationText(timesheetArr, stationName, key);
-		});
+		let lineDivs = document.querySelectorAll('.line_div');
+		let details = document.querySelectorAll('.detail');
+
+		for (let j = 0; j < stationArr.length; j++) {
+			// let key = Object.keys(station)[0];
+			// let lineNum = key.match(/\d+/)[0];
+			// let timesheetArr = station[key];
+			let station = stationArr[j];
+			setStationText(station, stationName, lineDivs[j], details[j]);
+		}
+		// stationArr.forEach((station) => {
+		// 	let key = Object.keys(station)[0];
+		// 	let lineNum = key.match(/\d+/)[0];
+		// 	let timesheetArr = station[key];
+		// 	// setlineColor(lineNum);
+		// 	// setStationText(timesheetArr, stationName, key);
+		// });
 		setContainer3(e.target);
 	} else {
 		container3.style.display = 'none';
@@ -158,12 +167,30 @@ function getLineBackground(line) {
 	return lineColorCss;
 }
 
-function setStationText(timesheetArr, stationName, line) {
+// function setStationText(timesheetArr, stationName, line) {
+// 	container3.querySelector('.title_name').innerText = stationName;
+// 	// container3.querySelector('.line_div').innerText = line;
+// 	let direction = container3.querySelectorAll('.detail-direction');
+// 	let startTime = container3.querySelectorAll('#start-time');
+// 	let endTime = container3.querySelectorAll('#end-time');
+// 	direction[0].innerText = timesheetArr[0].name + '方向';
+// 	direction[1].innerText = timesheetArr[1].name + '方向';
+// 	startTime[0].innerText = timesheetArr[0].st;
+// 	startTime[1].innerText = timesheetArr[1].st;
+// 	endTime[0].innerText = timesheetArr[0].et;
+// 	endTime[1].innerText = timesheetArr[1].et;
+// }
+
+function setStationText(station, stationName, lineDiv, detail) {
+	let key = Object.keys(station)[0];
+	let lineNum = key.match(/\d+/)[0];
+	let timesheetArr = station[key];
 	container3.querySelector('.title_name').innerText = stationName;
-	container3.querySelector('.line_div').innerText = line;
-	let direction = container3.querySelectorAll('.detail-direction');
-	let startTime = container3.querySelectorAll('#start-time');
-	let endTime = container3.querySelectorAll('#end-time');
+	lineDiv.innerText = key;
+	// container3.querySelector('.line_div').innerText = line;
+	let direction = detail.querySelectorAll('.detail-direction');
+	let startTime = detail.querySelectorAll('#start-time');
+	let endTime = detail.querySelectorAll('#end-time');
 	direction[0].innerText = timesheetArr[0].name + '方向';
 	direction[1].innerText = timesheetArr[1].name + '方向';
 	startTime[0].innerText = timesheetArr[0].st;
