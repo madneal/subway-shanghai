@@ -18,6 +18,8 @@ let colorMap = {
 let allTimesheet = JSON.parse(timesheetStr);
 let svg = document.querySelector('.svg');
 let container3 = document.querySelector('.container3');
+let lineBackgroundReg = /line\d+\-background/;
+
 svg.addEventListener('click', (e) => {
 	let activatedItem = document.querySelector('.activated');
 	let stationName = e.target.id || e.target.dataset.id;
@@ -37,7 +39,7 @@ svg.addEventListener('click', (e) => {
 			if (i >= 1) {
 				lineDiv = container3.querySelector('.line_div').cloneNode(true);
 				detailDiv = container3.querySelector('.detail').cloneNode(true);
-				lineDiv.classList = lineDiv.classList.value.replace(/line\d+\-background/, '');
+				lineDiv.classList = lineDiv.classList.value.replace(lineBackgroundReg, '');
 				convertLineDiv(false, lineDiv, lineNum);
 				container3.querySelector('.line_container').appendChild(lineDiv);
 				detailDiv.style.display = 'none';
@@ -68,18 +70,23 @@ function initialContainer3(container3) {
 	let details = container3.querySelectorAll('.detail');
 	let lineContainer = container3.querySelector('.line_container');
 	let msgbox = container3.querySelector('.msgbox');
-	for (let i = 1; i < lineDivs.length; i++) {
-		lineContainer.removeChild(lineDivs[i]);
-		msgbox.removeChild(details[i]);
+	for (let i = 0; i < lineDivs.length; i++) {
+		if (i === 0) {
+			lineDivs[i].classList = lineDivs[i].classList.value.replace(lineBackgroundReg, '');
+		} else {			
+			lineContainer.removeChild(lineDivs[i]);
+			msgbox.removeChild(details[i]);
+		}
 	}
 }
+
 
 function convertLineDiv(isActivated, lineDiv, lineNum) {
 	if (isActivated) {
 		setlineColor(lineNum);
 		lineDiv.style.color = '#fff';
 	} else {
-		lineDiv.style.background = '##e8edf2';
+		lineDiv.classList.add('line0-background');
 		lineDiv.style.color = '#777';
 	}
 }
@@ -94,7 +101,7 @@ function updateClassname(lineNum, className) {
 	if (className.indexOf('background') === -1) {
 		className = className + ' ' + getLineBackground(lineNum);
 	} else {
-		className = className.replace(/line\d\-background/, getLineBackground(lineNum));
+		className = className.replace(lineBackgroundReg, getLineBackground(lineNum));
 	}
 	return className;
 }
