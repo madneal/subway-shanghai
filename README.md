@@ -1,8 +1,9 @@
 # subway-shanghai
-The subway map in Shanghai
+The subway map in Shanghai. It can be utilized in offline environment :smile_cat:
 
 ## to do    
 
 - [ ] to support zoom
-- [ ] add time sheet information for every station
+- [x] add time sheet information for every station
+
 
