@@ -48,6 +48,7 @@ svg.addEventListener('click', (e) => {
 				lineDiv = container3.querySelector('.line_div');
 				lineDiv.style.display = 'block';
 				detailDiv = container3.querySelector('.detail');
+				detailDiv.style.display = 'block';
 				convertLineDiv(true, lineDiv, lineNum);
 			}
 		}
