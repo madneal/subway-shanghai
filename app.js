@@ -53,7 +53,8 @@ svg.addEventListener('click', (e) => {
 
 		let lineDivs = document.querySelectorAll('.line_div');
 		let details = document.querySelectorAll('.detail');
-
+		let lineContainer = document.querySelector('.line_container');
+		let currentLineDiv = container3.querySelector('.line_div');
 		for (let j = 0; j < stationArr.length; j++) {
 			// let key = Object.keys(station)[0];
 			// let lineNum = key.match(/\d+/)[0];
@@ -69,6 +70,13 @@ svg.addEventListener('click', (e) => {
 		// 	// setStationText(timesheetArr, stationName, key);
 		// });
 		setContainer3(e.target);
+		lineContainer.addEventListener('click', (e1) => {
+			currentLineDiv.classList = setInitialLineDivClass(currentLineDiv.classList);
+			let target = e1.target;
+			currentLineDiv = target;
+			let line = target.innerText;
+			changeLine(line);
+		})
 	} else {
 		container3.style.display = 'none';
 	}
@@ -87,6 +95,20 @@ function initialContainer3(container3) {
 			msgbox.removeChild(details[i]);
 		}
 	}
+}
+
+function setInitialLineDivClass(classList) {
+	return classList.value.replace(lineBackgroundReg, 'line0-background');
+}
+
+function changeLine(selector) {
+	selector = '#detail-' + selector;
+	container3.querySelector(selector).style.display = 'block';
+	container3.querySelectorAll('.detail').forEach((detailDiv) => {
+		if ('#' + detailDiv.id !== selector) {
+			detailDiv.style.display = 'none';
+		}
+	})
 }
 
 
@@ -187,6 +209,8 @@ function setStationText(station, stationName, lineDiv, detail) {
 	let timesheetArr = station[key];
 	container3.querySelector('.title_name').innerText = stationName;
 	lineDiv.innerText = key;
+	// as the css id better not start with digit
+	detail.id = 'detail-' + key;
 	// container3.querySelector('.line_div').innerText = line;
 	let direction = detail.querySelectorAll('.detail-direction');
 	let startTime = detail.querySelectorAll('#start-time');
