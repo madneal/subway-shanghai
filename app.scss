@@ -12,6 +12,10 @@ $line11-color: #7C1F31;
 $line12-color: #54ae11;
 $line13-color: #E77DAD;
 $line16-color: #78d6cd;
+.activated-line {
+    color: #fff;
+    font-weight: bold;
+}
 .line1-background {
 	background: $line1-color;
 }
@@ -54,9 +58,10 @@ $line16-color: #78d6cd;
 .line16-background {
 	background: $line16-color;
 }
-.line0-background {
-    background: '##e8edf2';
+.initial-line {
+    background: #eee;
     color: #777;
+    font-weight: normal;
 }
 
 .float-left {
@@ -119,7 +124,6 @@ $line16-color: #78d6cd;
     	font-size: 13px;
     	border-bottom: 1px solid;
     	.line_div {
-    		color: #fff;
     		min-width: 56px;
     		text-align: center;
     		height: 26px;

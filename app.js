@@ -39,7 +39,7 @@ svg.addEventListener('click', (e) => {
 			if (i >= 1) {
 				lineDiv = container3.querySelector('.line_div').cloneNode(true);
 				detailDiv = container3.querySelector('.detail').cloneNode(true);
-				lineDiv.classList = lineDiv.classList.value.replace(lineBackgroundReg, '');
+				lineDiv.classList = lineDiv.classList.value.replace(lineBackgroundReg, 'initial-line');
 				convertLineDiv(false, lineDiv, lineNum);
 				container3.querySelector('.line_container').appendChild(lineDiv);
 				detailDiv.style.display = 'none';
@@ -71,7 +71,7 @@ svg.addEventListener('click', (e) => {
 		// });
 		setContainer3(e.target);
 		lineContainer.addEventListener('click', (e1) => {
-			currentLineDiv.classList = setInitialLineDivClass(currentLineDiv.classList);
+			// setInitialLineDivClass(currentLineDiv);
 			let target = e1.target;
 			currentLineDiv = target;
 			let line = target.innerText;
@@ -97,34 +97,48 @@ function initialContainer3(container3) {
 	}
 }
 
-function setInitialLineDivClass(classList) {
-	return classList.value.replace(lineBackgroundReg, 'line0-background');
+function setInitialLineDivClass(lineDiv) {
+	lineDiv.classList.remove('activated-line');
+	lineDiv.classList = lineDiv.classList.value.replace(lineBackgroundReg, 'initial-line');
 }
 
-function changeLine(selector) {
-	selector = '#detail-' + selector;
-	container3.querySelector(selector).style.display = 'block';
+function changeLine(line) {
+	let detailDivId = '#detail-' + line;
+	let lineDivId = '#line-' + line;
+	setlineColor(container3.querySelector(lineDivId), line.match(/\d+/)[0]);
+	container3.querySelector(detailDivId).style.display = 'block';
 	container3.querySelectorAll('.detail').forEach((detailDiv) => {
-		if ('#' + detailDiv.id !== selector) {
+		if ('#' + detailDiv.id !== detailDivId) {
 			detailDiv.style.display = 'none';
 		}
-	})
+	});
+	container3.querySelectorAll('.line_div').forEach((lineDiv) => {
+		if (lineDiv.innerText !== line) {
+			setInitialLineDivClass(lineDiv);
+		}
+	});
 }
 
 
 function convertLineDiv(isActivated, lineDiv, lineNum) {
+	let lineDivClassList = getClassListVal(lineDiv);
 	if (isActivated) {
-		setlineColor(lineNum);
-		lineDiv.style.color = '#fff';
+		setlineColor(lineDiv, lineNum);
+		lineDiv.classList.add('activated-line');
+		if (lineDivClassList.indexOf('initial-line') !== -1) {
+			lineDiv.classList.remove('initial-line');
+		}
 	} else {
-		lineDiv.classList.add('line0-background');
-		lineDiv.style.color = '#777';
+		if (lineDivClassList.indexOf('-background') !== -1) {
+			lineDiv.classList = lineDivClassList.replace(lineBackgroundReg, 'initial-line');
+		}
 	}
 }
 
-function setlineColor(lineNum) {
-	let lineContainer = document.querySelector('.line_div');
-	lineContainer.className = updateClassname(lineNum, lineContainer.className);
+function setlineColor(lineDiv, lineNum) {
+	// let lineContainer = document.querySelector('.line_div');
+	lineDiv.className = updateClassname(lineNum, lineDiv.className);
+	lineDiv.classList.add('activated-line');
 	document.querySelector('.line_container').style.borderBottom = '1px solid ' + colorMap[lineNum];
 }
 
@@ -134,6 +148,7 @@ function updateClassname(lineNum, className) {
 	} else {
 		className = className.replace(lineBackgroundReg, getLineBackground(lineNum));
 	}
+	className = className.replace('initial-line', '');
 	return className;
 }
 
@@ -210,6 +225,7 @@ function setStationText(station, stationName, lineDiv, detail) {
 	container3.querySelector('.title_name').innerText = stationName;
 	lineDiv.innerText = key;
 	// as the css id better not start with digit
+	lineDiv.id = 'line-' + key;
 	detail.id = 'detail-' + key;
 	// container3.querySelector('.line_div').innerText = line;
 	let direction = detail.querySelectorAll('.detail-direction');
@@ -233,4 +249,8 @@ function setContainer3(target) {
 
 function isChinese(str) {
 	return /[^\u0000-\u00FF]/.test(str);
+}
+
+function getClassListVal(div) {
+	return div.classList.value;
 }

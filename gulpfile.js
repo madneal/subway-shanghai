@@ -1,5 +1,5 @@
 var gulp = require('gulp');
-var babel = require('gulp-babel');
+// var babel = require('gulp-babel');
 var uglify = require('gulp-uglify');
 var sass = require('gulp-sass');
 var minifycss = require('gulp-minify-css');
