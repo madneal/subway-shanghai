@@ -46,6 +46,7 @@ svg.addEventListener('click', (e) => {
 				container3.querySelector('.msgbox').appendChild(detailDiv);				
 			} else {
 				lineDiv = container3.querySelector('.line_div');
+				lineDiv.style.display = 'block';
 				detailDiv = container3.querySelector('.detail');
 				convertLineDiv(true, lineDiv, lineNum);
 			}
@@ -56,22 +57,11 @@ svg.addEventListener('click', (e) => {
 		let lineContainer = document.querySelector('.line_container');
 		let currentLineDiv = container3.querySelector('.line_div');
 		for (let j = 0; j < stationArr.length; j++) {
-			// let key = Object.keys(station)[0];
-			// let lineNum = key.match(/\d+/)[0];
-			// let timesheetArr = station[key];
 			let station = stationArr[j];
 			setStationText(station, stationName, lineDivs[j], details[j]);
 		}
-		// stationArr.forEach((station) => {
-		// 	let key = Object.keys(station)[0];
-		// 	let lineNum = key.match(/\d+/)[0];
-		// 	let timesheetArr = station[key];
-		// 	// setlineColor(lineNum);
-		// 	// setStationText(timesheetArr, stationName, key);
-		// });
 		setContainer3(e.target);
 		lineContainer.addEventListener('click', (e1) => {
-			// setInitialLineDivClass(currentLineDiv);
 			let target = e1.target;
 			currentLineDiv = target;
 			let line = target.innerText;
@@ -103,12 +93,15 @@ function setInitialLineDivClass(lineDiv) {
 }
 
 function changeLine(line) {
-	let detailDivId = '#detail-' + line;
-	let lineDivId = '#line-' + line;
-	setlineColor(container3.querySelector(lineDivId), line.match(/\d+/)[0]);
-	container3.querySelector(detailDivId).style.display = 'block';
+	let detailDivId = 'detail-' + line;
+	let lineDivId = 'line-' + line;
+	// the querySelector has a problem
+	let lineDiv = document.getElementById(lineDivId);
+	let detailDiv = document.getElementById(detailDivId);
+	setlineColor(lineDiv, line.match(/\d+/)[0]);
+	detailDiv.style.display = 'block';
 	container3.querySelectorAll('.detail').forEach((detailDiv) => {
-		if ('#' + detailDiv.id !== detailDivId) {
+		if (detailDiv.id !== detailDivId) {
 			detailDiv.style.display = 'none';
 		}
 	});
@@ -136,7 +129,6 @@ function convertLineDiv(isActivated, lineDiv, lineNum) {
 }
 
 function setlineColor(lineDiv, lineNum) {
-	// let lineContainer = document.querySelector('.line_div');
 	lineDiv.className = updateClassname(lineNum, lineDiv.className);
 	lineDiv.classList.add('activated-line');
 	document.querySelector('.line_container').style.borderBottom = '1px solid ' + colorMap[lineNum];
@@ -204,20 +196,6 @@ function getLineBackground(line) {
 	return lineColorCss;
 }
 
-// function setStationText(timesheetArr, stationName, line) {
-// 	container3.querySelector('.title_name').innerText = stationName;
-// 	// container3.querySelector('.line_div').innerText = line;
-// 	let direction = container3.querySelectorAll('.detail-direction');
-// 	let startTime = container3.querySelectorAll('#start-time');
-// 	let endTime = container3.querySelectorAll('#end-time');
-// 	direction[0].innerText = timesheetArr[0].name + '方向';
-// 	direction[1].innerText = timesheetArr[1].name + '方向';
-// 	startTime[0].innerText = timesheetArr[0].st;
-// 	startTime[1].innerText = timesheetArr[1].st;
-// 	endTime[0].innerText = timesheetArr[0].et;
-// 	endTime[1].innerText = timesheetArr[1].et;
-// }
-
 function setStationText(station, stationName, lineDiv, detail) {
 	let key = Object.keys(station)[0];
 	let lineNum = key.match(/\d+/)[0];
@@ -227,7 +205,6 @@ function setStationText(station, stationName, lineDiv, detail) {
 	// as the css id better not start with digit
 	lineDiv.id = 'line-' + key;
 	detail.id = 'detail-' + key;
-	// container3.querySelector('.line_div').innerText = line;
 	let direction = detail.querySelectorAll('.detail-direction');
 	let startTime = detail.querySelectorAll('#start-time');
 	let endTime = detail.querySelectorAll('#end-time');
