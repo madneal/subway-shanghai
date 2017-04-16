@@ -16,6 +16,7 @@ let colorMap = {
 	16: '#78d6cd',
 }
 let allTimesheet = JSON.parse(timesheetStr);
+let container = document.querySelector('.container');
 let svg = document.querySelector('.svg');
 let container3 = document.querySelector('.container3');
 let lineBackgroundReg = /line\d+\-background/;
@@ -232,3 +233,113 @@ function isChinese(str) {
 function getClassListVal(div) {
 	return div.classList.value;
 }
+
+
+let myPos = document.getElementById('myPos');
+// Transform(container);
+let initScale = 1;
+
+let lastScale = 0;
+let scale = 1.0;
+
+let gesture = new AlloyFinger(container, {
+    rotate: function (evt) {
+        // el.rotateZ += evt.angle;
+    },
+    pinch: function (evt) {
+        let map = document.getElementById('svg');
+        if(!map){
+            return;
+        }
+        scale = evt.scale;
+
+        //���ŷ�Χ������0.5-2
+        if(lastScale){
+            scale *= lastScale;
+        }
+        if(scale > 2 ){
+            scale = 2;
+        }
+        else if(scale < 0.4){
+            scale = 0.4;
+        }
+        scale = scale.toFixed(2);
+        sw.scale = scale;
+        //�����������ĵ�
+        let x = Math.abs(evt.touches[0].clientX - evt.touches[1].clientX) / 2 + Math.min(evt.touches[0].clientX, evt.touches[1].clientX);
+        let y = Math.abs(evt.touches[0].clientY - evt.touches[1].clientY) / 2 + Math.min(evt.touches[0].clientY, evt.touches[1].clientY);
+        //�����������ĵ�
+        container1.style.transformOrigin = x + container.scrollLeft + 'px ' + (y +  container.scrollTop) +'px';
+        container1.style.transform = 'scale3d(' + scale +', '+scale+',1)';//hack����Ӳ������
+        // document.getElementById('svg').setAttribute('viewBox', '0,0,'+2300*scale+','+2300*scale);
+        let left = parseInt($('#container3').css('left'));
+        let top = parseInt($('#container3').css('top'));
+        container3.style.transform = 'translate('+ getTransX(left, scale, container1) +'px,' + getTransY(top, scale, container1) + 'px)';
+        //todo  ��flag��ԭ��forѭ������ֶ�λʧЧ
+        $('.flag').each(function(index, item){
+            let left = parseInt($(item).css('left'));
+            let top = parseInt($(item).css('top'));
+            $(item).css('transform', 'translate('+ getTransX(left, scale, $('#container1')[0]) +'px,' + getTransY(top, scale, $('#container1')[0]) + 'px)');
+        });
+
+        for(let i = 0; i< $('.bubble').length; i++){
+            let left = parseInt($('.bubble')[i].style.left);
+            let top = parseInt($('.bubble')[i].style.top);
+            $('.bubble')[i].style.transform = 'translate('+ getTransX(left, scale, container1) +'px,' + (getTransY(top, scale, $('#container1')[0]) - parseFloat($('html').css('font-size'))*sw.config.BUBBLE_HEIGHT) + 'px)';
+        }
+
+        let c4left = parseInt($('#container4').css('left'));
+        let c4top = parseInt($('#container4').css('top'));
+        $('#container4, #myPos').css('transform', 'translate('+ getTransX(c4left, scale, container1) +'px,' + getTransY(c4top, scale, $('#container1')[0]) + 'px)');
+    },
+    multipointEnd: function(e) {
+        lastScale = scale;//��¼�ϴε�����ֵ
+    },
+    doubleTap: function (evt) {
+        scale = Math.min(parseFloat(scale) + 0.2, 2.0);
+        lastScale = scale;
+        sw.scale = scale;
+
+        let x = evt.changedTouches[0].clientX;
+        let y = evt.changedTouches[0].clientY;
+        container1.style.transformOrigin = x + container.scrollLeft + 'px ' + (y +  container.scrollTop) +'px';
+        container1.style.transform = 'scale3d(' + scale +', '+scale+',1)';//hack����Ӳ������
+
+        let left = parseInt($('#container3').css('left'));
+        let top = parseInt($('#container3').css('top'));
+        container3.style.transform = 'translate('+ getTransX(left, scale, container1) +'px,' + getTransY(top, scale, container1) + 'px)';
+        $('.flag').each(function(index, item){
+            let left = parseInt($(item).css('left'));
+            let top = parseInt($(item).css('top'));
+            // $(item).css('transform', 'translate('+ left*(scale - 1.0) +'px,' + top*(scale - 1.0) + 'px)');
+            $(item).css('transform', 'translate('+ getTransX(left, scale, container1) +'px,' + getTransY(top, scale, container1) + 'px)');
+        });
+
+        for(let i = 0; i< $('.bubble').length; i++){
+            let left = parseInt($('.bubble')[i].style.left);
+            let top = parseInt($('.bubble')[i].style.top);
+            $('.bubble')[i].style.transform = 'translate('+ getTransX(left, scale, container1) +'px,' + (getTransY(top, scale, $('#container1')[0]) - parseFloat($('html').css('font-size'))*sw.config.BUBBLE_HEIGHT) + 'px)';
+        }
+
+
+        let c4left = parseInt(container4.style.left);
+        let c4top = parseInt(container4.style.top);
+        container4.style.transform = 'translate('+ getTransX(c4left, scale, container1) +'px,' + getTransY(c4top, scale, container1) + 'px)';
+        myPos.style.transform = 'translate('+ getTransX(c4left, scale, container1) +'px,' + getTransY(c4top, scale, container1) + 'px)';
+    },
+    pressMove: function (evt) {
+        // map.style.transform = 'translateX(' + (evt.deltaX + parseInt(map.style.translateX || 0 )) + 'px)';
+        // console.log(map.style);
+    },
+    tap: function (evt) {
+        // console.log("tap");
+    },
+    longTap: function (evt) {
+        //console.log("longTap");
+    },
+    swipe: function (evt) {
+        // evt.preventDefault();
+        // console.log(evt);
+    }
+
+});
