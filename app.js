@@ -242,10 +242,6 @@ let scale = 1.0;
 
 let gesture = new AlloyFinger(container, {
     pinch: function (evt) {
-        let map = document.getElementById('svg');
-        if(!map){
-            return;
-        }
         scale = evt.scale;
 
         if(lastScale){
@@ -261,25 +257,25 @@ let gesture = new AlloyFinger(container, {
         let x = Math.abs(evt.touches[0].clientX - evt.touches[1].clientX) / 2 + Math.min(evt.touches[0].clientX, evt.touches[1].clientX);
         let y = Math.abs(evt.touches[0].clientY - evt.touches[1].clientY) / 2 + Math.min(evt.touches[0].clientY, evt.touches[1].clientY);
         container1.style.transformOrigin = x + container.scrollLeft + 'px ' + (y +  container.scrollTop) +'px';
-        container1.style.transform = 'scale3d(' + scale +', '+scale+',1)';//hack����Ӳ������
-        let left = parseInt($('#container3').css('left'));
-        let top = parseInt($('#container3').css('top'));
-        container3.style.transform = 'translate('+ getTransX(left, scale, container1) +'px,' + getTransY(top, scale, container1) + 'px)';
-        $('.flag').each(function(index, item){
-            let left = parseInt(container3.style.left;
-            let top = parseInt($(item).css('top'));
-            $(item).css('transform', 'translate('+ getTransX(left, scale, $('#container1')[0]) +'px,' + getTransY(top, scale, $('#container1')[0]) + 'px)');
-        });
+        container1.style.transform = 'scale3d(' + scale +', '+scale+',1)';
+        // let left = parseInt($('#container3').css('left'));
+        // let top = parseInt($('#container3').css('top'));
+        // container3.style.transform = 'translate('+ getTransX(left, scale, container1) +'px,' + getTransY(top, scale, container1) + 'px)';
+        // $('.flag').each(function(index, item){
+        //     let left = parseInt(container3.style.left;
+        //     let top = parseInt($(item).css('top'));
+        //     $(item).css('transform', 'translate('+ getTransX(left, scale, $('#container1')[0]) +'px,' + getTransY(top, scale, $('#container1')[0]) + 'px)');
+        // });
 
-        for(let i = 0; i< $('.bubble').length; i++){
-            let left = parseInt($('.bubble')[i].style.left);
-            let top = parseInt($('.bubble')[i].style.top);
-            $('.bubble')[i].style.transform = 'translate('+ getTransX(left, scale, container1) +'px,' + (getTransY(top, scale, $('#container1')[0]) - parseFloat($('html').css('font-size'))*sw.config.BUBBLE_HEIGHT) + 'px)';
-        }
+        // for(let i = 0; i< $('.bubble').length; i++){
+        //     let left = parseInt($('.bubble')[i].style.left);
+        //     let top = parseInt($('.bubble')[i].style.top);
+        //     $('.bubble')[i].style.transform = 'translate('+ getTransX(left, scale, container1) +'px,' + (getTransY(top, scale, $('#container1')[0]) - parseFloat($('html').css('font-size'))*sw.config.BUBBLE_HEIGHT) + 'px)';
+        // }
 
-        let c4left = parseInt($('#container4').css('left'));
-        let c4top = parseInt($('#container4').css('top'));
-        $('#container4, #myPos').css('transform', 'translate('+ getTransX(c4left, scale, container1) +'px,' + getTransY(c4top, scale, $('#container1')[0]) + 'px)');
+        // let c4left = parseInt($('#container4').css('left'));
+        // let c4top = parseInt($('#container4').css('top'));
+        // $('#container4, #myPos').css('transform', 'translate('+ getTransX(c4left, scale, container1) +'px,' + getTransY(c4top, scale, $('#container1')[0]) + 'px)');
     },
     multipointEnd: function(e) {
         lastScale = scale;
@@ -303,31 +299,6 @@ let gesture = new AlloyFinger(container, {
             $(item).css('transform', 'translate('+ getTransX(left, scale, container1) +'px,' + getTransY(top, scale, container1) + 'px)');
         });
 
-        for(let i = 0; i< $('.bubble').length; i++){
-            let left = parseInt($('.bubble')[i].style.left);
-            let top = parseInt($('.bubble')[i].style.top);
-            $('.bubble')[i].style.transform = 'translate('+ getTransX(left, scale, container1) +'px,' + (getTransY(top, scale, $('#container1')[0]) - parseFloat($('html').css('font-size'))*sw.config.BUBBLE_HEIGHT) + 'px)';
-        }
-
-
-        let c4left = parseInt(container4.style.left);
-        let c4top = parseInt(container4.style.top);
-        container4.style.transform = 'translate('+ getTransX(c4left, scale, container1) +'px,' + getTransY(c4top, scale, container1) + 'px)';
-        myPos.style.transform = 'translate('+ getTransX(c4left, scale, container1) +'px,' + getTransY(c4top, scale, container1) + 'px)';
     },
-    pressMove: function (evt) {
-        // map.style.transform = 'translateX(' + (evt.deltaX + parseInt(map.style.translateX || 0 )) + 'px)';
-        // console.log(map.style);
-    },
-    tap: function (evt) {
-        // console.log("tap");
-    },
-    longTap: function (evt) {
-        //console.log("longTap");
-    },
-    swipe: function (evt) {
-        // evt.preventDefault();
-        // console.log(evt);
-    }
 
 });
