@@ -236,7 +236,6 @@ function getClassListVal(div) {
 
 
 let initScale = 1;
-
 let lastScale = 0;
 let scale = 1.0;
 
@@ -258,47 +257,5 @@ let gesture = new AlloyFinger(container, {
         let y = Math.abs(evt.touches[0].clientY - evt.touches[1].clientY) / 2 + Math.min(evt.touches[0].clientY, evt.touches[1].clientY);
         container1.style.transformOrigin = x + container.scrollLeft + 'px ' + (y +  container.scrollTop) +'px';
         container1.style.transform = 'scale3d(' + scale +', '+scale+',1)';
-        // let left = parseInt($('#container3').css('left'));
-        // let top = parseInt($('#container3').css('top'));
-        // container3.style.transform = 'translate('+ getTransX(left, scale, container1) +'px,' + getTransY(top, scale, container1) + 'px)';
-        // $('.flag').each(function(index, item){
-        //     let left = parseInt(container3.style.left;
-        //     let top = parseInt($(item).css('top'));
-        //     $(item).css('transform', 'translate('+ getTransX(left, scale, $('#container1')[0]) +'px,' + getTransY(top, scale, $('#container1')[0]) + 'px)');
-        // });
-
-        // for(let i = 0; i< $('.bubble').length; i++){
-        //     let left = parseInt($('.bubble')[i].style.left);
-        //     let top = parseInt($('.bubble')[i].style.top);
-        //     $('.bubble')[i].style.transform = 'translate('+ getTransX(left, scale, container1) +'px,' + (getTransY(top, scale, $('#container1')[0]) - parseFloat($('html').css('font-size'))*sw.config.BUBBLE_HEIGHT) + 'px)';
-        // }
-
-        // let c4left = parseInt($('#container4').css('left'));
-        // let c4top = parseInt($('#container4').css('top'));
-        // $('#container4, #myPos').css('transform', 'translate('+ getTransX(c4left, scale, container1) +'px,' + getTransY(c4top, scale, $('#container1')[0]) + 'px)');
     },
-    multipointEnd: function(e) {
-        lastScale = scale;
-    },
-    doubleTap: function (evt) {
-        scale = Math.min(parseFloat(scale) + 0.2, 2.0);
-        lastScale = scale;
-        sw.scale = scale;
-
-        let x = evt.changedTouches[0].clientX;
-        let y = evt.changedTouches[0].clientY;
-        container1.style.transformOrigin = x + container.scrollLeft + 'px ' + (y +  container.scrollTop) +'px';
-        container1.style.transform = 'scale3d(' + scale +', '+scale+',1)';
-
-        let left = parseInt($('#container3').css('left'));
-        let top = parseInt($('#container3').css('top'));
-        container3.style.transform = 'translate('+ getTransX(left, scale, container1) +'px,' + getTransY(top, scale, container1) + 'px)';
-        $('.flag').each(function(index, item){
-            let left = parseInt($(item).css('left'));
-            let top = parseInt($(item).css('top'));
-            $(item).css('transform', 'translate('+ getTransX(left, scale, container1) +'px,' + getTransY(top, scale, container1) + 'px)');
-        });
-
-    },
-
 });
