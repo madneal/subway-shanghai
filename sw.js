@@ -2,7 +2,9 @@ var cacheName = 'subway';
 var filesToCache = [
 	'/',
 	'index.html',
-	'image/transfer.png'
+	'image/transfer.png',
+	'dist/alloy_finger.js',
+	'app.css'
 ];
 
 self.addEventListener('install', function(e) {
