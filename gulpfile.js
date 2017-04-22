@@ -34,4 +34,18 @@ gulp.task('sass-watch', function() {
 	gulp.watch('app.scss', ['sass'])
 })
 
+gulp.task('generate-sw', function(callback) {
+	var path = require('path');
+	var swPrecache = require('sw-precache');
+
+	swPrecache.write(path.join('sw.js'), {
+		staticFileGlobs: [
+			'app.js',
+			'dist/alloy_finger.js',
+			'dist/app.css',
+			'image/*.{png}'
+		]
+	}, callback)
+})
+
 gulp.task('default', ['script', ,'sass', 'auto'])
