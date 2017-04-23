@@ -147,55 +147,7 @@ function updateClassname(lineNum, className) {
 }
 
 function getLineBackground(line) {
-	let lineColorCss = '';
-	switch(line) {
-		case '1':
-			lineColorCss = 'line1-background';
-		break;
-		case '2':
-			lineColorCss = 'line2-background';
-		break;
-		case '3':
-			lineColorCss = 'line3-background';
-		break;
-		case '4':
-			lineColorCss = 'line4-background';
-		break;
-		case '5':
-			lineColorCss = 'line5-background';
-		break;
-		case '6':
-			lineColorCss = 'line6-background';
-		break;
-		case '7':
-			lineColorCss = 'line7-background';
-		break;
-		case '8':
-			lineColorCss = 'line8-background';
-		break;
-		case '9':
-			lineColorCss = 'line9-background';
-		break;
-		case '10':
-			lineColorCss = 'line10-background';
-		break;
-		case '11':
-			lineColorCss = 'line11-background';
-		break;
-		case '12':
-			lineColorCss = 'line12-background';
-		break;
-		case '13':
-			lineColorCss = 'line13-background';
-		break;
-		case '16':
-			lineColorCss = 'line16-background';
-		break;
-		default: 
-			lineColorCss = '';
-		break;
-	}
-	return lineColorCss;
+	return 'line' + line + '-background';
 }
 
 function setStationText(station, stationName, lineDiv, detail) {
