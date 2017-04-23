@@ -34,7 +34,7 @@ svg.addEventListener('click', (e) => {
 		}
 
 		for (let i = 0; i < stationArrLen; i++) {
-			let lineNum = Object.keys(stationArr[i])[0].match(/\d+/)[0];
+			let lineNum = Object.keys(stationArr[i])[0] === '机场磁悬浮' ? '2' : Object.keys(stationArr[i])[0].match(/\d+/)[0];
 			let lineDiv;
 			let detailDiv;
 			if (i >= 1) {
