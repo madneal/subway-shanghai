@@ -100,7 +100,7 @@ function changeLine(line) {
 	// the querySelector has a problem
 	let lineDiv = document.getElementById(lineDivId);
 	let detailDiv = document.getElementById(detailDivId);
-	setlineColor(lineDiv, line.match(/\d+/)[0]);
+	setlineColor(lineDiv, getLineNum(line));
 	detailDiv.style.display = 'block';
 	container3.querySelectorAll('.detail').forEach((detailDiv) => {
 		if (detailDiv.id !== detailDivId) {
@@ -211,3 +211,7 @@ let gesture = new AlloyFinger(container, {
         container1.style.transform = 'scale3d(' + scale +', '+scale+',1)';
     },
 });
+
+function getLineNum(line) {
+	return line === '机场磁悬浮' ? line : line.match(/\d+/)[0];
+}
