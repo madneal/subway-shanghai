@@ -152,7 +152,7 @@ function getLineBackground(line) {
 
 function setStationText(station, stationName, lineDiv, detail) {
 	let key = Object.keys(station)[0];
-	let lineNum = key.match(/\d+/)[0];
+	// let lineNum = key.match(/\d+/)[0];
 	let timesheetArr = station[key];
 	container3.querySelector('.title_name').innerText = stationName;
 	lineDiv.innerText = key;
