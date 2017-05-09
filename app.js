@@ -147,6 +147,9 @@ function updateClassname(lineNum, className) {
 }
 
 function getLineBackground(line) {
+	if (line === '机场磁悬浮') {
+		line = 2;
+	}
 	return 'line' + line + '-background';
 }
 
