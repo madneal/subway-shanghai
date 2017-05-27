@@ -37,7 +37,7 @@
 /* eslint-disable indent, no-unused-vars, no-multiple-empty-lines, max-nested-callbacks, space-before-function-paren, quotes, comma-spacing */
 'use strict';
 
-var precacheConfig = [["app.js","92f379e9ea86fd9d517a684d7d86f41f"],["dist/alloy_finger.js","27aa6b25ce27deb3549f1bec6488c212"],["dist/app.css","41ef786b1cad9723068d0303e676920d"],["index.html","ad0a5368c0c52bc3ccf489140796b0da"]];
+var precacheConfig = [["app.js","92f379e9ea86fd9d517a684d7d86f41f"],["dist/alloy_finger.js","27aa6b25ce27deb3549f1bec6488c212"],["dist/app.css","41ef786b1cad9723068d0303e676920d"],["image/transfer.png","05e2cdbf4e8642017ef5be74773e6541"],["index.html","99c002c6825c28aad77a76e1cd2e6e98"]];
 var cacheName = 'sw-precache-v3--' + (self.registration ? self.registration.scope : '');
 
 

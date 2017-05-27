@@ -43,7 +43,7 @@ gulp.task('generate-sw', function(callback) {
 			'app.js',
 			'dist/alloy_finger.js',
 			'dist/app.css',
-			'image/*.{png}',
+			'image/transfer.png',
 			'index.html',
 			'/'
 		]
