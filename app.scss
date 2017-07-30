@@ -178,3 +178,11 @@ footer {
     bottom: 0;
     left: 0;
 }
+.container {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	overflow: auto;
+	z-index: 1;
+	user-select: none;
+}

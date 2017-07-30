@@ -197,13 +197,13 @@ let gesture = new AlloyFinger(container, {
     pinch: function (evt) {
         scale = evt.scale;
 
-        if(lastScale){
+        if (lastScale) {
             scale *= lastScale;
         }
-        if(scale > 2 ){
+        if (scale > 2 ) {
             scale = 2;
         }
-        else if(scale < 0.4){
+        else if (scale < 0.4) {
             scale = 0.4;
         }
         scale = scale.toFixed(2);
