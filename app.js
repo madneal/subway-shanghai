@@ -155,7 +155,6 @@ function getLineBackground(line) {
 
 function setStationText(station, stationName, lineDiv, detail) {
 	let key = Object.keys(station)[0];
-	// let lineNum = key.match(/\d+/)[0];
 	let timesheetArr = station[key];
 	container3.querySelector('.title_name').innerText = stationName;
 	lineDiv.innerText = key;
@@ -211,10 +210,29 @@ let gesture = new AlloyFinger(container, {
         let x = Math.abs(evt.touches[0].clientX - evt.touches[1].clientX) / 2 + Math.min(evt.touches[0].clientX, evt.touches[1].clientX);
         let y = Math.abs(evt.touches[0].clientY - evt.touches[1].clientY) / 2 + Math.min(evt.touches[0].clientY, evt.touches[1].clientY);
         container1.style.transformOrigin = x + container.scrollLeft + 'px ' + (y +  container.scrollTop) +'px';
-        container1.style.transform = 'scale3d(' + scale +', '+scale+',1)';
+				container1.style.transform = 'scale3d(' + scale +', '+scale+',1)';
+				let left = parseInt(container3.style.left);
+				let top = parseInt(container3.style.top);
+				container3.style.transform = 'translate(' + getTransX(left, scale, container1) + 'px, ' +getTransY(top, scale, container1) + 'px)';
     },
 });
 
 function getLineNum(line) {
 	return line === '机场磁悬浮' ? line : line.match(/\d+/)[0];
+}
+
+function getTransX(orix, scale, element) {
+	let centrex = 0;
+	if (element.style.transformOrigin) {
+		centrex = parseFloat(element.style.transformOrigin.split(' ')[0]);
+	}
+	return (orix -centrex) * (scale -1);
+}
+
+function getTransY(oriy, scale, elment) {
+	let centrey = 0;
+	if (element.style.transformOrigin) {
+		centrey = parseFloat(element.style.transformOrigin.split(' '[1]));
+	}
+	return (oriy - centrey) * (scale - 1);
 }
