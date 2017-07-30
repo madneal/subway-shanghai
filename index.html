@@ -967,9 +967,6 @@
         <script type="text/javascript" src="dist/alloy_finger.js"></script>
         <script type="text/javascript" src="app.js"></script>
         <script type="text/javascript" async>
-            document.addEventListener("DOMContentLoaded", function (event) {
-                window.scroll(300, 300);
-            });
             if ('serviceWorker' in navigator) {
                 navigator.serviceWorker
                     .register('sw.js')
@@ -977,6 +974,10 @@
                         console.log('serviceworker registered');
                     })
             }
+            setTimeout(function() {
+                container.scrollTop = 2300 / 2 - window.innerHeight / 2;
+                container.scrollLeft = 2300 / 2 -window.innerWidth / 2;
+            }, 50)
 
         </script>
     </div>
