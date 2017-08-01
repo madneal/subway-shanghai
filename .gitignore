@@ -12,3 +12,11 @@ jspm_packages
 
 # Editor
 .vscode
+
+# unwanted tracing files
+sb.json
+alloy_finger.js
+parseData.js
+shanghai.xml
+timesheet.txt
+
