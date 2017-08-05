@@ -20,6 +20,14 @@ let container = document.querySelector('.container');
 let svg = document.querySelector('.svg');
 let container3 = document.querySelector('.container3');
 let lineBackgroundReg = /line\d+\-background/;
+let wc = document.querySelector('.wc');
+let jsonData = 'wc.json';
+
+// query for the wc information
+wc.addEventListener('click', (e) => {
+	let stationName = container3.querySelector('.title_name');
+	
+})
 
 svg.addEventListener('click', (e) => {
 	let activatedItem = document.querySelector('.activated');
