@@ -22,11 +22,24 @@ let container3 = document.querySelector('.container3');
 let lineBackgroundReg = /line\d+\-background/;
 let wc = document.querySelector('.wc');
 let jsonData = 'wc.json';
+let isShowWcInfo = false; // not show wc infomation initially
+let wcNotDisplayImgSrc = './image/wc0.png';
+let wcDisplayImgSrc = './image/wc.png';
 
 // query for the wc information
 wc.addEventListener('click', (e) => {
-	let stationName = container3.querySelector('.title_name');
-	
+	let stationName = container3.querySelector('.title_name');	
+	isShowWcInfo = !isShowWcInfo;
+	let currentImgSrc = wc.src;
+	if (isShowWcInfo) {
+		if (currentImgSrc !== wcDisplayImgSrc) {
+			wc.src = wcDisplayImgSrc;
+		}
+	} else {
+		if (currentImgSrc !== wcNotDisplayImgSrc) {
+			wc.src = wcNotDisplayImgSrc;
+		}
+	}
 })
 
 svg.addEventListener('click', (e) => {
