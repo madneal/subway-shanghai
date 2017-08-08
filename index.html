@@ -939,29 +939,32 @@
                     <div class="title_name float-left"></div>
                     <span><img src="./image/wc0.png" class="wc"></span>
                 </div>
-                <div class="line_container">
-                    <div class="line_div float-left"></div>
-                </div>
-                <div class="detail">
-                    <div class="detail_container">
-                        <div class="float-left detail-direction"></div>
-                        <div class="float-left">
-                            <div class="float-left detail-start detail-background">始</div>
-                            <div class="float-left" id="start-time"></div>
-                            <div class="float-left detail-end detail-background">末</div>
-                            <div class="float-left" id="end-time"></div>
+                <div class="ms-container">
+                    <div class="line_container">
+                        <div class="line_div float-left"></div>
+                    </div>
+                    <div class="detail">
+                        <div class="detail_container">
+                            <div class="float-left detail-direction"></div>
+                            <div class="float-left">
+                                <div class="float-left detail-start detail-background">始</div>
+                                <div class="float-left" id="start-time"></div>
+                                <div class="float-left detail-end detail-background">末</div>
+                                <div class="float-left" id="end-time"></div>
+                            </div>
+                        </div>
+                        <div class="detail_container">
+                            <div class="float-left detail-direction"></div>
+                            <div class="float-left">
+                                <div class="float-left detail-start detail-background">始</div>
+                                <div class="float-left" id="start-time"></div>
+                                <div class="float-left detail-end detail-background">末</div>
+                                <div class="float-left" id="end-time"></div>
+                            </div>
                         </div>
                     </div>
-                    <div class="detail_container">
-                        <div class="float-left detail-direction"></div>
-                        <div class="float-left">
-                            <div class="float-left detail-start detail-background">始</div>
-                            <div class="float-left" id="start-time"></div>
-                            <div class="float-left detail-end detail-background">末</div>
-                            <div class="float-left" id="end-time"></div>
-                        </div>
-                    </div>
                 </div>
+                <div class="wc-display"></div>
             </div>
         </div>
         <script type="text/javascript" src="dist/alloy_finger.js"></script>
@@ -974,11 +977,10 @@
                         console.log('serviceworker registered');
                     })
             }
-            setTimeout(function() {
+            setTimeout(function () {
                 container.scrollTop = 2000 / 2 - window.innerWidth / 2;
                 container.scrollLeft = 2000 / 2 - window.innerHeight / 2;
             }, 50)
-
         </script>
     </div>
 </body>

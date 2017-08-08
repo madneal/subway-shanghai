@@ -19,28 +19,80 @@ let allTimesheet = JSON.parse(timesheetStr);
 let container = document.querySelector('.container');
 let svg = document.querySelector('.svg');
 let container3 = document.querySelector('.container3');
+let msContainer = document.querySelector('.ms-container');
 let lineBackgroundReg = /line\d+\-background/;
 let wc = document.querySelector('.wc');
 let jsonData = 'wc.json';
 let isShowWcInfo = false; // not show wc infomation initially
 let wcNotDisplayImgSrc = './image/wc0.png';
 let wcDisplayImgSrc = './image/wc.png';
+let wcDisplayDiv = document.querySelector('.wc-display');
+let isLoad = false; // the load status
 
 // query for the wc information
 wc.addEventListener('click', (e) => {
-	let stationName = container3.querySelector('.title_name');	
+	let stationName = container3.querySelector('.title_name').innerText;	
 	isShowWcInfo = !isShowWcInfo;
 	let currentImgSrc = wc.src;
+	changeInfoContainer(false);
 	if (isShowWcInfo) {
 		if (currentImgSrc !== wcDisplayImgSrc) {
 			wc.src = wcDisplayImgSrc;
+			queryWcInfo(stationName);
 		}
 	} else {
 		if (currentImgSrc !== wcNotDisplayImgSrc) {
 			wc.src = wcNotDisplayImgSrc;
+			initialWC();
 		}
 	}
+	
 })
+
+function queryWcInfo(stationName) {
+	if (!localStorage[stationName]) {
+		requestJson(stationName);
+		// return stationInfo;
+	} else {
+		// return localStorage[stationName];
+		changeInfoContainer(true, localStorage[stationName]);
+	}
+}
+
+function initialWC() {
+	wcDisplayDiv.innerText = '';
+	msContainer.style.display = 'block';
+	wcDisplayDiv.style = '';
+	isShowWcInfo = false;
+	if (wc.src !== wcNotDisplayImgSrc) {
+		wc.src = wcNotDisplayImgSrc;
+	}
+}
+
+function requestJson(stationName) {
+	fetch(jsonData).then(function(res) {
+		if (res.ok) {
+			res.json().then(function(data) {
+				changeInfoContainer(true, data[stationName]);
+				localStorage[stationName] = data[stationName];
+			})
+		} else {
+			consoele.log('error:' + res.status);
+		}
+	}, function(e) {
+		console.log('fetch failed:' + e);
+	})
+}
+
+function changeInfoContainer(loadFinished, wcInfo) {
+	wcDisplayDiv.style.margin = '1rem';
+	if (loadFinished) {
+		wcDisplayDiv.innerText = wcInfo;
+	} else {
+		wcDisplayDiv.innerText = '正在加载...';
+		msContainer.style.display = 'none';
+	}
+}
 
 svg.addEventListener('click', (e) => {
 	let activatedItem = document.querySelector('.activated');
@@ -92,6 +144,7 @@ svg.addEventListener('click', (e) => {
 		})
 	} else {
 		container3.style.display = 'none';
+		initialWC();
 	}
 })
 
