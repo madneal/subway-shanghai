@@ -180,7 +180,11 @@ $line16-color: #78d6cd;
 	z-index: 1;
 	user-select: none;
 }
-.recover
+.recover {
+	position: absolute;
+	left: 50%;
+	bottom: .5rem;
+}
 html, body {
 	width: 100%;
 	height: 100%;
