@@ -20,6 +20,7 @@ let container = document.querySelector('.container');
 let svg = document.querySelector('.svg');
 let container3 = document.querySelector('.container3');
 let msContainer = document.querySelector('.ms-container');
+let recoverBtn = document.querySelector('recover');
 let lineBackgroundReg = /line\d+\-background/;
 let wc = document.querySelector('.wc');
 let jsonData = 'wc.json';
@@ -28,6 +29,10 @@ let wcNotDisplayImgSrc = './image/wc0.png';
 let wcDisplayImgSrc = './image/wc.png';
 let wcDisplayDiv = document.querySelector('.wc-display');
 let isLoad = false; // the load status
+
+recoverBtn.addEventListener('click', (e) => {
+	localStorage.clear();
+})
 
 // query for the wc information
 wc.addEventListener('click', (e) => {
@@ -52,9 +57,7 @@ wc.addEventListener('click', (e) => {
 function queryWcInfo(stationName) {
 	if (!localStorage[stationName]) {
 		requestJson(stationName);
-		// return stationInfo;
 	} else {
-		// return localStorage[stationName];
 		changeInfoContainer(true, localStorage[stationName]);
 	}
 }

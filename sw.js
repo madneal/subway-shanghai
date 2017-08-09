@@ -37,7 +37,7 @@
 /* eslint-disable indent, no-unused-vars, no-multiple-empty-lines, max-nested-callbacks, space-before-function-paren, quotes, comma-spacing */
 'use strict';
 
-var precacheConfig = [["app.js","0efcc2f39e8e80b3d48f216209b6bf8a"],["dist/alloy_finger.js","27aa6b25ce27deb3549f1bec6488c212"],["dist/app.css","f9c5b8490658c4b9e9c3c5becd0bba51"],["image/transfer.png","05e2cdbf4e8642017ef5be74773e6541"],["image/wc.png","64c45ec0095b062ebcc377e862ca6789"],["image/wc0.png","2608b87734cfcea035447405b59685bd"],["index.html","3da57907ff6f6fbcddd634ce041454b9"]];
+var precacheConfig = [["app.js","a5dacbcc9f7e3044035a2a944230b62a"],["dist/alloy_finger.js","27aa6b25ce27deb3549f1bec6488c212"],["dist/app.css","f9c5b8490658c4b9e9c3c5becd0bba51"],["image/transfer.png","05e2cdbf4e8642017ef5be74773e6541"],["image/wc.png","64c45ec0095b062ebcc377e862ca6789"],["image/wc0.png","2608b87734cfcea035447405b59685bd"],["index.html","a562a3ee6af7a2a7a393fa4a58a757bb"]];
 var cacheName = 'sw-precache-v3--' + (self.registration ? self.registration.scope : '');
 
 
