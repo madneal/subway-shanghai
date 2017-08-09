@@ -67,23 +67,28 @@ $line16-color: #78d6cd;
 .float-left {
 	float: left;
 }
+
 .float-right {
 	float: right;
 }
+
 .svg {
    font-size: 12px;
    font-family: 微软雅黑;
    width: 2000px;
    height: 2000px;
 }
+
 .transfer-station {
     width: 16px;
     height: 16px;
 }
+
 .rect-station {
     width: 26px;
     height: 26px;
 }
+
 .container3 {
     position: absolute;
     background-color: transparent;
@@ -95,6 +100,7 @@ $line16-color: #78d6cd;
 		display: none;
 		max-width: 25rem;
 }
+
 .msgbox {
     min-width: 22rem;
     box-sizing: border-box;
@@ -180,11 +186,13 @@ $line16-color: #78d6cd;
 	z-index: 1;
 	user-select: none;
 }
+
 .recover {
 	position: absolute;
 	left: 50%;
 	bottom: .5rem;
 }
+
 html, body {
 	width: 100%;
 	height: 100%;
