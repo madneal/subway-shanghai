@@ -1,5 +1,7 @@
 # subway-shanghai
 The subway map in Shanghai. It can be utilized in offline environment :smile_cat:
+![subway](https://user-images.githubusercontent.com/12164075/29123365-1bf93fca-7d48-11e7-9032-2203222af07d.gif)
+
 
 ## main features
 * The map of the Shanghai subway
