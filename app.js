@@ -117,7 +117,8 @@ svg.addEventListener('click', (e) => {
 				convertLineDiv(false, lineDiv, lineNum);
 				container3.querySelector('.line_container').appendChild(lineDiv);
 				detailDiv.style.display = 'none';
-				container3.querySelector('.msgbox').appendChild(detailDiv);				
+				// container3.querySelector('.msgbox').appendChild(detailDiv);				
+				msContainer.appendChild(detailDiv);
 			} else {
 				lineDiv = container3.querySelector('.line_div');
 				lineDiv.style.display = 'block';
@@ -285,9 +286,9 @@ let gesture = new AlloyFinger(container, {
         let y = Math.abs(evt.touches[0].clientY - evt.touches[1].clientY) / 2 + Math.min(evt.touches[0].clientY, evt.touches[1].clientY);
         container1.style.transformOrigin = x + container.scrollLeft + 'px ' + (y +  container.scrollTop) +'px';
 				container1.style.transform = 'scale3d(' + scale +', '+ scale +',1)';
-				let left = parseInt(container3.style.left || 0);
-				let top = parseInt(container3.style.top || 0);
-				container3.style.transform = 'translate(' + getTransX(left, scale, container1) + 'px, ' + getTransY(top, scale, container1) + 'px)';
+				// let left = parseInt(container3.style.left || 0);
+				// let top = parseInt(container3.style.top || 0);
+				// container3.style.transform = 'translate(' + getTransX(left, scale, container1) + 'px, ' + getTransY(top, scale, container1) + 'px)';
     },
 });
 
@@ -295,18 +296,18 @@ function getLineNum(line) {
 	return line === '机场磁悬浮' ? line : line.match(/\d+/)[0];
 }
 
-function getTransX(orix, scale, element) {
-	let centrex = 0;
-	if (element.style.transformOrigin) {
-		centrex = parseFloat(element.style.transformOrigin.split(' ')[0]);
-	}
-	return (orix -centrex) * (scale - 1);
-}
+// function getTransX(orix, scale, element) {
+// 	let centrex = 0;
+// 	if (element.style.transformOrigin) {
+// 		centrex = parseFloat(element.style.transformOrigin.split(' ')[0]);
+// 	}
+// 	return (orix -centrex) * (scale - 1);
+// }
 
-function getTransY(oriy, scale, element) {
-	let centrey = 0;
-	if (element.style.transformOrigin) {
-		centrey = parseFloat(element.style.transformOrigin.split(' ')[1]);
-	}
-	return (oriy - centrey) * (scale - 1);
-}
+// function getTransY(oriy, scale, element) {
+// 	let centrey = 0;
+// 	if (element.style.transformOrigin) {
+// 		centrey = parseFloat(element.style.transformOrigin.split(' ')[1]);
+// 	}
+// 	return (oriy - centrey) * (scale - 1);
+// }

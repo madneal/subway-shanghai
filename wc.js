@@ -6,7 +6,6 @@ fs.readFile('wc.txt', 'utf-8', function(err, data) {
 	var reg = /alt="[\u4e00-\u9fa5]+/;
 	for (var i = 0; i < arr.length; i++) {
 		var lineData = arr[i];
-		console.log(lineData);
 		stationName = lineData.match(reg)[0];
 		stationName = stationName.replace(/alt="/, '');
 		var info = lineData.replace(reg, '');
@@ -15,7 +14,13 @@ fs.readFile('wc.txt', 'utf-8', function(err, data) {
 		stationInfo[stationName] = info;
 	}
 	var jsonStr = JSON.stringify(stationInfo);
-	fs.writeFileSync('wc.json', jsonStr, 'utf8')
+	fs.writeFileSync('wc.json', jsonStr, 'utf8', function(err) {
+		if (err) {
+			console.log(err);
+		} else {
+			console.log('the json has been created successfully!');
+		}
+	})
 })
 
 function trim(str) {
