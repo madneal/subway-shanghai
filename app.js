@@ -159,7 +159,7 @@ function initialContainer3(container3) {
 			lineDivs[i].classList = lineDivs[i].classList.value.replace(lineBackgroundReg, '');
 		} else {			
 			lineContainer.removeChild(lineDivs[i]);
-			msgbox.removeChild(details[i]);
+			msContainer.removeChild(details[i]);
 		}
 	}
 }
