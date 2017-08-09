@@ -1,5 +1,5 @@
 # subway-shanghai
-The subway map in Shanghai. It can be utilized in offline environment :smile_cat:
+The subway map in Shanghai. It can be utilized in offline environment. You'd better use this in Chome. The web application can be added to homescreen. It will provide you with native expericen. Any suggestions are welcome. @[neal](mailto:bing.ecnu@gmail.com) :smile_cat:
 
 ## main features
 * The map of the Shanghai subway
@@ -14,5 +14,6 @@ The subway map in Shanghai. It can be utilized in offline environment :smile_cat
 - [x] to add washroom information
 - [x] to improve the zoom use convinience
 
+![subway](https://user-images.githubusercontent.com/12164075/29123365-1bf93fca-7d48-11e7-9032-2203222af07d.gif)
 
 
