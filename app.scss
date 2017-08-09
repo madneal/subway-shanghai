@@ -92,7 +92,8 @@ $line16-color: #78d6cd;
     top: 476px;
     margin-top: -219px;
     z-index: 200;
-    display: none;
+		display: none;
+		max-width: 25rem;
 }
 .msgbox {
     min-width: 22rem;

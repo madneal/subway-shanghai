@@ -85,7 +85,7 @@ function requestJson(stationName) {
 }
 
 function changeInfoContainer(loadFinished, wcInfo) {
-	wcDisplayDiv.style.margin = '1rem';
+	wcDisplayDiv.style.margin = '.5rem';
 	if (loadFinished) {
 		wcDisplayDiv.innerText = wcInfo;
 	} else {
