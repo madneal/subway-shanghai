@@ -21,6 +21,7 @@ fs.readFile('wc.txt', 'utf-8', function(err, data) {
 			console.log('the json has been created successfully!');
 		}
 	})
+	console.log('finished');
 })
 
 function trim(str) {
