@@ -21,6 +21,7 @@ let svg = document.querySelector('.svg');
 let container3 = document.querySelector('.container3');
 let msContainer = document.querySelector('.ms-container');
 let recoverBtn = document.querySelector('.recover');
+let error = document.querySelector('.error');
 let lineBackgroundReg = /line\d+\-background/;
 let wc = document.querySelector('.wc');
 let jsonData = 'wc.json';
@@ -29,6 +30,7 @@ let wcNotDisplayImgSrc = './image/wc0.png';
 let wcDisplayImgSrc = './image/wc.png';
 let wcDisplayDiv = document.querySelector('.wc-display');
 let isLoad = false; // the load status
+let emailAddress = 'mailto:bing.ecnu@gmail.com';
 
 recoverBtn.addEventListener('click', (e) => {
 	localStorage.clear();
@@ -52,6 +54,12 @@ wc.addEventListener('click', (e) => {
 		}
 	}
 	
+})
+
+error.addEventListener('click', (e) => {
+	let stationName = container3.querySelector('.title_name').innerText;
+	emailAddress = emailAddress + '?subject=' + stationName + '-problem submit';
+	window.open(emailAddress);
 })
 
 function queryWcInfo(stationName) {

@@ -114,7 +114,11 @@ $line16-color: #78d6cd;
     .top {
     	height: 9px;
     	width: 100%;
-    }
+		}
+		.error {
+			position: absolute;
+			right: 0;
+		}
     .title_container {
     	padding-left: 2px;
     	height: 20px;
