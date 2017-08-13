@@ -105,6 +105,7 @@ function changeInfoContainer(loadFinished, wcInfo) {
 	}
 }
 
+// click the map
 svg.addEventListener('click', (e) => {
 	let activatedItem = document.querySelector('.activated');
 	let stationName = e.target.id || e.target.dataset.id;
@@ -128,7 +129,6 @@ svg.addEventListener('click', (e) => {
 				convertLineDiv(false, lineDiv, lineNum);
 				container3.querySelector('.line_container').appendChild(lineDiv);
 				detailDiv.style.display = 'none';
-				// container3.querySelector('.msgbox').appendChild(detailDiv);				
 				msContainer.appendChild(detailDiv);
 			} else {
 				lineDiv = container3.querySelector('.line_div');
