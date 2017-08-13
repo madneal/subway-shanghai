@@ -154,6 +154,9 @@ svg.addEventListener('click', (e) => {
 			let line = target.innerText;
 			changeLine(line);
 		})
+		if (isShowWcInfo) {
+			queryWcInfo(stationName);
+		}
 	} else {
 		container3.style.display = 'none';
 		initialWC();
