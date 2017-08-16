@@ -9,10 +9,10 @@ The subway map in Shanghai. It can be utilized in offline environment. You'd bet
 
 ## to do    
 
-- [x] to support zoom
-- [x] add time sheet information for every station
-- [x] to add washroom information
-- [x] to improve the zoom use convinience
+- [x] ~~to support zoom~~
+- [x] ~~add time sheet information for every station~~
+- [x] ~~to add washroom information~~
+- [x] ~~to improve the zoom use convinience~~
 
 ![subway](https://user-images.githubusercontent.com/12164075/29123365-1bf93fca-7d48-11e7-9032-2203222af07d.gif)
 
