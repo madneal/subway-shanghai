@@ -1,4 +1,4 @@
-# subway-shanghai
+# subway-shanghai [![Codacy Badge](https://api.codacy.com/project/badge/Grade/4070ff787b7d4da5a494756242686fd8)](https://www.codacy.com/app/neal1991/subway-shanghai?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=neal1991/subway-shanghai&amp;utm_campaign=Badge_Grade)
 The subway map in Shanghai. It can be utilized in offline environment. You'd better use this in Chome. The web application can be added to homescreen. It will provide you with native expericen. Any suggestions are welcome. @[neal](mailto:bing.ecnu@gmail.com) :smile_cat:
 
 ## main features
