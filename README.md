@@ -13,8 +13,10 @@ The subway map in Shanghai. It can be utilized in offline environment. You'd bet
 
 ## condfig
 Gulp is utilized to build. There are several tasks of gulp.
+
 sass: to generate the corresponding css
-generate-sw: As for service worker, if you modify the files cached by service worker, you should run `generate-sw` task.
+
+generate-sw: As for service worker, if you modify the files cached by service worker, you should run `generate-sw` task by `gulp generate-sw`.
 
 
 ![subway](https://user-images.githubusercontent.com/12164075/29123365-1bf93fca-7d48-11e7-9032-2203222af07d.gif)
