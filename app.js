@@ -251,8 +251,8 @@ function setStationText(station, stationName, lineDiv, detail) {
 	lineDiv.id = 'line-' + key;
 	detail.id = 'detail-' + key;
 	let direction = detail.querySelectorAll('.detail-direction');
-	let startTime = detail.querySelectorAll('#start-time');
-	let endTime = detail.querySelectorAll('#end-time');
+	let startTime = detail.querySelectorAll('.start-time');
+	let endTime = detail.querySelectorAll('.end-time');
 	direction[0].innerText = timesheetArr[0].name + '方向';
 	direction[1].innerText = timesheetArr[1].name + '方向';
 	startTime[0].innerText = timesheetArr[0].st;
