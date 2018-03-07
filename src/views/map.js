@@ -2,7 +2,9 @@ class Map extends React.Component {
   render() {
     return (
       <div class="map">
-        <Station />
+        <svg class="svg" viewbox="0 0 2300 2300" autofocus>
+          <Station />
+        </svg>
       </div>
     )
   }
