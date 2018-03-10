@@ -7,3 +7,5 @@ class Line extends React.Component {
     </g>
   }
 }
+
+export default Line
