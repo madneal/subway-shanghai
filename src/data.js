@@ -15,7 +15,7 @@ export const lineColor = {
   12: '#54ae11',
   13: '#E77DAD',
   16: '#78d6cd',
-  17: '#78d6cd'
+  17: '#bc796f'
 }
 
 const linePath = {
