@@ -14,7 +14,6 @@ class Line extends React.Component {
       linePaths.push(
         <path d={path} fill="none" strokeWidth="6" stroke={color} key={key}></path>);
     }
-
     return (
       <g>{linePaths}</g>
       
