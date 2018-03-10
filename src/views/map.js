@@ -1,5 +1,5 @@
 import React from 'react';
-import labels from '../labels.json'
+import labels from '../data/labels.json'
 import Line from './Line'
 
 class Map extends React.Component {
