@@ -1,4 +1,4 @@
-export default lineNames({
+const lineNames = {
    LINE1: '1号线',
    LINE2: '2号线',
    LINE2_EXTEND: '2号线东延线',
@@ -15,4 +15,6 @@ export default lineNames({
    LINE13: '13号线',
    LINE16: '16号线',
    LINE17: '17号线'
-});
+}
+
+export default lineNames;

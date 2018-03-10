@@ -1,10 +1,24 @@
+import React from 'react'
+import linePath from '../Data'
+import { lineColor } from '../Data'
+
 class Line extends React.Component {
   render() {
-    const props = this.props;
-    <g>
-      <path d={props.path} fill="none" stroke-width="6" stoke={lineColor}></path>
-      <text x={x} y={y} fill={lineColor}></text>
-    </g>
+    console.dir(linePath);
+    const linePaths = [];
+    for (const key in linePath) {
+      console.log(key);
+      const path = linePath[key];
+      const lineNum = key.match(/\d+/)[0];
+      const color = lineColor[lineNum];
+      linePaths.push(
+        <path d={path} fill="none" strokeWidth="6" stroke={color} key={key}></path>);
+    }
+
+    return (
+      <g>{linePaths}</g>
+      
+    )
   }
 }
 
