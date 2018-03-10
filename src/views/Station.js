@@ -8,14 +8,28 @@ class Station extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      show: false
+      show: false,
+      stationName: null
     }
     this.convertShow = this.convertShow.bind(this);
   }
 
-  convertShow() {
+  getAttVal(attributes) {
+    let value = null;
+    if (attributes.id) {
+      value = attributes.id.value;
+    } else if (attributes.dataid) {
+      value = attributes.dataid.value;
+    }
+    return value;
+  }
+
+  convertShow(e) {
+    const attributes = e.target.attributes;
+    const value = this.getAttVal(attributes);
     this.setState(preState => {
-      show: !preState.show
+      preState.show = !preState.show;
+      preState.stationName = value;
     });
   }
 
@@ -43,7 +57,7 @@ class Station extends React.Component {
     }
 
     return (
-      <g onClick={this.convertShow}>
+      <g onClick={e => this.convertShow(e)}>
         {stationEles}
         {transferEles}
         {InfoCardDiv}
