@@ -1,11 +1,17 @@
+import React from 'react'
+import stations from '../data/stations.json'
+
 class Station extends React.Component {
   render() {
-    const props = this.props
+    const stationEles = [];
+    for (let i = 0; i < stations.length; i++) {
+      const station = stations[i];
+      stationEles.push(
+        <circle cx={station.cx} cy={station.cy} r="5" fill="white" stroke={station.stroke} id={station.id} key={station.id + i}></circle>
+      )
+    }
     return (
-      <g>
-        <circle cx={props.cx} cy={props.cy} r="5" fill="white" stroke={props.color} id={props.stationName}></circle>
-        <text x={props.x} y={props.y} fill="black"></text>
-      </g>
+      <g>{stationEles}</g>
     )
   }
 }
