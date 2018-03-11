@@ -25,10 +25,11 @@ class InfoCard extends React.Component {
     }
   }
 
-  changeState(stateName) {
-    this.setState({
-      stateName: !this.state[stateName]
-    })
+  changeState(e) {
+    const stateName = e.target.attributes['id'].value;
+    let state = {};
+    state[stateName] = !this.state[stateName];
+    this.setState(state);
   }
 
   render() {
@@ -37,10 +38,10 @@ class InfoCard extends React.Component {
     <div className="info-card" style={this.getStyle(this.props.infoCard)}>
         <div className="header">
           {infoCard.stationName}
-          <span className="icons">
-            <img src={this.state.wc ? wcActive : wcInactive} alt="卫生间"/>
-            <img src={this.state.elevator ? elevatorActive : elevatorInactive} alt="无障碍电梯"/>
-            <img src={this.state.entrance ? entranceActive : entranceInactive} alt="出入口"/>          
+          <span className="icons" onClick={e => this.changeState(e)}>
+            <img src={this.state.wc ? wcActive : wcInactive} alt="卫生间" id="wc"/>
+            <img src={this.state.elevator ? elevatorActive : elevatorInactive} alt="无障碍电梯" id="elevator"/>
+            <img src={this.state.entrance ? entranceActive : entranceInactive} alt="出入口" id="entrance"/>          
           </span>
         </div>
         <div className="container"></div>

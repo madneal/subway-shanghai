@@ -26,3 +26,9 @@
   position: relative;
   top: .5rem;
 }
+
+.icons img {
+  width: 25px;
+  height: 25px;
+  margin: 0 .5rem;
+}
