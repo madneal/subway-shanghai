@@ -1,13 +1,16 @@
 import React from 'react'
 
 class TimeSheet extends React.Component {
-  constructor() {
+  constructor(props) {
     super(props);
   }
 
   render() {
+    const props = this.props;
     return (
-      <div className="timesheet"></div>
+      <div className="timesheet">
+        <div className="line-name">{props.stationName}</div>
+      </div>
     )
   }
 }

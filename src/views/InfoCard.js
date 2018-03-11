@@ -1,14 +1,13 @@
 import React from 'react'
+import '../styles/Station.css'
 
 class InfoCard extends React.Component {
-  constructor() {
-    super(props);
 
-  }
   render() {
+    const props = this.props;
     return (
     <div className="info-card">
-        <div className="header"></div>
+        <div className="header">{props.stationName}</div>
         <div className="container"></div>
     </div>
     )

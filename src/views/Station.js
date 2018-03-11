@@ -9,9 +9,9 @@ class Station extends React.Component {
     super(props);
     this.state = {
       show: false,
-      stationName: null
+      stationName: ''
     }
-    this.convertShow = this.convertShow.bind(this);
+    // this.convertShow = this.convertShow.bind(this);
   }
 
   getAttVal(attributes) {
@@ -24,13 +24,14 @@ class Station extends React.Component {
     return value;
   }
 
+  componentDidUpdate() {
+    console.log('Station update');
+  }
+
   convertShow(e) {
     const attributes = e.target.attributes;
     const value = this.getAttVal(attributes);
-    this.setState(preState => {
-      preState.show = !preState.show;
-      preState.stationName = value;
-    });
+    this.props.convertShowInfoCard(!this.state.show, value);
   }
 
   render() {
@@ -38,9 +39,9 @@ class Station extends React.Component {
     const transferEles = [];
     let InfoCardDiv = null;
 
-    if (this.state.show) {
-      InfoCardDiv = <InfoCard />
-    }
+    // if (this.state.show) {
+    //   InfoCardDiv = <InfoCard />
+    // }
 
     for (let i = 0; i < stations.length; i++) {
       const station = stations[i];
@@ -60,7 +61,6 @@ class Station extends React.Component {
       <g onClick={e => this.convertShow(e)}>
         {stationEles}
         {transferEles}
-        {InfoCardDiv}
       </g>
     )
   }

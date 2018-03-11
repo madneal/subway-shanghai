@@ -4,11 +4,9 @@ import { lineColor } from '../Data'
 
 class Line extends React.Component {
   render() {
-    console.dir(linePath);
     const linePaths = [];
 
     for (const key in linePath) {
-      console.log(key);
       const path = linePath[key];
       const lineNum = key.match(/\d+/)[0];
       const color = lineColor[lineNum];
