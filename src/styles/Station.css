@@ -21,3 +21,8 @@
   color: #000;
   font-weight: 700
 }
+
+.icons {
+  position: relative;
+  top: .5rem;
+}

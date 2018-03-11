@@ -1,22 +1,14 @@
 import React from 'react'
 import '../styles/Station.css'
+import wcActive from '../imgs/wc.png'
+import wcInactive from '../imgs/wc0.png'
 
 class InfoCard extends React.Component {
   constructor(props) {
     super(props);
-    // this.state = {
-    //   show: false,
-    //   stationName: '',
-    //   stationPosition: {
-    //     x: null,
-    //     y: null
-    //   }
-    // }
-  }
-
-  componentDidUpdate() {
-    console.log('infocard');
-    console.log(this.props);
+    this.state = {
+      wc: false
+    }
   }
 
   getStyle(infoCard) {
@@ -31,7 +23,12 @@ class InfoCard extends React.Component {
     const infoCard = this.props.infoCard;
     return (
     <div className="info-card" style={this.getStyle(this.props.infoCard)}>
-        <div className="header">{infoCard.stationName}</div>
+        <div className="header">
+          {infoCard.stationName}
+          <span className="icons">
+            <img src={this.state.wc ? wcActive : wcInactive}/>
+          </span>
+        </div>
         <div className="container"></div>
     </div>
     )
