@@ -8,15 +8,20 @@ class Map extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      show: false,
-      stationName: ''
+      infoCard: {
+        show: false,
+        stationName: '',
+        stationPosition: {
+          x: null,
+          y: null
+        }
+      }
     };
   }
 
-  convertShowInfoCard(show, stationName) {
+  convertShowInfoCard(infoCard) {
     this.setState({
-      show: show,
-      stationName: stationName
+      infoCard: infoCard
     })
   }
 
@@ -31,9 +36,9 @@ class Map extends React.Component {
         <svg className="svg" viewBox="0 0 2300 2300" autoFocus>
         {labelElements}
         <Line />
-        <Station convertShowInfoCard = {(show,stationName) => this.convertShowInfoCard(show, stationName)}/>
+        <Station convertShowInfoCard = {infoCard => this.convertShowInfoCard(infoCard)}/>
         </svg>
-        <InfoCard show = {this.state.show}/>
+        <InfoCard infoCard = {this.state.infoCard}/>
       </div>
     )
   }

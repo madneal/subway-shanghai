@@ -8,20 +8,20 @@ class Station extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      show: false,
-      stationName: ''
+      infoCard: null
     }
-    // this.convertShow = this.convertShow.bind(this);
   }
 
-  getAttVal(attributes) {
-    let value = null;
-    if (attributes.id) {
-      value = attributes.id.value;
-    } else if (attributes.dataid) {
-      value = attributes.dataid.value;
+  getAttVal(attributes, attrName) {
+    if (attributes[attrName]) {
+      if (attrName === 'cx' || attrName === 'cy') {
+        return attributes[attrName];
+      } else {
+        return attributes[attrName].value;
+      }
+    } else {
+      return null;
     }
-    return value;
   }
 
   componentDidUpdate() {
@@ -30,8 +30,19 @@ class Station extends React.Component {
 
   convertShow(e) {
     const attributes = e.target.attributes;
-    const value = this.getAttVal(attributes);
-    this.props.convertShowInfoCard(!this.state.show, value);
+    const stationName = this.getAttVal(attributes, 'id') || this.getAttVal(attributes, 'dataid');
+    const x = e.target.x ? e.target.x.baseVal.valueAsString : e.target.cx.baseVal.valueAsString;
+    const y = e.target.y ? e.target.y.baseVal.valueAsString : e.target.cy.baseVal.valueAsString;    
+    const position = {
+      x: x,
+      y: y
+    }
+    const infoCard = {
+      show: !this.state.show,
+      stationName: stationName,
+      stationPosition: position
+    }
+    this.props.convertShowInfoCard(infoCard);
   }
 
   render() {
