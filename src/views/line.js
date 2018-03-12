@@ -1,6 +1,6 @@
 import React from 'react'
-import linePath from '../Data'
-import { lineColor } from '../Data'
+import linePath from '../data/Data'
+import { lineColor } from '../data/Data'
 
 class Line extends React.Component {
   render() {

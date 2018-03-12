@@ -32,3 +32,8 @@
   height: 25px;
   margin: 0 .5rem;
 }
+
+.container .info-container {
+  margin-top: .5rem;
+  padding: .5rem;
+}
