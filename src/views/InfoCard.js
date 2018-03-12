@@ -6,6 +6,7 @@ import elevatorActive from '../imgs/elevator.png'
 import elevatorInactive from '../imgs/elevator0.png'
 import entranceActive from '../imgs/exit.png'
 import entranceInactive from '../imgs/exit0.png'
+import stationInfos from '../data/stationInfo.json'
 
 class InfoCard extends React.Component {
   constructor(props) {
@@ -13,7 +14,11 @@ class InfoCard extends React.Component {
     this.state = {
       wc: false,
       elevator: false,
-      entrance: false
+      entrance: false,
+      wcInfo: null,
+      elevatorInfo: null,
+      entranceInfo: null,
+      timesheet: null
     }
   }
 
