@@ -6,7 +6,8 @@ class TimeSheet extends React.Component {
   }
 
   render() {
-    const props = this.props;
+    const timesheet = this.props.timesheet;
+
     return (
       <div className="timesheet">
         <div className="line-name">{props.stationName}</div>
