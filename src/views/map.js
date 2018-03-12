@@ -1,7 +1,8 @@
 import React from 'react';
 import Line from './Line'
 import Station from './Station'
-import InfoCard from './InfoCard';
+import InfoCard from './InfoCard'
+import Label from './Label'
 
 class Map extends React.Component {
   constructor(props) {
@@ -29,6 +30,7 @@ class Map extends React.Component {
     return (
       <div className="map">
         <svg className="svg" viewBox="0 0 2300 2300" autoFocus>
+        <Label />
         <Line />
         <Station convertShowInfoCard = {infoCard => this.convertShowInfoCard(infoCard)}/>
         </svg>
