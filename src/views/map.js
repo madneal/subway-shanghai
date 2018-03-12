@@ -26,10 +26,19 @@ class Map extends React.Component {
     })
   }
 
-  render() {
+  closeInfoCard(e) {
+    if (!e.target.attributes['statid'] && this.state.infoCard.show) {
+      this.state.infoCard.show = false;
+      this.setState({
+        infoCard: this.state.infoCard
+      })
+    }
+  }
 
+
+  render() {
     return (
-      <div className="map">
+      <div className="map" onClick={e => this.closeInfoCard(e)}>
         <svg className="svg" viewBox="0 0 2300 2300" autoFocus>
         <Label />
         <Line />
