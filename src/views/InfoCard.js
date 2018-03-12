@@ -39,9 +39,9 @@ class InfoCard extends React.Component {
         <div className="header">
           {infoCard.stationName}
           <span className="icons" onClick={e => this.changeState(e)}>
-            <img src={this.state.wc ? wcActive : wcInactive} alt="卫生间" id="wc"/>
-            <img src={this.state.elevator ? elevatorActive : elevatorInactive} alt="无障碍电梯" id="elevator"/>
-            <img src={this.state.entrance ? entranceActive : entranceInactive} alt="出入口" id="entrance"/>          
+            <img src={this.state.wc ? wcActive : wcInactive} alt="卫生间" title="卫生间" id="wc"/>
+            <img src={this.state.elevator ? elevatorActive : elevatorInactive} alt="无障碍电梯" title="无障碍电梯" id="elevator"/>
+            <img src={this.state.entrance ? entranceActive : entranceInactive} alt="出入口" title="出入口" id="entrance"/>          
           </span>
         </div>
         <div className="container"></div>
