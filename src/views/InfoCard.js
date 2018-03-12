@@ -32,6 +32,9 @@ class InfoCard extends React.Component {
 
   changeState(e) {
     const stateName = e.target.attributes['id'].value;
+    const statId = this.props.infoCard.statId;
+    const stationName = this.props.infoCard.stationName;
+    const stationInfo = stationInfos[statId];
     let state = {};
     state[stateName] = !this.state[stateName];
     this.setState(state);
@@ -49,7 +52,9 @@ class InfoCard extends React.Component {
             <img src={this.state.entrance ? entranceActive : entranceInactive} alt="出入口" title="出入口" id="entrance"/>          
           </span>
         </div>
-        <div className="container"></div>
+        <div className="container">
+          <div className="info-container">{}</div>
+        </div>
     </div>
     )
   }

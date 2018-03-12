@@ -36,11 +36,13 @@ class Station extends React.Component {
     const position = {
       x: x,
       y: y
-    }
+    };
+    const statId = this.getAttVal(attributes, 'statid');
     const infoCard = {
       show: !this.state.show,
       stationName: stationName,
-      stationPosition: position
+      stationPosition: position,
+      statId: statId
     }
     this.props.convertShowInfoCard(infoCard);
   }
@@ -50,21 +52,17 @@ class Station extends React.Component {
     const transferEles = [];
     let InfoCardDiv = null;
 
-    // if (this.state.show) {
-    //   InfoCardDiv = <InfoCard />
-    // }
-
     for (let i = 0; i < stations.length; i++) {
       const station = stations[i];
       stationEles.push(
-        <circle cx={station.cx} cy={station.cy} r="5" fill="white" stroke={station.stroke} id={station.id} key={station.id + i}></circle>
+        <circle cx={station.cx} cy={station.cy} r="5" fill="white" stroke={station.stroke} id={station.id} statid={station.statid} key={station.id + i}></circle>
       )
     }
 
     for (let i = 0; i < transfers.length; i++) {
       const transfer = transfers[i];
       transferEles.push(
-        <image x={transfer.x} y={transfer.y} dataid={transfer['data-id']} href={transferPath} key={transfer['data-id'] + i}></image>
+        <image x={transfer.x} y={transfer.y} dataid={transfer['data-id']} href={transferPath} statid={transfer.statid} key={transfer['data-id'] + i}></image>
       )
     }
 

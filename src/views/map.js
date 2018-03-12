@@ -14,7 +14,8 @@ class Map extends React.Component {
         stationPosition: {
           x: null,
           y: null
-        }
+        },
+        statid: null
       }
     };
   }
