@@ -3,6 +3,7 @@ import stations from '../data/stations.json'
 import transfers from '../data/transfers.json'
 import transferPath from '../imgs/transfer.png'
 import InfoCard from './InfoCard'
+import stationInfos from '../data/stationInfo.json'
 
 class Station extends React.Component {
   constructor(props) {
@@ -28,6 +29,24 @@ class Station extends React.Component {
     console.log('Station update');
   }
 
+  formatTimesheet(timesheet) {
+    let formatedTimesheet = {};
+    for (const key in timesheet) {
+      const ele = timesheet[key];
+      const line = ele.line;
+      // const firstTime = ele['first_time'];
+      // const lastTime = ele['last_time'];
+      // const weekday = ele['last_time_desc'].weekday;
+      formatedTimesheet[line] = {
+        firstTime: ele.first_time,
+        last_time: ele.last_time,
+        weekday: ele.last_time_desc ? JSON.parse(ele.last_time_desc).weekday : null,
+        description: ele.description
+      }
+    }
+    return formatedTimesheet;
+  }
+
   convertShow(e) {
     const attributes = e.target.attributes;
     const stationName = this.getAttVal(attributes, 'id') || this.getAttVal(attributes, 'dataid');
@@ -38,11 +57,15 @@ class Station extends React.Component {
       y: y
     };
     const statId = this.getAttVal(attributes, 'statid');
+    let timesheet = null;  
+    timesheet = stationInfos[statId].timesheet;
+    timesheet = this.formatTimesheet(timesheet);
     const infoCard = {
       show: !this.state.show,
       stationName: stationName,
       stationPosition: position,
-      statId: statId
+      statId: statId,
+      timesheet: timesheet
     }
     this.props.convertShowInfoCard(infoCard);
   }
