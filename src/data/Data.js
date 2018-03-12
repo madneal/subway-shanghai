@@ -1,5 +1,3 @@
-import lineNames from './constants'
-
 export const lineColor = {
   1: '#EE1822',
   2: '#85C73F',
