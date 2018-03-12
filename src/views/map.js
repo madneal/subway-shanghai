@@ -15,7 +15,8 @@ class Map extends React.Component {
           x: null,
           y: null
         },
-        statid: null
+        statid: null,
+        timesheet: null
       }
     };
   }
@@ -28,9 +29,10 @@ class Map extends React.Component {
 
   closeInfoCard(e) {
     if (!e.target.attributes['statid'] && this.state.infoCard.show) {
-      this.state.infoCard.show = false;
+      const infoCard = this.state.infoCard;
+      infoCard.show = false;
       this.setState({
-        infoCard: this.state.infoCard
+        infoCard: infoCard
       })
     }
   }
