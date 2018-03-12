@@ -10,8 +10,10 @@ class TimeSheet extends React.Component {
 
     return (
       <div className="timesheet">
-        <div className="line-name">{props.stationName}</div>
+        <div className="line-name"></div>
       </div>
     )
   }
 }
+
+export default TimeSheet
