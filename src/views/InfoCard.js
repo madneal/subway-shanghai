@@ -8,10 +8,12 @@ import entranceActive from '../imgs/exit.png'
 import entranceInactive from '../imgs/exit0.png'
 import stationInfos from '../data/stationInfo.json'
 import { lineColor } from '../data/Data'
+import TimeSheet from './TimeSheet';
 
 class InfoCard extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
       toiletPosition: false,
       elevator: false,
@@ -70,9 +72,10 @@ class InfoCard extends React.Component {
     e.stopPropagation();
   }
 
+
+
   render() {
     const infoCard = this.props.infoCard;
-    let timesheet = infoCard.show ? stationInfos[this.props.infoCard.statId].timesheet : null;
     return (
     <div className="info-card" style={this.getStyle(this.props.infoCard)}>
         <div className="header">
@@ -84,7 +87,7 @@ class InfoCard extends React.Component {
           </span>
         </div>
         <div className="container">
-          <div className="timesheet"></div>
+          <TimeSheet timesheet={this.props.infoCard.timesheet}/>
           <div className="info-container" style={this.getContainerStyle(this.state.line)} dangerouslySetInnerHTML={this.state.info}></div>
         </div>
     </div>
