@@ -5,3 +5,10 @@
     line-height: 28px;
     padding: 0 5px;
 }
+
+.initial-line {
+    background: #eee;
+    color: #777;
+    font-weight: 400
+}
+
