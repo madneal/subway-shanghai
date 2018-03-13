@@ -1,9 +1,16 @@
-.line {
-    min-width: 56px;
+.line-name {
+    min-width: 6rem;
     text-align: center;
     height: 26px;
     line-height: 28px;
     padding: 0 5px;
+    display: inline-block;
+}
+
+.line {
+    display: flex;
+    flex-direction: row;
+    margin-top: .5rem;
 }
 
 .initial-line {
@@ -12,3 +19,19 @@
     font-weight: 400
 }
 
+table {
+    margin-top: .6rem;
+    width: 100%;
+}
+
+table th:first-child {
+    width: 40%;
+}
+
+table th, table td {
+    text-align: center;
+}
+
+table th:not(:first-child) {
+    width: 30%;
+}
