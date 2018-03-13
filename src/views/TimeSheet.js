@@ -23,7 +23,7 @@ class TimeSheet extends React.Component {
     const timesheetEles = [];
     
     for (const line in timesheet) {
-      const div = <div className="line-sheet" key="line">{line} + '号线'<TimesheetDiv timesheet = {this.state.timesheetOfEachLine} /></div>;
+      const div = <div className="line" key={line}>{line} + '号线'<TimesheetDiv timesheet = {this.state.timesheetOfEachLine} /></div>;
       timesheetEles.push(div);
     }
 
