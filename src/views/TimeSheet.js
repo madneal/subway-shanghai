@@ -5,7 +5,12 @@ class TimeSheet extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      timesheetOfEachLine: null
+      timesheetOfEachLine: null,
+      currentLine: null
+  }
+    
+  convertLine(e) {
+    
   }
 
   render() {
@@ -19,7 +24,7 @@ class TimeSheet extends React.Component {
 
     return (
       <div className="timesheet">
-      {timesheetEles}
+      {timesheetEles onClick={e =} this.convertLine(e)} }
       </div>
     )
   }
