@@ -39,12 +39,19 @@ class TimesheetDiv extends React.Component {
     const timesheetOfEachLine = this.props.timesheetOfEachLine;
     const timesheetTableDiv = [];
     const tableHead = <tr><th>方向</th><th>周日-周四</th><th>周五-周六</th></tr>;
+    timesheetTableDiv.push(tableHead);
     for (const ele in timesheetOfEachLine) {
       const direction = ele.description;
       const firstTime = ele.firstTime;
       const lastTime = ele.lastTime;
       const lastTimeExtend = timeExtend(ele.weekday, lastTime);
-    <div></div>
+      timesheetTableDiv.push(
+        <tr><td>{description}</td><td>{firstTime} {lastTime}</td><td><firstTime} {lastTimeExtend}</td></tr>
+      );
+    }
+    return (
+      <table>{timesheetTableDiv}</table>
+    )
   }
 }
 
