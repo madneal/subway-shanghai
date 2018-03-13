@@ -1,6 +1,6 @@
 import React from 'react'
 
-class TimesheetDiv extends React.Component {
+class TimesheetTable extends React.Component {
   constructor(props) {
     super(props)
   }
@@ -28,8 +28,8 @@ class TimesheetDiv extends React.Component {
   }
   
   timeExtend(weekday, lastTime) {
-    if (weekday[weekday.length - 1) != 0) {
-      lastTime = addTime(lastTime, +weekday[weekday.length -1]);
+    if (weekday[weekday.length - 1] !== 0) {
+      lastTime = this.addTime(lastTime, +weekday[weekday.length -1]);
     }
     return lastTime;
   }
@@ -44,10 +44,10 @@ class TimesheetDiv extends React.Component {
       const direction = ele.description;
       const firstTime = ele.firstTime;
       const lastTime = ele.lastTime;
-      const lastTimeExtend = timeExtend(ele.weekday, lastTime);
-      const style = lastTime === lastTimeExtend ? : 'color:red;' : null;
+      const lastTimeExtend = this.timeExtend(ele.weekday, lastTime);
+      const style = lastTime === lastTimeExtend ? 'color:red;' : null;
       timesheetTableDiv.push(
-        <tr><td>{description}</td><td>{firstTime} {lastTime}</td><td><firstTime} <span style={style}>{lastTimeExtend}</span></td></tr>
+        <tr><td>{direction}</td><td>{firstTime} {lastTime}</td><td>{firstTime} <span style={style}>{lastTimeExtend}</span></td></tr>
       );
     }
     return (
