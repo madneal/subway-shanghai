@@ -1,5 +1,5 @@
 import React from 'react'
-import TimesheetDiv from './TimesheetDiv'
+import TimesheetTable from './TimesheetTable'
 
 class TimeSheet extends React.Component {
   constructor(props) {
