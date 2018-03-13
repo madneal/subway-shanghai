@@ -1,18 +1,21 @@
 import React from 'react'
-import TimesheetTable from './TimesheetTabel'
+import TimesheetTable from './TimesheetTable'
 import { lineColor } from '../data/Data'
+import '../styles/Timesheet.css'
 
 class TimeSheet extends React.Component {
   constructor(props) {
     super(props);
+    const timesheet = this.props.timesheet;
+    const initialLine = timesheet ? timesheet[Object.keys(timesheet)] : null
     this.state = {
       timesheetOfEachLine: null,
-      currentLine: null
+      currentLine: initialLine
     }
   }
 
   convertLine(e) {
-    const line = e.target.attrivutes.key.value;
+    const line = +e.target.innerText.match(/\d+/)[0];
     const timesheetOfEachLine = this.props.timesheet[line];
     this.setState({
       timesheetOfEachLine: timesheetOfEachLine,
@@ -20,38 +23,54 @@ class TimeSheet extends React.Component {
     });
   }
 
-  getStyle(line) {
+  getStyle(currentLine, line) {
+    // let currentLine = null;
+    // if (!this.state.currentLine) {
+    //   currentLine = Object.keys(this.props.timesheet)[0];
+    // }
     let style = null;
-    if (line === this.currentLine) {
-      style = {
-        background: '#eee',
-        color: '#777',
-        fontWeight: 400
-      };
-    } else {
+    if (line === currentLine) {
       style = {
         color: '#fff',
         fontWeight: 700,
-        background: lineColor[line]
+        backgroundColor: lineColor[line],
+        // border: '1px solid ' + lineColor[line]
+      };
+    } else {
+      style = {
+        backgroundColor: '#eee',
+        color: '#777',
+        fontWeight: 400,
       }
     }
     return style;
   }
 
-
+  getFirstPair(object) {
+    for (const key in object) {
+      return object[key];
+    }
+  }
 
   render() {
     const timesheet = this.props.timesheet;
     const timesheetEles = [];
+    let currentLine = this.state.currentLine;
+    if (!currentLine && timesheet) {
+      currentLine = Object.keys(timesheet)[0];
+    }
 
     for (const line in timesheet) {
-      const div = <div className="line" key={line} style={this.getStyle(line)} onClick={e => this.convertLine(e)} >{line} + '号线'<TimesheetTable timesheet={this.state.timesheetOfEachLine} /></div>;
+      const div = <div className="line-name" style={this.getStyle(this.state.currentLine || Object.keys(this.props.timesheet)[0], line)} key={line} 
+                    onClick={e => this.convertLine(e)}>{line + '号线'}</div>
       timesheetEles.push(div);
     }
 
+    const lineDiv = <div className="line" style={{borderBottom: '1px solid ' + lineColor[currentLine]}}>{timesheetEles}</div>
     return (
       <div className="timesheet">
-        {timesheetEles}
+        {lineDiv}
+        <TimesheetTable timesheetOfEachLine={this.state.timesheetOfEachLine || this.getFirstPair(this.props.timesheet)} />
       </div>
     )
   }
