@@ -10,7 +10,12 @@ class TimeSheet extends React.Component {
   }
     
   convertLine(e) {
-    
+    const line = e.target.attrivutes.key.value;
+    const timesheetOfEachLine = this.props[line];
+    this.setState({
+      timesheetOfEachLine: timesheetOfEachLine,
+      currentLine: line
+    });
   }
 
   render() {
@@ -18,7 +23,7 @@ class TimeSheet extends React.Component {
     const timesheetEles = [];
     
     for (const line in timesheet) {
-      const div = <div className="line-sheet">{line}<TimesheetDiv timesheet = {this.state.timesheetOfEachLine} /></div>;
+      const div = <div className="line-sheet" key="line">{line} + '号线'<TimesheetDiv timesheet = {this.state.timesheetOfEachLine} /></div>;
       timesheetEles.push(div);
     }
 
