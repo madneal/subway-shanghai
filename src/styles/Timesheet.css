@@ -1,0 +1,7 @@
+.line {
+    min-width: 56px;
+    text-align: center;
+    height: 26px;
+    line-height: 28px;
+    padding: 0 5px;
+}
