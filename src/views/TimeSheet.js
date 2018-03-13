@@ -11,7 +11,7 @@ class TimeSheet extends React.Component {
     
   convertLine(e) {
     const line = e.target.attrivutes.key.value;
-    const timesheetOfEachLine = this.props[line];
+    const timesheetOfEachLine = this.props.timesheet[line];
     this.setState({
       timesheetOfEachLine: timesheetOfEachLine,
       currentLine: line
@@ -29,7 +29,7 @@ class TimeSheet extends React.Component {
 
     return (
       <div className="timesheet">
-      {timesheetEles onClick={e =} this.convertLine(e)} }
+      {timesheetEles onClick={e => this.convertLine(e)} }
       </div>
     )
   }
