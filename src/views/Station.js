@@ -2,7 +2,7 @@ import React from 'react'
 import stations from '../data/stations.json'
 import transfers from '../data/transfers.json'
 import transferPath from '../imgs/transfer.png'
-import stationInfos from '../data/stationInfo.json'
+// import stationInfos from '../data/stationInfo.json'
 
 class Station extends React.Component {
   constructor(props) {
@@ -45,6 +45,7 @@ class Station extends React.Component {
   }
 
 convertShow(e) {
+  const stationInfos = require('../data/stationInfo.json');
   const attributes = e.target.attributes;
   const stationName = this.getAttVal(attributes, 'id') || this.getAttVal(attributes, 'dataid');
   const x = e.target.x ? e.target.x.baseVal.valueAsString : e.target.cx.baseVal.valueAsString;
