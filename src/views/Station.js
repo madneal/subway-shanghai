@@ -25,18 +25,11 @@ class Station extends React.Component {
     }
   }
 
-  componentDidUpdate() {
-    console.log('Station update');
-  }
-
   formatTimesheet(timesheet) {
     let formatedTimesheet = {};
     for (const key in timesheet) {
       const ele = timesheet[key];
       const line = ele.line;
-      // const firstTime = ele['first_time'];
-      // const lastTime = ele['last_time'];
-      // const weekday = ele['last_time_desc'].weekday;
       const data = {
         firstTime: ele.first_time,
         lastTime: ele.last_time,
@@ -49,12 +42,6 @@ class Station extends React.Component {
         formatedTimesheet[line] = formatedTimesheet[line].concat(data);
       }
     }
-    // formatedTimesheet[line] = {
-    //   firstTime: ele.first_time,
-    //   last_time: ele.last_time,
-    //   weekday: ele.last_time_desc ? JSON.parse(ele.last_time_desc).weekday : null,
-    //   description: ele.description
-    // }
     return formatedTimesheet;
   }
 

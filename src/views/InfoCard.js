@@ -28,7 +28,7 @@ class InfoCard extends React.Component {
 
   getStyle(infoCard) {
     return {
-      display: infoCard.show ? 'block' : 'none',
+      display: infoCard.show && this.state.timesheetActive ? 'block' : 'none',
       left: +infoCard.stationPosition.x - 130 + 'px',
       top: +infoCard.stationPosition.y - 20 + 'px'
     }
