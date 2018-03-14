@@ -45,7 +45,7 @@ class TimesheetTable extends React.Component {
       const style = lastTime === lastTimeExtend ? {color:'red'} : null;
 
       timesheetTableDiv.push(
-        <tr key={direction}><td>{direction}</td><td>{firstTime + ' /'} {lastTime}</td><td>{firstTime + ' /'} <span style={style}>{lastTimeExtend}</span></td></tr>
+        <tr key={direction}><td>{direction}</td><td>{firstTime + '/'}{lastTime}</td><td>{firstTime + '/'}<span style={style}>{lastTimeExtend}</span></td></tr>
       );
     }
     return (
