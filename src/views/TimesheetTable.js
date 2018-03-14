@@ -1,4 +1,5 @@
 import React from 'react'
+import '../styles/TimesheetTable.css'
 
 class TimesheetTable extends React.Component {
   
@@ -38,15 +39,13 @@ class TimesheetTable extends React.Component {
     for (const index in timesheetOfEachLine) {
       const ele = timesheetOfEachLine[index];
       const direction = ele.description;
-      const begin = <span class="begin label">始</span>;
-      const end = <span class="end label">末</span>;
-      const firstTime = begin + ele.firstTime;
-      const lastTime = end + ele.lastTime;
+      const firstTime = ele.firstTime;
+      const lastTime = ele.lastTime;
       const lastTimeExtend = this.timeExtend(ele.weekday, lastTime);
       const style = lastTime === lastTimeExtend ? {color:'red'} : null;
 
       timesheetTableDiv.push(
-        <tr key={direction}><td>{direction}</td><td>{firstTime} {lastTime}</td><td>{firstTime} <span style={style}>{lastTimeExtend}</span></td></tr>
+        <tr key={direction}><td>{direction}</td><td>{firstTime + ' /'} {lastTime}</td><td>{firstTime + ' /'} <span style={style}>{lastTimeExtend}</span></td></tr>
       );
     }
     return (

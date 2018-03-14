@@ -68,7 +68,7 @@ class TimeSheet extends React.Component {
 
     const lineDiv = <div className="line" style={{borderBottom: '1px solid ' + lineColor[currentLine]}}>{timesheetEles}</div>
     return (
-      <div className="timesheet">
+      <div className="timesheet" style={{display: this.props.timesheetActive ? 'block' : 'none'}}>
         {lineDiv}
         <TimesheetTable timesheetOfEachLine={this.state.timesheetOfEachLine || this.getFirstPair(this.props.timesheet)} />
       </div>
