@@ -34,9 +34,10 @@ class InfoCard extends React.Component {
     }
   }
 
-  getContainerStyle(line) {
+  getContainerStyle(line, timesheetActive) {
     return {
-      borderTop: '2px solid ' + lineColor[line]
+      borderTop: '2px solid ' + lineColor[line],
+      display: timesheetActive ? 'none' : 'block'
     }
   }
 
@@ -95,7 +96,7 @@ class InfoCard extends React.Component {
         </div>
         <div className="container">
           <TimeSheet timesheet={this.props.infoCard.timesheet} timesheetActive={this.state.timesheetActive} />
-          <div className="info-container" style={this.getContainerStyle(this.state.line)} dangerouslySetInnerHTML={this.state.info}></div>
+          <div className="info-container" style={this.getContainerStyle(this.state.line, this.state.timesheetActive)} dangerouslySetInnerHTML={this.state.info}></div>
         </div>
     </div>
     )
