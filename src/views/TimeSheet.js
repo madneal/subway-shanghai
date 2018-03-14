@@ -61,7 +61,7 @@ class TimeSheet extends React.Component {
     }
 
     for (const line in timesheet) {
-      const div = <div className="line-name" style={this.getStyle(this.state.currentLine || Object.keys(this.props.timesheet)[0], line)} key={line} 
+      const div = <div className="line-name" style={this.getStyle(+currentLine, +line)} key={line} 
                     onClick={e => this.convertLine(e)}>{line + '号线'}</div>
       timesheetEles.push(div);
     }

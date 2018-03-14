@@ -28,7 +28,11 @@ class Map extends React.Component {
   }
 
   closeInfoCard(e) {
-    if (!e.target.attributes['statid'] && this.state.infoCard.show) {
+    let isSvg = false;
+    if (e.target.attributes.class) {
+      isSvg = e.target.attributes.class.value === 'svg';
+    }
+    if (isSvg && this.state.infoCard.show) {
       const infoCard = this.state.infoCard;
       infoCard.show = false;
       this.setState({
