@@ -21,7 +21,8 @@ class InfoCard extends React.Component {
       timesheet: null,
       info: null,
       lastClickId: null,
-      line: null
+      line: null,
+      timesheetActive: true
     }
   }
 
@@ -68,6 +69,7 @@ class InfoCard extends React.Component {
     state.info = {__html: stationInfo[id]};
     state.lastClickId = id;
     state.line = stationInfo.timesheet[0].line;
+    state.timesheetActive = !(state.toiletPosition || state.elevator || state.entranceInfo);
     this.setState(state);
     e.stopPropagation();
   }
@@ -78,6 +80,9 @@ class InfoCard extends React.Component {
 
   render() {
     const infoCard = this.props.infoCard;
+    const style = {
+      display: 'none'
+    };
     return (
     <div className="info-card" style={this.getStyle(this.props.infoCard)}>
         <div className="header">
@@ -89,7 +94,7 @@ class InfoCard extends React.Component {
           </span>
         </div>
         <div className="container">
-          <TimeSheet timesheet={this.props.infoCard.timesheet} style={{display: this.isIconActivated() ? 'none' : 'block'}}/>
+          <TimeSheet timesheet={this.props.infoCard.timesheet} timesheetActive={this.state.timesheetActive} />
           <div className="info-container" style={this.getContainerStyle(this.state.line)} dangerouslySetInnerHTML={this.state.info}></div>
         </div>
     </div>
