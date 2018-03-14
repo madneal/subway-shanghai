@@ -60,13 +60,14 @@ class InfoCard extends React.Component {
   changeState(e) {
     const id = e.target.attributes['id'].value;
     const statId = this.props.infoCard.statId;
-    const stationName = this.props.infoCard.stationName;
+    // const stationName = this.props.infoCard.stationName;
     const stationInfo = stationInfos[statId];
     const state = this.changeIconState(id, this.state);
     stationInfo[id] = stationInfo[id].replace(/\d+号线/g, word => {
       return '<b>' + word + '</b>'
     });
-    stationInfo[id] = stationInfo[id].replace(/\,/g, ',<br />');
+    stationInfo[id] = stationInfo[id].replace('<br />', '');
+    stationInfo[id] = stationInfo[id].replace(/,/g, ',<br />');
     state.info = {__html: stationInfo[id]};
     state.lastClickId = id;
     state.line = stationInfo.timesheet[0].line;
@@ -81,9 +82,7 @@ class InfoCard extends React.Component {
 
   render() {
     const infoCard = this.props.infoCard;
-    const style = {
-      display: 'none'
-    };
+
     return (
     <div className="info-card" style={this.getStyle(this.props.infoCard)}>
         <div className="header">
