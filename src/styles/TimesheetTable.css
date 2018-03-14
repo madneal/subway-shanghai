@@ -14,3 +14,7 @@ table th, table td {
 table th:not(:first-child) {
     width: 30%;
 }
+
+tbody {
+    font-size: 14px;
+}
