@@ -38,11 +38,13 @@ class TimesheetTable extends React.Component {
     for (const index in timesheetOfEachLine) {
       const ele = timesheetOfEachLine[index];
       const direction = ele.description;
-      const firstTime = ele.firstTime;
-      const lastTime = ele.lastTime;
+      const begin = <span class="begin">始</span>;
+      const end = <span class="end">末</span>;
+      const firstTime = begin + ele.firstTime;
+      const lastTime = end + ele.lastTime;
       const lastTimeExtend = this.timeExtend(ele.weekday, lastTime);
       const style = lastTime === lastTimeExtend ? {color:'red'} : null;
-      const begin = <span class="begin">始</span>;
+
       timesheetTableDiv.push(
         <tr key={direction}><td>{direction}</td><td>{firstTime} {lastTime}</td><td>{firstTime} <span style={style}>{lastTimeExtend}</span></td></tr>
       );
