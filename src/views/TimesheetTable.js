@@ -42,7 +42,7 @@ class TimesheetTable extends React.Component {
       const firstTime = ele.firstTime;
       const lastTime = ele.lastTime;
       const lastTimeExtend = this.timeExtend(ele.weekday, lastTime);
-      const style = lastTime === lastTimeExtend ? {color:'red'} : null;
+      const style = lastTime === lastTimeExtend ? null : {color:'red'};
 
       timesheetTableDiv.push(
         <tr key={direction}><td>{direction}</td><td>{firstTime + '/'}{lastTime}</td><td>{firstTime + '/'}<span style={style}>{lastTimeExtend}</span></td></tr>
