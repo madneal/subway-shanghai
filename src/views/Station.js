@@ -2,7 +2,6 @@ import React from 'react'
 import stations from '../data/stations.json'
 import transfers from '../data/transfers.json'
 import transferPath from '../imgs/transfer.png'
-import InfoCard from './InfoCard'
 import stationInfos from '../data/stationInfo.json'
 
 class Station extends React.Component {
@@ -71,7 +70,6 @@ convertShow(e) {
 render() {
   const stationEles = [];
   const transferEles = [];
-  let InfoCardDiv = null;
 
   for (let i = 0; i < stations.length; i++) {
     const station = stations[i];
