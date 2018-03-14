@@ -1,0 +1,25 @@
+{
+  "name": "Subway Shanghai",
+  "short_name": "Subway",
+  "icons": [{
+    "src": "./image/subway-128.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    }, {
+      "src": "./image/subway-144.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    }, {
+      "src": "./image/subway-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }, {
+      "src": "./image/subway-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }],
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#3E4EB8",
+  "theme_color": "#2F3BA2"
+}

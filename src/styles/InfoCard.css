@@ -1,0 +1,45 @@
+.info-card {
+  position: absolute;
+  background-color: transparent;
+  border: none;
+  margin-left: -148px;
+  top: 476px;
+  margin-top: -219px;
+  z-index: 200;
+  display: none;
+  max-width: 25rem;
+  min-width: 22rem;
+  box-sizing: border-box;
+  border-radius: 3px;
+  padding: 15px .2rem 10px;
+  background-color: RGB(255,255,255);
+  box-shadow: -3px 0 3px #d1d1d1,4px 0 4px #d1d1d1,0 -1px 1px #d1d1d1,-4px 6px 6px #d1d1d1
+}
+
+.info-card .header {
+  font-size: 20px;
+  color: #000;
+  font-weight: 700
+}
+
+.icons {
+  position: relative;
+  top: .5rem;
+}
+
+.icons img {
+  width: 25px;
+  height: 25px;
+  margin: 0 .5rem;
+}
+
+.container .info-container {
+  margin-top: .5rem;
+  padding: .5rem;
+}
+
+.close {
+  position: absolute;
+  top: 0;
+  right: 0;
+}

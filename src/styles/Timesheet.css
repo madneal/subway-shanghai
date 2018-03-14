@@ -1,0 +1,24 @@
+.line-name {
+    min-width: 5rem;
+    text-align: center;
+    height: 26px;
+    line-height: 28px;
+    padding: 0 5px;
+    display: inline-block;
+}
+
+.line {
+    display: flex;
+    flex-direction: row;
+    margin-top: .5rem;
+}
+
+.initial-line {
+    background: #eee;
+    color: #777;
+    font-weight: 400
+}
+
+.timesheet {
+    display: block;
+}

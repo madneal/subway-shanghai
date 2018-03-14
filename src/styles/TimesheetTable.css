@@ -1,0 +1,20 @@
+table {
+    margin-top: .6rem;
+    width: 100%;
+}
+
+table th:first-child {
+    width: 40%;
+}
+
+table th, table td {
+    text-align: center;
+}
+
+table th:not(:first-child) {
+    width: 30%;
+}
+
+tbody {
+    font-size: 14px;
+}
