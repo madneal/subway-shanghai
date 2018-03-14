@@ -27,12 +27,12 @@ class Map extends React.Component {
     })
   }
 
-  closeInfoCard(e) {
+  closeInfoCard(e, isCloseFromInfoCard) {
     let isSvg = false;
     if (e.target.attributes.class) {
       isSvg = e.target.attributes.class.value === 'svg';
     }
-    if (isSvg && this.state.infoCard.show) {
+    if ((isCloseFromInfoCard || isSvg) && this.state.infoCard.show) {
       const infoCard = this.state.infoCard;
       infoCard.show = false;
       this.setState({
@@ -44,13 +44,13 @@ class Map extends React.Component {
 
   render() {
     return (
-      <div className="map" onClick={e => this.closeInfoCard(e)}>
+      <div className="map" onClick={e => this.closeInfoCard(e, false)}>
         <svg className="svg" viewBox="0 0 2300 2300" autoFocus>
         <Label />
         <Line />
         <Station convertShowInfoCard = {infoCard => this.convertShowInfoCard(infoCard)}/>
         </svg>
-        <InfoCard infoCard = {this.state.infoCard}/>
+        <InfoCard infoCard = {this.state.infoCard} closeInfoCard={e => this.closeInfoCard(e, true)}/>
       </div>
     )
   }

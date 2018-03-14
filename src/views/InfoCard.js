@@ -1,5 +1,6 @@
 import React from 'react'
-import '../styles/Station.css'
+import '../styles/InfoCard.css'
+import closeIcon from '../imgs/close.png'
 import wcActive from '../imgs/wc.png'
 import wcInactive from '../imgs/wc0.png'
 import elevatorActive from '../imgs/elevator.png'
@@ -60,7 +61,6 @@ class InfoCard extends React.Component {
   changeState(e) {
     const id = e.target.attributes['id'].value;
     const statId = this.props.infoCard.statId;
-    // const stationName = this.props.infoCard.stationName;
     const stationInfo = stationInfos[statId];
     const state = this.changeIconState(id, this.state);
     stationInfo[id] = stationInfo[id].replace(/\d+号线/g, word => {
@@ -85,6 +85,7 @@ class InfoCard extends React.Component {
 
     return (
     <div className="info-card" style={this.getStyle(this.props.infoCard)}>
+        <img src={closeIcon} class="close" alt="关闭" title="关闭" onClick={(e) => this.props.closeInfoCard(e)}/>
         <div className="header">
           {infoCard.stationName}
           <span className="icons" onClick={e => this.changeState(e)}>
