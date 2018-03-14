@@ -37,3 +37,9 @@
   margin-top: .5rem;
   padding: .5rem;
 }
+
+.close {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
