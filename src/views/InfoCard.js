@@ -71,8 +71,10 @@ class InfoCard extends React.Component {
     this.setState(state);
     e.stopPropagation();
   }
-
-
+  
+  isIconActivated() {
+    return this.state.toiletPosition || this.state.elevator || this.state.entranceInfo;
+  }
 
   render() {
     const infoCard = this.props.infoCard;
@@ -87,7 +89,7 @@ class InfoCard extends React.Component {
           </span>
         </div>
         <div className="container">
-          <TimeSheet timesheet={this.props.infoCard.timesheet}/>
+          <TimeSheet timesheet={this.props.infoCard.timesheet} style={{display: this.isIconActivated() ? 'none' : 'block'}}/>
           <div className="info-container" style={this.getContainerStyle(this.state.line)} dangerouslySetInnerHTML={this.state.info}></div>
         </div>
     </div>
