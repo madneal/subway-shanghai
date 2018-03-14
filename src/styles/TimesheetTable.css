@@ -1,34 +1,16 @@
-.lalbel {
-    width: 15px;
-    height: 15px;
-    line-height: 15px;
-    text-align: center;
-    opacity: .6;
-    color: #fff;
-    font-size: 12px;
- }
- 
- .label .begin {
-  background-color: #74bf4c;
-  }
-  
-  .label .end {
-    background-color: ##e6325c；
-  }
-  
-  table {
+table {
     margin-top: .6rem;
     width: 100%;
-  }
+}
 
-  table th:first-child {
-      width: 40%;
-  }
+table th:first-child {
+    width: 40%;
+}
 
-  table th, table td {
-      text-align: center;
-  }
+table th, table td {
+    text-align: center;
+}
 
-  table th:not(:first-child) {
-      width: 30%;
-  }
+table th:not(:first-child) {
+    width: 30%;
+}
