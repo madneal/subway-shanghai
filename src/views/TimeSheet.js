@@ -66,7 +66,7 @@ class TimeSheet extends React.Component {
       timesheetEles.push(div);
     }
 
-    const lineDiv = <div className="line" style={{borderBottom: '1px solid ' + lineColor[currentLine]}}>{timesheetEles}</div>
+    const lineDiv = <div className="line" style={{borderBottom: '2px solid ' + lineColor[currentLine]}}>{timesheetEles}</div>
     return (
       <div className="timesheet" style={{display: this.props.timesheetActive ? 'block' : 'none'}}>
         {lineDiv}
