@@ -24,17 +24,12 @@ class TimeSheet extends React.Component {
   }
 
   getStyle(currentLine, line) {
-    // let currentLine = null;
-    // if (!this.state.currentLine) {
-    //   currentLine = Object.keys(this.props.timesheet)[0];
-    // }
     let style = null;
     if (line === currentLine) {
       style = {
         color: '#fff',
         fontWeight: 700,
         backgroundColor: lineColor[line],
-        // border: '1px solid ' + lineColor[line]
       };
     } else {
       style = {
@@ -56,6 +51,7 @@ class TimeSheet extends React.Component {
     const timesheet = this.props.timesheet;
     const timesheetEles = [];
     let currentLine = this.state.currentLine;
+
     if (!currentLine && timesheet) {
       currentLine = Object.keys(timesheet)[0];
     }
