@@ -22,7 +22,7 @@ class TimesheetTable extends React.Component {
     if (hour > 23) {
       hour = hour - 24;
     }
-    return hour < 10 ? '次日' + this.formatNum(hour) : this.formatNum(hour) + ':' + this.formatNum(minute);
+    return (hour < 10 ? '次日' + this.formatNum(hour) : this.formatNum(hour)) + ':' + this.formatNum(minute);
   }
   
   timeExtend(weekday, lastTime) {
