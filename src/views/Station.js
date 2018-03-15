@@ -2,7 +2,6 @@ import React from 'react'
 import stations from '../data/stations.json'
 import transfers from '../data/transfers.json'
 import transferPath from '../imgs/transfer.png'
-// import stationInfos from '../data/stationInfo.json'
 
 export default function asyncStation(importComponent) {
   class Station extends React.Component {
@@ -60,8 +59,8 @@ export default function asyncStation(importComponent) {
       const x = e.target.x ? e.target.x.baseVal.valueAsString : e.target.cx.baseVal.valueAsString;
       const y = e.target.y ? e.target.y.baseVal.valueAsString : e.target.cy.baseVal.valueAsString;
       const position = {
-        x: x,
-        y: y
+        x: +x + 100,
+        y: +y + 70
       };
       const statId = this.getAttVal(attributes, 'statid');
       let timesheet = null;
