@@ -1,11 +1,13 @@
 import React from 'react';
 import Line from './Line'
-// import Station from './Station'
 import asyncStation from './Station'
 import asyncInfoCard from './InfoCard'
-import Label from './Label'
+import asyncTimesheet from './TimeSheet'
+import asyncLabel from './Label'
 const Station = asyncStation(() => import('./Station'))
 const InfoCard = asyncInfoCard(() => import('./InfoCard'))
+const TimeSheet = asyncTimesheet(() => import('./TimeSheet'))
+const Label = asyncLabel(() => import('./Label'))
 
 class Map extends React.Component {
   constructor(props) {
