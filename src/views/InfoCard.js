@@ -45,7 +45,7 @@ export default function asyncInfoCard(importComponent) {
 
     getContainerStyle(line, timesheetActive) {
       return {
-        borderTop: '2px solid ' + lineColor[line],
+        borderTop: '2px solid #8a8a8a',
         display: timesheetActive ? 'none' : 'block'
       }
     }
@@ -76,8 +76,7 @@ export default function asyncInfoCard(importComponent) {
     }
 
     changeState(e) {
-      const id = e.target.attributes['id'].value;
-      // const statId = this.props.infoCard.statId;
+      const id = e.target.attributes['id'] ? e.target.attributes['id'].value : null;
       const stationInfo = this.props.stationInfo;
       const state = this.changeIconState(id, this.state);
       state.lastClickId = id;
@@ -97,7 +96,6 @@ export default function asyncInfoCard(importComponent) {
       let infoHtml = null;
       ids.forEach(id => {
         if (this.state[id]) {
-          // const stationInfo = this.props.stationInfo;
           infoHtml = this.fotmatStationInfo(this.props.stationInfo[id]);
         }
       })
@@ -106,9 +104,7 @@ export default function asyncInfoCard(importComponent) {
 
     render() {
       const infoCard = this.props.infoCard;
-      // const stationInfo = this.props.stationInfo;
-      // const info = this.getInfo();
-      // this.getInfo();
+
       return (
         <div className="info-card" style={this.getStyle(this.props.infoCard)}>
           <img src={closeIcon} className="close" alt="关闭" title="关闭" onClick={(e) => this.props.closeInfoCard(e)} />
