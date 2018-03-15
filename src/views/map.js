@@ -25,9 +25,10 @@ class Map extends React.Component {
     };
   }
 
-  convertShowInfoCard(infoCard) {
+  convertShowInfoCard(infoCard, stationInfo) {
     this.setState({
-      infoCard: infoCard
+      infoCard: infoCard,
+      stationInfo: stationInfo
     })
   }
 
@@ -52,9 +53,9 @@ class Map extends React.Component {
         <svg className="svg" viewBox="0 0 2300 2300" autoFocus>
         <Label />
         <Line />
-        <Station convertShowInfoCard = {(infoCard, stationInfo) => this.convertShowInfoCard(infoCard)}/>
+        <Station convertShowInfoCard = {(infoCard, stationInfo) => this.convertShowInfoCard(infoCard, stationInfo)}/>
         </svg>
-        <InfoCard infoCard = {this.state.infoCard} closeInfoCard={e => this.closeInfoCard(e, true)}/>
+        <InfoCard infoCard={this.state.infoCard} stationInfo={this.state.stationInfo} closeInfoCard={e => this.closeInfoCard(e, true)}/>
       </div>
     )
   }

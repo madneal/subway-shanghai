@@ -65,7 +65,7 @@ export default function asyncInfoCard(importComponent) {
       }
       return state;
     }
-    
+
     fotmatStationInfo(stationInfo) {
       stationInfo = stationInfo.replace(/\d+号线/g, word => {
         return '<b>' + word + '</b>'
@@ -77,12 +77,13 @@ export default function asyncInfoCard(importComponent) {
 
     changeState(e) {
       const id = e.target.attributes['id'].value;
-      const statId = this.props.infoCard.statId;
+      // const statId = this.props.infoCard.statId;
       const stationInfo = this.props.stationInfo;
       const state = this.changeIconState(id, this.state);
       state.lastClickId = id;
       state.line = stationInfo.timesheet[0].line;
       state.timesheetActive = !(state.toiletPosition || state.elevator || state.entranceInfo);
+      state.info = this.fotmatStationInfo(this.props.stationInfo[id]);
       this.setState(state);
       e.stopPropagation();
     }
@@ -90,26 +91,27 @@ export default function asyncInfoCard(importComponent) {
     isIconActivated() {
       return this.state.toiletPosition || this.state.elevator || this.state.entranceInfo;
     }
-    
-    getInfo() ｛
-      const ids =['toiletPosition', 'elevator', 'entranceInfo'];
+
+    getInfo() {
+      const ids = ['toiletPosition', 'elevator', 'entranceInfo'];
+      let infoHtml = null;
       ids.forEach(id => {
         if (this.state[id]) {
-          const stationInfo = this.props.stationInfo;
-          const info = {__html: this.formatStationInfo(stationInfo[id])};
-          return info;
+          // const stationInfo = this.props.stationInfo;
+          infoHtml = this.fotmatStationInfo(this.props.stationInfo[id]);
         }
-      }
-      return null;
-    ｝
+      })
+      return infoHtml;
+    }
 
     render() {
       const infoCard = this.props.infoCard;
-      const stationInfo = this.props.stationInfo;
-
+      // const stationInfo = this.props.stationInfo;
+      // const info = this.getInfo();
+      // this.getInfo();
       return (
         <div className="info-card" style={this.getStyle(this.props.infoCard)}>
-          <img src={closeIcon} class="close" alt="关闭" title="关闭" onClick={(e) => this.props.closeInfoCard(e)} />
+          <img src={closeIcon} className="close" alt="关闭" title="关闭" onClick={(e) => this.props.closeInfoCard(e)} />
           <div className="header">
             {infoCard.stationName}
             <span className="icons" onClick={e => this.changeState(e)}>
@@ -120,7 +122,7 @@ export default function asyncInfoCard(importComponent) {
           </div>
           <div className="container">
             <TimeSheet timesheet={this.props.infoCard.timesheet} timesheetActive={this.state.timesheetActive} />
-            <div className="info-container" style={this.getContainerStyle(this.state.line, this.state.timesheetActive)} dangerouslySetInnerHTML={this.getInfo()}></div>
+            <div className="info-container" style={this.getContainerStyle(this.state.line, this.state.timesheetActive)} dangerouslySetInnerHTML={{__html: this.getInfo()}}></div>
           </div>
         </div>
       )
