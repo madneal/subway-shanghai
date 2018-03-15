@@ -7,7 +7,6 @@ import elevatorActive from '../imgs/elevator.png'
 import elevatorInactive from '../imgs/elevator0.png'
 import entranceActive from '../imgs/exit.png'
 import entranceInactive from '../imgs/exit0.png'
-import stationInfos from '../data/stationInfo.json'
 import { lineColor } from '../data/Data'
 import TimeSheet from './TimeSheet';
 
@@ -66,18 +65,21 @@ export default function asyncInfoCard(importComponent) {
       }
       return state;
     }
+    
+    fotmatStationInfo(stationInfo) {
+      stationInfo = stationInfo.replace(/\d+号线/g, word => {
+        return '<b>' + word + '</b>'
+      });
+      stationInfo = stationInfo.replace('<br />', '');
+      stationInfo = stationInfo.replace(/,/g, ',<br />');
+      return stationInfo;
+    }
 
     changeState(e) {
       const id = e.target.attributes['id'].value;
       const statId = this.props.infoCard.statId;
-      const stationInfo = stationInfos[statId];
+      const stationInfo = this.props.stationInfo;
       const state = this.changeIconState(id, this.state);
-      stationInfo[id] = stationInfo[id].replace(/\d+号线/g, word => {
-        return '<b>' + word + '</b>'
-      });
-      stationInfo[id] = stationInfo[id].replace('<br />', '');
-      stationInfo[id] = stationInfo[id].replace(/,/g, ',<br />');
-      state.info = { __html: stationInfo[id] };
       state.lastClickId = id;
       state.line = stationInfo.timesheet[0].line;
       state.timesheetActive = !(state.toiletPosition || state.elevator || state.entranceInfo);
@@ -88,9 +90,22 @@ export default function asyncInfoCard(importComponent) {
     isIconActivated() {
       return this.state.toiletPosition || this.state.elevator || this.state.entranceInfo;
     }
+    
+    getInfo() ｛
+      const ids =['toiletPosition', 'elevator', 'entranceInfo'];
+      ids.forEach(id => {
+        if (this.state[id]) {
+          const stationInfo = this.props.stationInfo;
+          const info = {__html: this.formatStationInfo(stationInfo[id])};
+          return info;
+        }
+      }
+      return null;
+    ｝
 
     render() {
       const infoCard = this.props.infoCard;
+      const stationInfo = this.props.stationInfo;
 
       return (
         <div className="info-card" style={this.getStyle(this.props.infoCard)}>
@@ -105,7 +120,7 @@ export default function asyncInfoCard(importComponent) {
           </div>
           <div className="container">
             <TimeSheet timesheet={this.props.infoCard.timesheet} timesheetActive={this.state.timesheetActive} />
-            <div className="info-container" style={this.getContainerStyle(this.state.line, this.state.timesheetActive)} dangerouslySetInnerHTML={this.state.info}></div>
+            <div className="info-container" style={this.getContainerStyle(this.state.line, this.state.timesheetActive)} dangerouslySetInnerHTML={this.getInfo()}></div>
           </div>
         </div>
       )
