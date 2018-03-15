@@ -20,7 +20,8 @@ class Map extends React.Component {
         },
         statid: null,
         timesheet: null
-      }
+      },
+      stationInfo: null
     };
   }
 
@@ -51,7 +52,7 @@ class Map extends React.Component {
         <svg className="svg" viewBox="0 0 2300 2300" autoFocus>
         <Label />
         <Line />
-        <Station convertShowInfoCard = {infoCard => this.convertShowInfoCard(infoCard)}/>
+        <Station convertShowInfoCard = {(infoCard, stationInfo) => this.convertShowInfoCard(infoCard)}/>
         </svg>
         <InfoCard infoCard = {this.state.infoCard} closeInfoCard={e => this.closeInfoCard(e, true)}/>
       </div>
