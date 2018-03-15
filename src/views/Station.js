@@ -74,7 +74,8 @@ export default function asyncStation(importComponent) {
         statId: statId,
         timesheet: timesheet
       }
-      this.props.convertShowInfoCard(infoCard);
+      const stationInfo = stationInfos[statId];
+      this.props.convertShowInfoCard(infoCard, stationInfo);
     }
 
     render() {
