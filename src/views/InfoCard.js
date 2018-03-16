@@ -7,7 +7,8 @@ import elevatorActive from '../imgs/elevator.png'
 import elevatorInactive from '../imgs/elevator0.png'
 import entranceActive from '../imgs/exit.png'
 import entranceInactive from '../imgs/exit0.png'
-import TimeSheet from './TimeSheet';
+import asyncTimesheet from './TimeSheet'
+const TimeSheet = asyncTimesheet(() => import('./TimeSheet'))
 
 export default function asyncInfoCard(importComponent) {
   class InfoCard extends React.Component {
