@@ -4,6 +4,7 @@ import { lineColor } from '../data/Data'
 import '../styles/Timesheet.css'
 
 export default function asyncTimesheet(impotComponent) {
+  
   class TimeSheet extends React.Component {
     constructor(props) {
       super(props);

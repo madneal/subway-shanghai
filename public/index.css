@@ -1,0 +1,23 @@
+body .right {
+  position: relative;
+  left: 10rem;
+  top: 10rem;
+  animation: moveright 3s linear infinite;
+}
+@media (min-width: 1000px) {
+  body .right {
+    display: none;
+  }
+}
+
+@keyframes moveright {
+  0% {
+    transform: translateX(2rem);
+  }
+  50% {
+    transform: translateX(3rem);
+  }
+  100% {
+    transform: translateX(5rem);
+  }
+}
