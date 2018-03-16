@@ -128,4 +128,3 @@ export default function asyncInfoCard(importComponent) {
 
 }
 
-// export default InfoCard
