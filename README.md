@@ -13,6 +13,10 @@
 * Line： 地铁线路
 * InfoCard: 状态最复杂的一个组件，主要包含时刻表信息、卫生间位置信息、出入口信息、无障碍电梯信息
 
+## LICENSE
+
+[MIT](https://github.com/neal1991/subway-shanghai/blob/master/LICENSE.md)
+
 
 
 
