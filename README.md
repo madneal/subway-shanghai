@@ -14,4 +14,4 @@ The whole map can be seen as a Map component, and deivde it into 4 child compone
 * InfoCard: The most complex component, including timesheet, washroom position information, entrance infomation and elevator information
 
 ## LICENSE
-[MIT]https://github.com/neal1991/subway-shanghai/blob/master/LICENSE.md)
+[MIT](https://github.com/neal1991/subway-shanghai/blob/master/LICENSE.md)
