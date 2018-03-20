@@ -51,8 +51,8 @@ class Map extends React.Component {
     return (
       <div className="map" onClick={e => this.closeInfoCard(e, false)}>
         <svg className="svg" viewBox="0 0 2300 2300" autoFocus>
-        <Label />
         <Line />
+        <Label />
         <Station convertShowInfoCard = {(infoCard, stationInfo) => this.convertShowInfoCard(infoCard, stationInfo)}/>
         </svg>
         <InfoCard infoCard={this.state.infoCard} stationInfo={this.state.stationInfo} closeInfoCard={e => this.closeInfoCard(e, true)}/>
