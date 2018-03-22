@@ -1,6 +1,6 @@
 # :train2::train2::train2: Subway Shanghai
 
-The before vesion is based on native js. With the incresement of the size of the code, the code become messy. Therefore, the new version is implemented on the basis of [create-react-app](https://github.com/facebook/create-react-app).
+The before vesion is based on native js. With the increse of the size of the code, the code become messy. Therefore, the new version is implemented on the basis of [create-react-app](https://github.com/facebook/create-react-app).
 
 ## Component structure
 
@@ -12,6 +12,9 @@ The whole map can be seen as a Map component, and deivde it into 4 child compone
 * Station: Station, including normal station and transfer station
 * Line: Subway line
 * InfoCard: The most complex component, including timesheet, washroom position information, entrance infomation and elevator information
+
+![subway-react](https://user-images.githubusercontent.com/12164075/37656324-ace5c2b2-2c82-11e8-8b6a-b3c96e091c73.gif)
+
 
 ## LICENSE
 [MIT](https://github.com/neal1991/subway-shanghai/blob/master/LICENSE.md)
