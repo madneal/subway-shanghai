@@ -19,7 +19,6 @@ export default function asyncInfoCard(importComponent) {
         toiletPosition: false,
         elevator: false,
         entranceInfo: false,
-        timesheet: null,
         info: null,
         lastClickId: null,
         line: null,
@@ -102,6 +101,12 @@ export default function asyncInfoCard(importComponent) {
       return infoHtml;
     }
 
+    changeLine(line) {
+      const infoCard = this.props.infoCard;
+      infoCard.currentLine = line;
+      this.props.changeInfoCard(infoCard);
+    }
+
     render() {
       const infoCard = this.props.infoCard;
 
@@ -117,7 +122,7 @@ export default function asyncInfoCard(importComponent) {
             </span>
           </div>
           <div className="container">
-            <TimeSheet timesheet={this.props.infoCard.timesheet} timesheetActive={this.state.timesheetActive} />
+            <TimeSheet timesheet={this.props.infoCard.timesheet} timesheetActive={this.state.timesheetActive} currentLine={this.props.infoCard.currentLine} changeLine={(line)=>{this.changeLine(line)}}/>
             <div className="info-container" style={this.getContainerStyle(this.state.line, this.state.timesheetActive)} dangerouslySetInnerHTML={{__html: this.getInfo()}}></div>
           </div>
         </div>

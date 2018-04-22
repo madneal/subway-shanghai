@@ -8,11 +8,8 @@ export default function asyncTimesheet(impotComponent) {
   class TimeSheet extends React.Component {
     constructor(props) {
       super(props);
-      const timesheet = this.props.timesheet;
-      const initialLine = timesheet ? timesheet[Object.keys(timesheet)] : null
       this.state = {
         timesheetOfEachLine: null,
-        currentLine: initialLine,
         component: null
       }
     }
@@ -31,6 +28,7 @@ export default function asyncTimesheet(impotComponent) {
         timesheetOfEachLine: timesheetOfEachLine,
         currentLine: line
       });
+      this.props.changeLine(line);
     }
 
     getStyle(currentLine, line) {
@@ -60,8 +58,7 @@ export default function asyncTimesheet(impotComponent) {
     render() {
       const timesheet = this.props.timesheet;
       const timesheetEles = [];
-      let currentLine = this.state.currentLine;
-
+      let currentLine = this.props.currentLine;
       if (!currentLine && timesheet) {
         currentLine = Object.keys(timesheet)[0];
       }

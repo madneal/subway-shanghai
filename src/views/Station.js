@@ -9,7 +9,8 @@ export default function asyncStation(importComponent) {
       super(props);
       this.state = {
         infoCard: null,
-        component: null
+        component: null,
+        lastStation: null
       }
     }
 
@@ -72,6 +73,15 @@ export default function asyncStation(importComponent) {
         stationPosition: position,
         statId: statId,
         timesheet: timesheet
+      }
+      if (this.state.lastStation === null) {
+        this.setState({ lastStation: statId });
+      } else if (statId !== this.state.lastStation) {
+        const keys = Object.keys(timesheet);
+        if (timesheet !== null && timesheet.length !== 0) {
+          const currentLine = keys[0];
+          infoCard.currentLine = currentLine;
+        }
       }
       const stationInfo = stationInfos[statId];
       this.props.convertShowInfoCard(infoCard, stationInfo);
