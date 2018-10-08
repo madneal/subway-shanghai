@@ -101,7 +101,8 @@ export default function asyncStation(importComponent) {
       for (let i = 0; i < transfers.length; i++) {
         const transfer = transfers[i];
         transferEles.push(
-          <image x={transfer.x} y={transfer.y} dataid={transfer['data-id']} href={transferPath} statid={transfer.statid} key={transfer['data-id'] + i}></image>
+          <image x={transfer.x} y={transfer.y} dataid={transfer['data-id']} xlinkHref={transferPath} statid={transfer.statid} key={transfer['data-id']+i}
+          height="16" width="16"></image>
         )
       }
 
