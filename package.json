@@ -5,10 +5,11 @@
   "private": true,
   "dependencies": {
     "ajv": "^6.5.4",
-    "gh-pages": "^1.1.0",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
-    "react-scripts": "1.1.1"
+    "cryptiles": "^4.1.2",
+    "gh-pages": "^1.2.0",
+    "react": "^16.5.2",
+    "react-dom": "^16.5.2",
+    "react-scripts": "^2.0.4"
   },
   "scripts": {
     "predeploy": "npm run build",
@@ -19,6 +20,12 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {
-    "hoek": "^5.0.3"
-  }
+    "hoek": "^5.0.4"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }
