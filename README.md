@@ -15,6 +15,10 @@ The whole map can be seen as a Map component, and deivde it into 4 child compone
 
 ![subway-react](https://user-images.githubusercontent.com/12164075/37656324-ace5c2b2-2c82-11e8-8b6a-b3c96e091c73.gif)
 
+# Run
+
+`npm start`: Run the app in development mode.
+`npm decploy`: Deploy the build results to gh-pages branch, to display the app.
 
 ## LICENSE
 [MIT](https://github.com/neal1991/subway-shanghai/blob/master/LICENSE.md)
