@@ -18,6 +18,7 @@ The whole map can be seen as a Map component, and deivde it into 4 child compone
 # Run
 
 `npm start`: Run the app in development mode.
+
 `npm decploy`: Deploy the build results to gh-pages branch, to display the app.
 
 ## LICENSE
