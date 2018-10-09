@@ -16,7 +16,7 @@ self.__precacheManifest = [
     "url": "/subway-shanghai/static/css/main.4dee0569.chunk.css"
   },
   {
-    "revision": "1d490f6a6baa5fa4b4b99d222fba19d2",
+    "revision": "24c2345a506dcc178abc17c269113285",
     "url": "/subway-shanghai/index.html"
   }
 ];
