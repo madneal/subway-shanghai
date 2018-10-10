@@ -4,19 +4,19 @@ self.__precacheManifest = [
     "url": "/subway-shanghai/static/js/runtime~main.3f0878a4.js"
   },
   {
-    "revision": "61b1022755db1428735b",
-    "url": "/subway-shanghai/static/js/main.61b10227.chunk.js"
+    "revision": "3d8eb7806a4855cfbf85",
+    "url": "/subway-shanghai/static/js/main.3d8eb780.chunk.js"
   },
   {
     "revision": "a5ed942880f1105774ca",
     "url": "/subway-shanghai/static/js/1.a5ed9428.chunk.js"
   },
   {
-    "revision": "61b1022755db1428735b",
-    "url": "/subway-shanghai/static/css/main.4dee0569.chunk.css"
+    "revision": "3d8eb7806a4855cfbf85",
+    "url": "/subway-shanghai/static/css/main.d86a1ef9.chunk.css"
   },
   {
-    "revision": "1a910207f4aa009f59276ddfe03bf6bf",
+    "revision": "619c6afffa2f4b763c091ae67dcea95f",
     "url": "/subway-shanghai/index.html"
   }
 ];

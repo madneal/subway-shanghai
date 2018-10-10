@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.2/workbox-sw.js");
 
 importScripts(
-  "/subway-shanghai/precache-manifest.95c2a6a24217d98a41e1e07ae3f625ca.js"
+  "/subway-shanghai/precache-manifest.0983dad4a1d48b0305a1cb9cec26c50d.js"
 );
 
 workbox.clientsClaim();
