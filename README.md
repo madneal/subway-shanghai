@@ -19,7 +19,7 @@ The whole map can be seen as a Map component, and deivde it into 4 child compone
 
 `npm start`: Run the app in development mode.
 
-`npm decploy`: Deploy the build results to gh-pages branch, to display the app.
+`npm deploy`: Deploy the build results to gh-pages branch, to display the app.
 
 ## LICENSE
 [MIT](https://github.com/neal1991/subway-shanghai/blob/master/LICENSE.md)
