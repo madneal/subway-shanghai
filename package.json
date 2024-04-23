@@ -6,7 +6,7 @@
   "dependencies": {
     "ajv": "^6.12.3",
     "cryptiles": "^4.1.2",
-    "gh-pages": "^4.0.0",
+    "gh-pages": "^5.0.0",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "react-scripts": "^5.0.1"
