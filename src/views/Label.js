@@ -1,7 +1,9 @@
 import React from 'react';
 import labels from '../data/labels.json';
 
-function isLineLabel(text) {
+function isLineLabel(label) {
+  if (label.kind === 'line') return true;
+  const text = label.text || '';
   return (
     text.includes('号线') ||
     text.includes('磁浮') ||
@@ -12,30 +14,44 @@ function isLineLabel(text) {
 
 class Label extends React.Component {
   render() {
-    const labelElements = [];
+    const lineLabels = [];
+    const stationLabels = [];
+
     for (let i = 0; i < labels.length; i++) {
       const label = labels[i];
-      if (isLineLabel(label.text) && label.fill) {
-        labelElements.push(
+      if (isLineLabel(label) && label.fill) {
+        lineLabels.push(
           <text
+            className="line-label"
             x={label.x}
             y={label.y}
             fill={label.fill}
-            fontWeight="700"
-            key={label.text + i}
+            key={'line-' + label.text + i}
           >
             {label.text}
           </text>
         );
-      } else {
-        labelElements.push(
-          <text x={label.x} y={label.y} key={label.text + i}>
+      } else if (!isLineLabel(label)) {
+        stationLabels.push(
+          <text
+            className="station-label"
+            x={label.x}
+            y={label.y}
+            key={'st-' + label.text + i}
+          >
             {label.text}
           </text>
         );
       }
     }
-    return <g className="labels">{labelElements}</g>;
+
+    // Station names under line names so line titles stay on top.
+    return (
+      <g className="labels">
+        <g className="station-labels">{stationLabels}</g>
+        <g className="line-labels">{lineLabels}</g>
+      </g>
+    );
   }
 }
 

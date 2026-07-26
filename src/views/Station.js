@@ -5,6 +5,48 @@ import stationInfos from '../data/stationInfo.json';
 import transferPath from '../imgs/transfer.png';
 import { formatTimesheet } from '../utils/timesheet';
 
+/**
+ * Convert a click on the SVG into coordinates relative to the scrollable .map box,
+ * so the floating info card can sit next to the station on screen.
+ */
+function mapRelativePoint(e) {
+  const mapEl = e.currentTarget.closest('.map');
+  if (!mapEl) {
+    return { x: e.clientX, y: e.clientY };
+  }
+  const rect = mapEl.getBoundingClientRect();
+  return {
+    x: e.clientX - rect.left + mapEl.scrollLeft,
+    y: e.clientY - rect.top + mapEl.scrollTop,
+  };
+}
+
+/**
+ * Place the card near the station, preferring bottom-right, flipping if near edges.
+ */
+function cardAnchor(point, mapEl) {
+  const OFFSET = 14;
+  const CARD_W = 360;
+  const CARD_H = 280;
+  const mapW = mapEl ? mapEl.scrollWidth : point.x + CARD_W;
+  const mapH = mapEl ? mapEl.scrollHeight : point.y + CARD_H;
+
+  let x = point.x + OFFSET;
+  let y = point.y + OFFSET;
+
+  if (x + CARD_W > mapW - 8) {
+    x = point.x - CARD_W - OFFSET;
+  }
+  if (y + CARD_H > mapH - 8) {
+    y = point.y - CARD_H - OFFSET;
+  }
+
+  return {
+    x: Math.max(8, x),
+    y: Math.max(8, y),
+  };
+}
+
 class Station extends React.Component {
   constructor(props) {
     super(props);
@@ -23,10 +65,6 @@ class Station extends React.Component {
     return null;
   }
 
-  /**
-   * Read an SVG coordinate. Prefer DOM attributes (works under jsdom tests)
-   * and fall back to SVGAnimatedLength in real browsers.
-   */
   getCoordinate(target, attrNames) {
     for (const name of attrNames) {
       if (target.getAttribute) {
@@ -56,15 +94,13 @@ class Station extends React.Component {
       return;
     }
 
-    const x = this.getCoordinate(e.target, ['x', 'cx']);
-    const y = this.getCoordinate(e.target, ['y', 'cy']);
-    if (x == null || y == null) {
-      return;
-    }
-    const position = {
-      x: +x + 100,
-      y: +y + 70,
-    };
+    // Prefer SVG station coords for svgX/svgY (data); screen placement from click.
+    const svgX = this.getCoordinate(e.target, ['x', 'cx']);
+    const svgY = this.getCoordinate(e.target, ['y', 'cy']);
+    const mapEl = e.currentTarget.closest('.map');
+    const clickPt = mapRelativePoint(e);
+    const position = cardAnchor(clickPt, mapEl);
+
     const statId = this.getAttVal(attributes, 'statid');
     const stationInfo = stationInfos[statId] || {
       timesheet: [],
@@ -78,6 +114,8 @@ class Station extends React.Component {
       show: true,
       stationName,
       stationPosition: position,
+      svgPosition:
+        svgX != null && svgY != null ? { x: +svgX, y: +svgY } : null,
       statId,
       timesheet,
     };
@@ -93,6 +131,7 @@ class Station extends React.Component {
     }
 
     this.props.convertShowInfoCard(infoCard, stationInfo);
+    e.stopPropagation();
   }
 
   render() {
@@ -105,12 +144,15 @@ class Station extends React.Component {
         <circle
           cx={station.cx}
           cy={station.cy}
-          r="5"
+          r="6"
           fill="white"
           stroke={station.stroke}
+          strokeWidth="2.5"
           id={station.id}
           statid={station.statid}
           key={(station.id || 'station') + i}
+          className="station-dot"
+          style={{ cursor: 'pointer' }}
         />
       );
     }
@@ -128,12 +170,14 @@ class Station extends React.Component {
           key={transfer['data-id'] + i}
           height="16"
           width="16"
+          className="station-transfer"
+          style={{ cursor: 'pointer' }}
         />
       );
     }
 
     return (
-      <g onClick={(e) => this.convertShow(e)}>
+      <g className="stations" onClick={(e) => this.convertShow(e)}>
         {stationEles}
         {transferEles}
       </g>

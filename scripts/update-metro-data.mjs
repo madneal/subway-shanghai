@@ -116,6 +116,40 @@ function pointsToSvgPath(points) {
     .join(' ');
 }
 
+/**
+ * Place a line name offset from the track (perpendicular to the path),
+ * so labels don't sit on top of the colored stroke.
+ */
+function lineLabelPosition(points) {
+  if (!points.length) return { x: 0, y: 0 };
+  if (points.length === 1) {
+    return { x: points[0].x + 16, y: points[0].y - 18 };
+  }
+  // ~20% along the polyline for a stable, non-crowded label spot
+  const idx = Math.min(
+    points.length - 2,
+    Math.max(0, Math.floor(points.length * 0.2))
+  );
+  const a = points[idx];
+  const b = points[idx + 1];
+  const dx = b.x - a.x;
+  const dy = b.y - a.y;
+  const len = Math.hypot(dx, dy) || 1;
+  // Perpendicular unit vector
+  let nx = -dy / len;
+  let ny = dx / len;
+  // Prefer offset toward the upper-left of the canvas for consistency
+  if (nx * -1 + ny * -1 < 0) {
+    nx = -nx;
+    ny = -ny;
+  }
+  const OFFSET = 24;
+  return {
+    x: a.x + nx * OFFSET,
+    y: a.y + ny * OFFSET,
+  };
+}
+
 function colorHex(cl) {
   const raw = String(cl || '999999').replace(/^#/, '');
   return `#${raw.toUpperCase()}`;
@@ -289,18 +323,23 @@ function build() {
   const transfers = [];
   const labels = [];
 
+  // One label per line key (avoid duplicate 5/5a names stacked on the same spot)
+  const placedLineKeys = new Set();
   for (const line of draw.l || []) {
     const key = lsToKey[line.ls];
+    if (placedLineKeys.has(key)) continue;
+    placedLineKeys.add(key);
     const name = lineNames[key];
     const color = lineColor[key];
-    const first = (line.st || [])[0];
-    if (!first?.p) continue;
-    const [x, y] = String(first.p).trim().split(/\s+/).map(Number);
+    const pts = parsePoints(line.c);
+    if (!pts.length) continue;
+    const pos = lineLabelPosition(pts);
     labels.push({
-      x: String(x + 12),
-      y: String(y - 10),
+      x: String(Math.round(pos.x)),
+      y: String(Math.round(pos.y)),
       fill: color,
       text: name,
+      kind: 'line',
     });
   }
 
@@ -330,10 +369,12 @@ function build() {
       });
     }
 
+    // Station names sit slightly above-right of the dot, off the track stroke.
     labels.push({
-      x: String(st.x + 8),
-      y: String(st.y - 6),
+      x: String(st.x + 10),
+      y: String(st.y - 10),
       text: st.name,
+      kind: 'station',
     });
   }
 

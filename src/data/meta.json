@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-26T10:21:17.030Z",
+  "generatedAt": "2026-07-26T11:05:32.767Z",
   "sources": {
     "geometry": "local:src/data/raw/amap-draw.json",
     "facilitiesAndTimes": "local:src/data/official/",
