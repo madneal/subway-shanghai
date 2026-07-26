@@ -1,8 +1,14 @@
 import React from 'react';
 import TimesheetTable from './TimesheetTable';
-import { lineColor } from '../data/Data';
+import { lineColor, lineNames } from '../data/Data';
 import { getFirstPair } from '../utils/timesheet';
 import '../styles/Timesheet.css';
+
+function lineLabel(lineKey) {
+  if (lineNames && lineNames[lineKey]) return lineNames[lineKey];
+  if (/^\d+$/.test(String(lineKey))) return `${lineKey}号线`;
+  return String(lineKey);
+}
 
 class TimeSheet extends React.Component {
   constructor(props) {
@@ -14,25 +20,23 @@ class TimeSheet extends React.Component {
   }
 
   convertLine(e) {
-    const match = e.target.innerText.match(/\d+/);
-    if (!match) {
-      return;
-    }
-    const line = +match[0];
-    const timesheetOfEachLine = this.props.timesheet[line];
+    const lineKey = e.currentTarget.getAttribute('data-line');
+    if (!lineKey || !this.props.timesheet) return;
+    const timesheetOfEachLine = this.props.timesheet[lineKey];
     this.setState({
       timesheetOfEachLine,
-      currentLine: line,
+      currentLine: lineKey,
     });
-    this.props.changeLine(line);
+    this.props.changeLine(lineKey);
   }
 
   getStyle(currentLine, line) {
-    if (line === currentLine) {
+    const color = lineColor[line] || '#666';
+    if (String(line) === String(currentLine)) {
       return {
         color: '#fff',
         fontWeight: 700,
-        backgroundColor: lineColor[line],
+        backgroundColor: color,
       };
     }
     return {
@@ -51,24 +55,22 @@ class TimeSheet extends React.Component {
     }
 
     for (const line in timesheet) {
-      const div = (
+      timesheetEles.push(
         <div
           className="line-name"
-          style={this.getStyle(+currentLine, +line)}
+          style={this.getStyle(currentLine, line)}
           key={line}
+          data-line={line}
           onClick={(e) => this.convertLine(e)}
         >
-          {line + '号线'}
+          {lineLabel(line)}
         </div>
       );
-      timesheetEles.push(div);
     }
 
+    const borderColor = lineColor[currentLine] || '#8a8a8a';
     const lineDiv = (
-      <div
-        className="line"
-        style={{ borderBottom: '2px solid ' + lineColor[currentLine] }}
-      >
+      <div className="line" style={{ borderBottom: '2px solid ' + borderColor }}>
         {timesheetEles}
       </div>
     );

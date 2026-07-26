@@ -3,6 +3,7 @@ import Line from './Line';
 import Station from './Station';
 import InfoCard from './InfoCard';
 import Label from './Label';
+import meta from '../data/meta.json';
 
 class Map extends React.Component {
   constructor(props) {
@@ -49,9 +50,10 @@ class Map extends React.Component {
   }
 
   render() {
+    const viewBox = meta.viewBox || '0 0 3080 2505';
     return (
       <div className="map" onClick={(e) => this.closeInfoCard(e, false)}>
-        <svg className="svg" viewBox="0 0 2300 2300" autoFocus>
+        <svg className="svg" viewBox={viewBox} autoFocus>
           <Line />
           <Label />
           <Station

@@ -8,6 +8,27 @@ Interactive Shanghai metro map.
 
 Originally a native JS map, later rewritten with Create React App, and now on Vite.
 
+## Map data
+
+Schematic geometry and first/last train times are generated from **Amap** public subway APIs (Shanghai `3100`):
+
+| File | Role |
+|------|------|
+| `src/data/Data.js` | Line colors, display names, SVG path geometry |
+| `src/data/stations.json` | Non-transfer station dots |
+| `src/data/transfers.json` | Transfer station markers |
+| `src/data/labels.json` | Line + station text labels |
+| `src/data/stationInfo.json` | Per-station timesheets (and facility fields when available) |
+| `src/data/meta.json` | Bounds, viewBox, generation metadata |
+
+Refresh from upstream anytime:
+
+```bash
+npm run update-data   # scripts/update-metro-data.mjs
+```
+
+This pulls the latest Amap drawing + info JSON and rewrites the files above (includes lines **1–18**, **浦江线**, **磁浮线**, **市域机场线**). Facility details (toilet / elevator / exit) from the old static dump are not in the Amap feed and may be empty until another source is added.
+
 ## Component structure
 
 The map is a `Map` with four child pieces:

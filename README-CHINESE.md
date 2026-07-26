@@ -8,6 +8,27 @@
 
 早期版本用原生 JS，后用 Create React App 重构，现已迁移到 Vite。
 
+## 地图数据
+
+线路示意图与首末班车时间来自 **高德地图** 公开地铁接口（上海 `3100`）：
+
+| 文件 | 作用 |
+|------|------|
+| `src/data/Data.js` | 线路颜色、名称、SVG 路径 |
+| `src/data/stations.json` | 普通站点 |
+| `src/data/transfers.json` | 换乘站 |
+| `src/data/labels.json` | 线路/站名文字 |
+| `src/data/stationInfo.json` | 各站时刻表等 |
+| `src/data/meta.json` | 边界、viewBox、生成信息 |
+
+从上游刷新：
+
+```bash
+npm run update-data   # scripts/update-metro-data.mjs
+```
+
+会重新拉取高德绘图与 info 数据并覆盖上述文件（含 **1–18 号线**、**浦江线**、**磁浮线**、**市域机场线**）。卫生间/电梯/出入口等设施字段不在高德接口中，可能为空，后续可再接官方数据源。
+
 ## 组件结构
 
 将整个地图看作一个 `Map` 组件，再拆成 4 个子组件：
