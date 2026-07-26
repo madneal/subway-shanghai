@@ -9,7 +9,7 @@ export default defineConfig({
       include: '**/*.{jsx,js}',
     }),
   ],
-  // GitHub Pages project site: https://neal1991.github.io/subway-shanghai/
+  // Project Pages path (also used under custom domain madneal.com/subway-shanghai/)
   base: '/subway-shanghai/',
   build: {
     outDir: 'dist',
