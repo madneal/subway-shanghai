@@ -1,11 +1,8 @@
 import React from 'react';
-import Line from './Line'
-import asyncStation from './Station'
-import asyncInfoCard from './InfoCard'
-import asyncLabel from './Label'
-const Station = asyncStation(() => import('./Station'))
-const InfoCard = asyncInfoCard(() => import('./InfoCard'))
-const Label = asyncLabel(() => import('./Label'))
+import Line from './Line';
+import Station from './Station';
+import InfoCard from './InfoCard';
+import Label from './Label';
 
 class Map extends React.Component {
   constructor(props) {
@@ -16,26 +13,26 @@ class Map extends React.Component {
         stationName: '',
         stationPosition: {
           x: null,
-          y: null
+          y: null,
         },
         statid: null,
-        timesheet: null
+        timesheet: null,
       },
-      stationInfo: null
+      stationInfo: null,
     };
   }
 
   convertShowInfoCard(infoCard, stationInfo) {
     this.setState({
-      infoCard: infoCard,
-      stationInfo: stationInfo
-    })
+      infoCard,
+      stationInfo,
+    });
   }
 
   changeInfoCard(infoCard) {
     this.setState({
-      infoCard: infoCard
-    })
+      infoCard,
+    });
   }
 
   closeInfoCard(e, isCloseFromInfoCard) {
@@ -44,29 +41,34 @@ class Map extends React.Component {
       isSvg = e.target.attributes.class.value === 'svg';
     }
     if ((isCloseFromInfoCard || isSvg) && this.state.infoCard.show) {
-      const infoCard = this.state.infoCard;
-      infoCard.show = false;
+      const infoCard = { ...this.state.infoCard, show: false };
       this.setState({
-        infoCard: infoCard
-      })
+        infoCard,
+      });
     }
   }
 
-
   render() {
     return (
-      <div className="map" onClick={e => this.closeInfoCard(e, false)}>
+      <div className="map" onClick={(e) => this.closeInfoCard(e, false)}>
         <svg className="svg" viewBox="0 0 2300 2300" autoFocus>
-        <Line />
-        <Label />
-        <Station convertShowInfoCard = {(infoCard, stationInfo) => this.convertShowInfoCard(infoCard, stationInfo)}/>
+          <Line />
+          <Label />
+          <Station
+            convertShowInfoCard={(infoCard, stationInfo) =>
+              this.convertShowInfoCard(infoCard, stationInfo)
+            }
+          />
         </svg>
-        <InfoCard infoCard={this.state.infoCard} stationInfo={this.state.stationInfo} closeInfoCard={e => this.closeInfoCard(e, true)} 
-          changeInfoCard={(infoCard) => this.changeInfoCard(infoCard)}/>
+        <InfoCard
+          infoCard={this.state.infoCard}
+          stationInfo={this.state.stationInfo}
+          closeInfoCard={(e) => this.closeInfoCard(e, true)}
+          changeInfoCard={(infoCard) => this.changeInfoCard(infoCard)}
+        />
       </div>
-    )
+    );
   }
 }
 
-
-export default Map
+export default Map;
