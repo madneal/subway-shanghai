@@ -1,6 +1,5 @@
-import React from 'react'
-import linePath from '../data/Data'
-import { lineColor } from '../data/Data'
+import React from 'react';
+import linePath, { lineColor } from '../data/Data';
 
 class Line extends React.Component {
   render() {
@@ -10,12 +9,18 @@ class Line extends React.Component {
       const path = linePath[key];
       const lineNum = key.match(/\d+/)[0];
       const color = lineColor[lineNum];
-      linePaths.push(<path d={path} fill="none" strokeWidth="6" stroke={color} key={key}></path>);
+      linePaths.push(
+        <path
+          d={path}
+          fill="none"
+          strokeWidth="6"
+          stroke={color}
+          key={key}
+        />
+      );
     }
 
-    return (
-      <g>{linePaths}</g>
-    )
+    return <g>{linePaths}</g>;
   }
 }
 
