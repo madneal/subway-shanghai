@@ -1,0 +1,14 @@
+{
+  "source": "https://m.shmetro.com/workspace/shmetrotest/view_csdt.aspx",
+  "apis": {
+    "map": "https://m.shmetro.com/interface/metromap/metromap.aspx",
+    "lines": "https://m.shmetro.com/interface/metromap/metromap.aspx?func=lines",
+    "stationInfo": "https://m.shmetro.com/interface/metromap/metromap.aspx?func=stationInfo&station_code=…",
+    "fltime": "https://m.shmetro.com/interface/metromap/metromap.aspx?func=fltimeA&station_code=…"
+  },
+  "fetchedAt": "2026-07-26T10:20:47.346Z",
+  "locationCount": 534,
+  "stationCount": 420,
+  "ok": 420,
+  "fail": 0
+}

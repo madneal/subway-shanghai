@@ -1,14 +1,19 @@
 {
-  "source": {
-    "draw": "https://map.amap.com/service/subway?_v2.0&srhdata=3100_drw_shanghai.json",
-    "info": "https://map.amap.com/service/subway?_v2.0&srhdata=3100_info_shanghai.json"
+  "generatedAt": "2026-07-26T10:21:17.030Z",
+  "sources": {
+    "geometry": "local:src/data/raw/amap-draw.json",
+    "facilitiesAndTimes": "local:src/data/official/",
+    "officialFetchedAt": "2026-07-26T10:20:47.333Z",
+    "officialPage": "https://m.shmetro.com/workspace/shmetrotest/view_csdt.aspx"
   },
-  "generatedAt": "2026-07-26T02:26:04.926Z",
+  "runtimeNetwork": false,
   "lines": 24,
   "stations": 285,
   "transfers": 133,
   "labels": 442,
   "stationInfo": 418,
+  "matchedOfficial": 415,
+  "withFacilities": 415,
   "bounds": {
     "minX": 0,
     "minY": 115,
@@ -35,11 +40,11 @@
     "16": "16号线",
     "17": "17号线",
     "18": "18号线",
+    "pujiang": "浦江线",
+    "maglev": "磁浮线",
     "5a": "5号线",
     "10a": "10号线",
     "11a": "11号线",
-    "maglev": "磁浮线",
-    "pujiang": "浦江线",
     "airport": "市域机场线"
   }
 }

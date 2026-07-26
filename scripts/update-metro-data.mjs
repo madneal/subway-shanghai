@@ -1,46 +1,51 @@
 /**
- * Fetch Shanghai metro schematic + timetable data from Amap and regenerate
- * src/data/{Data.js,stations.json,transfers.json,labels.json,stationInfo.json}.
+ * Rebuild app map data from LOCAL sources only (no network).
  *
- * Usage: node scripts/update-metro-data.mjs
+ * Inputs (must already exist on disk):
+ *   - src/data/raw/amap-draw.json          Amap schematic (optional geometry source)
+ *   - src/data/raw/amap-info.json          Amap fallback times
+ *   - src/data/official/stations.json     Official shmetro dump (toilet/elevator/entrance/fltime)
+ *   - src/data/official/lines.json        Official line colors
+ *   - src/data/official/map-locations.json Official location pins
  *
- * Data sources (public Amap subway APIs, no key required for these endpoints):
- *   - drawing:  .../subway?_v2.0&srhdata=3100_drw_shanghai.json
- *   - info:     .../subway?_v2.0&srhdata=3100_info_shanghai.json
+ * Outputs:
+ *   - src/data/{Data.js,stations.json,transfers.json,labels.json,stationInfo.json,meta.json}
+ *
+ * Usage:
+ *   npm run fetch-official          # network: refresh official dump once
+ *   npm run fetch-amap              # network: refresh amap schematic once (optional)
+ *   npm run update-data             # offline: rebuild app JSON from local files
  */
 
-import { writeFileSync, mkdirSync } from 'node:fs';
+import {
+  writeFileSync,
+  mkdirSync,
+  readFileSync,
+  existsSync,
+} from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
 const DATA_DIR = join(ROOT, 'src', 'data');
-const RAW_DIR = join(ROOT, 'src', 'data', 'raw');
+const RAW_DIR = join(DATA_DIR, 'raw');
+const OFFICIAL_DIR = join(DATA_DIR, 'official');
 
-const DRAW_URL =
-  'https://map.amap.com/service/subway?_v2.0&srhdata=3100_drw_shanghai.json';
-const INFO_URL =
-  'https://map.amap.com/service/subway?_v2.0&srhdata=3100_info_shanghai.json';
-
-const UA =
-  'Mozilla/5.0 (compatible; subway-shanghai-data-bot/1.0; +https://github.com/madneal/subway-shanghai)';
-
-async function fetchJson(url) {
-  const res = await fetch(url, { headers: { 'User-Agent': UA } });
-  if (!res.ok) {
-    throw new Error(`GET ${url} → ${res.status} ${res.statusText}`);
+function readJson(path) {
+  if (!existsSync(path)) {
+    throw new Error(
+      `Missing local data file: ${path}\nRun npm run fetch-official (and optionally npm run fetch-amap) first.`
+    );
   }
-  return res.json();
+  return JSON.parse(readFileSync(path, 'utf8'));
 }
 
-/** Stable short key used in lineColor / linePath / timesheet grouping. */
 function lineKeyFromName(ln, ls, usedKeys) {
   const name = (ln || '').trim();
   const numMatch = name.match(/^(\d+)号线/);
   if (numMatch) {
     const base = numMatch[1];
-    // Branches (e.g. two 5/10/11 segments) get a/b/c suffixes.
     if (!usedKeys.has(base)) {
       usedKeys.add(base);
       return base;
@@ -59,11 +64,9 @@ function lineKeyFromName(ln, ls, usedKeys) {
     市域机场线: 'airport',
   };
   if (specials[name]) {
-    const key = specials[name];
-    usedKeys.add(key);
-    return key;
+    usedKeys.add(specials[name]);
+    return specials[name];
   }
-  // Fallback: Amap line id
   const key = `ls_${ls}`;
   usedKeys.add(key);
   return key;
@@ -73,6 +76,26 @@ function displayName(ln, kn) {
   if (ln && ln.trim()) return ln.trim();
   if (kn && kn.trim()) return kn.replace(/^地铁/, '').trim();
   return '未知线路';
+}
+
+/** Official line_no → our line key / display name */
+const OFFICIAL_LINE_MAP = {
+  41: { key: 'pujiang', name: '浦江线' },
+  51: { key: 'maglev', name: '磁浮线' },
+  // 市域机场线 may appear under other codes; keep numeric if unknown
+};
+
+function officialLineKey(lineNo) {
+  const n = Number(lineNo);
+  if (OFFICIAL_LINE_MAP[n]) return OFFICIAL_LINE_MAP[n].key;
+  return String(n);
+}
+
+function officialLineName(lineNo, lineNames) {
+  const n = Number(lineNo);
+  if (OFFICIAL_LINE_MAP[n]) return OFFICIAL_LINE_MAP[n].name;
+  if (lineNames[String(n)]) return lineNames[String(n)];
+  return `${n}号线`;
 }
 
 function parsePoints(c) {
@@ -102,189 +125,330 @@ function isValidTime(t) {
   return typeof t === 'string' && /^\d{1,2}:\d{2}$/.test(t);
 }
 
+/** Official JSON sometimes uses single-quoted keys. */
+function parseLooseJson(raw) {
+  if (raw == null || raw === '') return null;
+  if (typeof raw === 'object') return raw;
+  try {
+    return JSON.parse(String(raw).replace(/'/g, '"'));
+  } catch {
+    return null;
+  }
+}
+
+function formatToilet(raw) {
+  const data = parseLooseJson(raw);
+  if (!data?.toilet?.length) {
+    // fall back to English plain text if present
+    return typeof raw === 'string' && !raw.trim().startsWith('{') ? raw : '';
+  }
+  return data.toilet
+    .map((t) => {
+      const line = t.lineno ? `${t.lineno}号线：` : '';
+      return `${line}${t.description || ''}`.trim();
+    })
+    .filter(Boolean)
+    .join('<br />');
+}
+
+function formatElevator(raw) {
+  const data = parseLooseJson(raw);
+  if (!data?.line?.length) {
+    return typeof raw === 'string' && !raw.trim().startsWith('{') ? raw : '';
+  }
+  const parts = [];
+  for (const ln of data.line) {
+    const linePrefix = ln.lineno ? `${ln.lineno}号线：` : '';
+    for (const el of ln.elevator || []) {
+      parts.push(`${linePrefix}${el.description || ''}`.trim());
+    }
+  }
+  return parts.filter(Boolean).join('<br />');
+}
+
+function formatEntrance(raw, enFallback) {
+  const data = parseLooseJson(raw);
+  if (!data?.line?.length) {
+    if (typeof enFallback === 'string' && enFallback) {
+      // "Exit 1:…,Exit 2:…" style — keep Chinese if we have nothing else
+      return enFallback
+        .split(',')
+        .map((s) => s.trim())
+        .filter(Boolean)
+        .join('<br />');
+    }
+    return typeof raw === 'string' && !raw.trim().startsWith('{') ? raw : '';
+  }
+  const parts = [];
+  for (const ln of data.line) {
+    for (const ent of ln.entrance || []) {
+      const id = ent.id_alias || (ent.id != null ? `${ent.id}号出入口` : '');
+      const desc = ent.description || '';
+      const memo = ent.memo ? `（${ent.memo}）` : '';
+      parts.push(`${id}: ${desc}${memo}`.trim());
+    }
+  }
+  return parts.filter(Boolean).join('<br />');
+}
+
+function normalizeName(name) {
+  return String(name || '')
+    .replace(/\s+/g, '')
+    .replace(/（/g, '(')
+    .replace(/）/g, ')');
+}
+
+function directionText(desc) {
+  if (!desc) return '往终点方向';
+  const t = String(desc).trim();
+  if (t.endsWith('方向')) return t;
+  if (t.startsWith('往')) return `${t}方向`;
+  return `往${t}方向`;
+}
+
 function build() {
-  return Promise.all([fetchJson(DRAW_URL), fetchJson(INFO_URL)]).then(
-    ([draw, info]) => {
-      mkdirSync(RAW_DIR, { recursive: true });
-      writeFileSync(
-        join(RAW_DIR, 'amap-draw.json'),
-        JSON.stringify(draw, null, 2)
-      );
-      writeFileSync(
-        join(RAW_DIR, 'amap-info.json'),
-        JSON.stringify(info, null, 2)
-      );
+  mkdirSync(DATA_DIR, { recursive: true });
 
-      const usedKeys = new Set();
-      const lineColor = {};
-      const lineNames = {}; // key → display name
-      const linePath = {};
-      const lsToKey = {}; // Amap ls → our key
-      const sidToStation = new Map(); // si → { name, x, y, lines:Set, colors:Set, isTransfer }
+  const draw = readJson(join(RAW_DIR, 'amap-draw.json'));
+  const amapInfo = existsSync(join(RAW_DIR, 'amap-info.json'))
+    ? readJson(join(RAW_DIR, 'amap-info.json'))
+    : { l: [] };
+  const officialStations = readJson(join(OFFICIAL_DIR, 'stations.json'));
+  const officialLines = existsSync(join(OFFICIAL_DIR, 'lines.json'))
+    ? readJson(join(OFFICIAL_DIR, 'lines.json'))
+    : { lines: [] };
+  const officialMeta = existsSync(join(OFFICIAL_DIR, 'meta.json'))
+    ? readJson(join(OFFICIAL_DIR, 'meta.json'))
+    : {};
 
-      // --- lines + stations from drawing ---
-      for (const line of draw.l || []) {
-        const key = lineKeyFromName(line.ln, line.ls, usedKeys);
-        const name = displayName(line.ln, line.kn);
-        const color = colorHex(line.cl);
-        lsToKey[line.ls] = key;
-        lineColor[key] = color;
-        lineNames[key] = name;
-        linePath[key] = pointsToSvgPath(parsePoints(line.c));
+  // Index official stations by Chinese name
+  const officialByName = new Map();
+  for (const [code, st] of Object.entries(officialStations.stations || {})) {
+    const name = normalizeName(st.info?.[0]?.name_cn || st.title);
+    if (!name) continue;
+    if (!officialByName.has(name)) officialByName.set(name, []);
+    officialByName.get(name).push({ code, ...st });
+  }
 
-        for (const st of line.st || []) {
-          if (!st.si || !st.p) continue;
-          const [x, y] = String(st.p).trim().split(/\s+/).map(Number);
-          if (!Number.isFinite(x) || !Number.isFinite(y)) continue;
-          const existing = sidToStation.get(st.si);
-          if (existing) {
-            existing.lines.add(key);
-            existing.colors.add(color);
-            if (st.t === '1') existing.isTransfer = true;
-          } else {
-            sidToStation.set(st.si, {
-              si: st.si,
-              name: st.n || st.sp || st.si,
-              x,
-              y,
-              lines: new Set([key]),
-              colors: new Set([color]),
-              isTransfer: st.t === '1',
-            });
-          }
-        }
-      }
+  const usedKeys = new Set();
+  const lineColor = {};
+  const lineNames = {};
+  const linePath = {};
+  const lsToKey = {};
+  const sidToStation = new Map();
 
-      // Promote multi-line stations to transfers
-      for (const st of sidToStation.values()) {
-        if (st.lines.size > 1) st.isTransfer = true;
-      }
+  // Prefer official line colors when available
+  for (const ln of officialLines.lines || []) {
+    const key = officialLineKey(ln.line_no);
+    lineColor[key] = colorHex(ln.color);
+    if (!OFFICIAL_LINE_MAP[Number(ln.line_no)]) {
+      lineNames[key] = `${ln.line_no}号线`;
+    } else {
+      lineNames[key] = OFFICIAL_LINE_MAP[Number(ln.line_no)].name;
+    }
+  }
 
-      // --- station list + transfers ---
-      const stations = [];
-      const transfers = [];
-      const labels = [];
+  // Geometry from local Amap dump
+  for (const line of draw.l || []) {
+    const key = lineKeyFromName(line.ln, line.ls, usedKeys);
+    const name = displayName(line.ln, line.kn);
+    const color = colorHex(line.cl);
+    lsToKey[line.ls] = key;
+    if (!lineColor[key]) lineColor[key] = color;
+    lineNames[key] = name;
+    linePath[key] = pointsToSvgPath(parsePoints(line.c));
 
-      // Line name labels: put near the first station of each line segment
-      for (const line of draw.l || []) {
-        const key = lsToKey[line.ls];
-        const name = lineNames[key];
-        const color = lineColor[key];
-        const first = (line.st || [])[0];
-        if (!first?.p) continue;
-        const [x, y] = String(first.p).trim().split(/\s+/).map(Number);
-        labels.push({
-          x: String(x + 12),
-          y: String(y - 10),
-          fill: color,
-          text: name,
+    for (const st of line.st || []) {
+      if (!st.si || !st.p) continue;
+      const [x, y] = String(st.p).trim().split(/\s+/).map(Number);
+      if (!Number.isFinite(x) || !Number.isFinite(y)) continue;
+      const existing = sidToStation.get(st.si);
+      if (existing) {
+        existing.lines.add(key);
+        existing.colors.add(color);
+        if (st.t === '1') existing.isTransfer = true;
+      } else {
+        sidToStation.set(st.si, {
+          si: st.si,
+          name: st.n || st.sp || st.si,
+          x,
+          y,
+          lines: new Set([key]),
+          colors: new Set([color]),
+          isTransfer: st.t === '1',
         });
       }
+    }
+  }
 
-      for (const st of sidToStation.values()) {
-        // Prefer a numeric line color if present, else first color
-        let stroke = [...st.colors][0];
-        for (const key of st.lines) {
-          if (/^\d/.test(key)) {
-            stroke = lineColor[key];
-            break;
-          }
-        }
+  for (const st of sidToStation.values()) {
+    if (st.lines.size > 1) st.isTransfer = true;
+  }
 
-        if (st.isTransfer) {
-          transfers.push({
-            x: String(st.x - 8),
-            y: String(st.y - 8),
-            'data-id': st.name,
-            statid: st.si,
-          });
-        } else {
-          stations.push({
-            cx: String(st.x),
-            cy: String(st.y),
-            stroke,
-            id: st.name,
-            statid: st.si,
-          });
-        }
+  const stations = [];
+  const transfers = [];
+  const labels = [];
 
-        // Station name label (offset to the right)
-        labels.push({
-          x: String(st.x + 8),
-          y: String(st.y - 6),
-          text: st.name,
-        });
+  for (const line of draw.l || []) {
+    const key = lsToKey[line.ls];
+    const name = lineNames[key];
+    const color = lineColor[key];
+    const first = (line.st || [])[0];
+    if (!first?.p) continue;
+    const [x, y] = String(first.p).trim().split(/\s+/).map(Number);
+    labels.push({
+      x: String(x + 12),
+      y: String(y - 10),
+      fill: color,
+      text: name,
+    });
+  }
+
+  for (const st of sidToStation.values()) {
+    let stroke = [...st.colors][0];
+    for (const key of st.lines) {
+      if (/^\d/.test(key)) {
+        stroke = lineColor[key];
+        break;
       }
+    }
 
-      // --- stationInfo / timesheets from info API ---
-      // Build si → name for direction endpoints
-      const siToName = new Map(
-        [...sidToStation.values()].map((s) => [s.si, s.name])
-      );
+    if (st.isTransfer) {
+      transfers.push({
+        x: String(st.x - 8),
+        y: String(st.y - 8),
+        'data-id': st.name,
+        statid: st.si,
+      });
+    } else {
+      stations.push({
+        cx: String(st.x),
+        cy: String(st.y),
+        stroke,
+        id: st.name,
+        statid: st.si,
+      });
+    }
 
-      // Also map from draw stations that might only appear as direction targets
-      for (const line of draw.l || []) {
-        for (const st of line.st || []) {
-          if (st.si && st.n) siToName.set(st.si, st.n);
-        }
+    labels.push({
+      x: String(st.x + 8),
+      y: String(st.y - 6),
+      text: st.name,
+    });
+  }
+
+  // Amap fallback times by si
+  const amapTimesBySi = new Map();
+  for (const line of amapInfo.l || []) {
+    for (const st of line.st || []) {
+      if (!st.si) continue;
+      if (!amapTimesBySi.has(st.si)) amapTimesBySi.set(st.si, []);
+      amapTimesBySi.get(st.si).push(...(st.d || []));
+    }
+  }
+
+  const siToName = new Map(
+    [...sidToStation.values()].map((s) => [s.si, s.name])
+  );
+
+  const stationInfo = {};
+  let matchedOfficial = 0;
+  let withFacilities = 0;
+
+  for (const st of sidToStation.values()) {
+    const nameKey = normalizeName(st.name);
+    const officialList = officialByName.get(nameKey) || [];
+    // Prefer the entry with the richest info payload
+    const official = [...officialList].sort(
+      (a, b) =>
+        (b.info?.[0] ? 1 : 0) +
+        (b.fltime?.length || 0) -
+        ((a.info?.[0] ? 1 : 0) + (a.fltime?.length || 0))
+    )[0];
+
+    const infoRow = official?.info?.[0] || null;
+    const fltime = official?.fltime || [];
+
+    if (official) matchedOfficial += 1;
+
+    const toiletPosition = formatToilet(infoRow?.toilet_position);
+    const elevator = formatElevator(infoRow?.elevator);
+    const entranceInfo = formatEntrance(
+      infoRow?.entrance_info,
+      infoRow?.entrance_info_en
+    );
+    if (toiletPosition || elevator || entranceInfo) withFacilities += 1;
+
+    const timesheet = [];
+    const seen = new Set();
+
+    // Prefer official first/last trains
+    for (const row of fltime) {
+      if (!isValidTime(row.first_time) || !isValidTime(row.last_time)) continue;
+      const lineKey = officialLineKey(row.line);
+      if (!lineNames[lineKey]) {
+        lineNames[lineKey] = officialLineName(row.line, lineNames);
       }
+      if (!lineColor[lineKey] && row.line != null) {
+        // leave color unset → UI falls back
+      }
+      const entry = {
+        line: lineKey,
+        lineName: lineNames[lineKey] || officialLineName(row.line, lineNames),
+        stat_id: st.si,
+        name: st.name,
+        first_time: row.first_time,
+        first_time_desc: row.first_time_desc || '',
+        last_time: row.last_time,
+        last_time_desc: row.last_time_desc || '',
+        description: directionText(row.description),
+        station_code: official?.code || infoRow?.station_code || '',
+      };
+      const sig = `${entry.line}|${entry.description}|${entry.first_time}|${entry.last_time}`;
+      if (seen.has(sig)) continue;
+      seen.add(sig);
+      timesheet.push(entry);
+    }
 
-      const stationInfo = {};
-      // Ensure every drawn station has an info record (even if times are missing).
-      for (const st of sidToStation.values()) {
-        stationInfo[st.si] = {
-          timesheet: [],
-          elevator: '',
-          entranceInfo: '',
-          toiletPosition: '',
+    // Fallback: Amap times if official empty
+    if (!timesheet.length) {
+      for (const d of amapTimesBySi.get(st.si) || []) {
+        if (!isValidTime(d.ft) || !isValidTime(d.lt)) continue;
+        if (d.n === st.si) continue;
+        const lineKey = lsToKey[d.ls] || d.ls;
+        const destName = siToName.get(d.n) || d.n || '终点';
+        const entry = {
+          line: lineKey,
+          lineName: lineNames[lineKey] || lineKey,
+          stat_id: st.si,
+          name: st.name,
+          first_time: d.ft,
+          first_time_desc: '',
+          last_time: d.lt,
+          last_time_desc: '',
+          description: directionText(`往${destName}`),
         };
+        const sig = `${entry.line}|${entry.description}|${entry.first_time}|${entry.last_time}`;
+        if (seen.has(sig)) continue;
+        seen.add(sig);
+        timesheet.push(entry);
       }
+    }
 
-      for (const line of info.l || []) {
-        for (const st of line.st || []) {
-          if (!st.si) continue;
-          if (!stationInfo[st.si]) {
-            stationInfo[st.si] = {
-              timesheet: [],
-              elevator: '',
-              entranceInfo: '',
-              toiletPosition: '',
-            };
-          }
-          const seen = new Set(
-            stationInfo[st.si].timesheet.map(
-              (r) => `${r.line}|${r.description}|${r.first_time}|${r.last_time}`
-            )
-          );
-          for (const d of st.d || []) {
-            if (!isValidTime(d.ft) || !isValidTime(d.lt)) continue;
-            const lineKey = lsToKey[d.ls] || d.ls;
-            const lineName = lineNames[lineKey] || lineKey;
-            const destName = siToName.get(d.n) || d.n || '终点';
-            // Skip rows where dest is the same station (placeholder pairs in Amap data)
-            if (d.n === st.si) continue;
-            const row = {
-              line: lineKey,
-              lineName,
-              stat_id: st.si,
-              name: siToName.get(st.si) || '',
-              first_time: d.ft,
-              first_time_desc: '',
-              last_time: d.lt,
-              last_time_desc: '',
-              description: `往${destName}方向`,
-            };
-            const sig = `${row.line}|${row.description}|${row.first_time}|${row.last_time}`;
-            if (seen.has(sig)) continue;
-            seen.add(sig);
-            stationInfo[st.si].timesheet.push(row);
-          }
-        }
-      }
+    stationInfo[st.si] = {
+      timesheet,
+      elevator,
+      entranceInfo,
+      toiletPosition,
+      // keep official code for debugging / future deep-links
+      station_code: official?.code || infoRow?.station_code || '',
+      name_cn: st.name,
+    };
+  }
 
-      // --- write Data.js ---
-      const dataJs = `// Auto-generated by scripts/update-metro-data.mjs — do not edit by hand.
-// Source: Amap Shanghai subway schematic (3100_drw / 3100_info).
+  const dataJs = `// Auto-generated by scripts/update-metro-data.mjs from LOCAL data only.
+// Geometry: src/data/raw/amap-*.json
+// Facilities + times: src/data/official/* (Shanghai Metro dump; no runtime network)
 // Regenerated: ${new Date().toISOString()}
 
 export const lineColor = ${JSON.stringify(lineColor, null, 2)};
@@ -297,60 +461,68 @@ const linePath = ${JSON.stringify(linePath, null, 2)};
 export default linePath;
 `;
 
-      writeFileSync(join(DATA_DIR, 'Data.js'), dataJs);
-      writeFileSync(
-        join(DATA_DIR, 'stations.json'),
-        JSON.stringify(stations, null, 2) + '\n'
-      );
-      writeFileSync(
-        join(DATA_DIR, 'transfers.json'),
-        JSON.stringify(transfers, null, 2) + '\n'
-      );
-      writeFileSync(
-        join(DATA_DIR, 'labels.json'),
-        JSON.stringify(labels, null, 2) + '\n'
-      );
-      writeFileSync(
-        join(DATA_DIR, 'stationInfo.json'),
-        JSON.stringify(stationInfo) + '\n'
-      );
-
-      // Metadata for viewBox / docs
-      let minX = Infinity;
-      let minY = Infinity;
-      let maxX = -Infinity;
-      let maxY = -Infinity;
-      for (const st of sidToStation.values()) {
-        minX = Math.min(minX, st.x);
-        minY = Math.min(minY, st.y);
-        maxX = Math.max(maxX, st.x);
-        maxY = Math.max(maxY, st.y);
-      }
-      const meta = {
-        source: { draw: DRAW_URL, info: INFO_URL },
-        generatedAt: new Date().toISOString(),
-        lines: Object.keys(linePath).length,
-        stations: stations.length,
-        transfers: transfers.length,
-        labels: labels.length,
-        stationInfo: Object.keys(stationInfo).length,
-        bounds: { minX, minY, maxX, maxY },
-        viewBox: `0 0 ${Math.ceil(maxX + 80)} ${Math.ceil(maxY + 80)}`,
-        lineNames,
-      };
-      writeFileSync(
-        join(DATA_DIR, 'meta.json'),
-        JSON.stringify(meta, null, 2) + '\n'
-      );
-
-      console.log('Updated metro data:');
-      console.log(JSON.stringify(meta, null, 2));
-      return meta;
-    }
+  writeFileSync(join(DATA_DIR, 'Data.js'), dataJs);
+  writeFileSync(
+    join(DATA_DIR, 'stations.json'),
+    JSON.stringify(stations, null, 2) + '\n'
   );
+  writeFileSync(
+    join(DATA_DIR, 'transfers.json'),
+    JSON.stringify(transfers, null, 2) + '\n'
+  );
+  writeFileSync(
+    join(DATA_DIR, 'labels.json'),
+    JSON.stringify(labels, null, 2) + '\n'
+  );
+  writeFileSync(
+    join(DATA_DIR, 'stationInfo.json'),
+    JSON.stringify(stationInfo) + '\n'
+  );
+
+  let minX = Infinity;
+  let minY = Infinity;
+  let maxX = -Infinity;
+  let maxY = -Infinity;
+  for (const st of sidToStation.values()) {
+    minX = Math.min(minX, st.x);
+    minY = Math.min(minY, st.y);
+    maxX = Math.max(maxX, st.x);
+    maxY = Math.max(maxY, st.y);
+  }
+
+  const meta = {
+    generatedAt: new Date().toISOString(),
+    sources: {
+      geometry: 'local:src/data/raw/amap-draw.json',
+      facilitiesAndTimes: 'local:src/data/official/',
+      officialFetchedAt: officialStations.fetchedAt || officialMeta.fetchedAt || null,
+      officialPage:
+        'https://m.shmetro.com/workspace/shmetrotest/view_csdt.aspx',
+    },
+    runtimeNetwork: false,
+    lines: Object.keys(linePath).length,
+    stations: stations.length,
+    transfers: transfers.length,
+    labels: labels.length,
+    stationInfo: Object.keys(stationInfo).length,
+    matchedOfficial,
+    withFacilities,
+    bounds: { minX, minY, maxX, maxY },
+    viewBox: `0 0 ${Math.ceil(maxX + 80)} ${Math.ceil(maxY + 80)}`,
+    lineNames,
+  };
+  writeFileSync(
+    join(DATA_DIR, 'meta.json'),
+    JSON.stringify(meta, null, 2) + '\n'
+  );
+
+  console.log('Rebuilt app data from LOCAL files only:');
+  console.log(JSON.stringify(meta, null, 2));
 }
 
-build().catch((err) => {
-  console.error(err);
+try {
+  build();
+} catch (err) {
+  console.error(err.message || err);
   process.exit(1);
-});
+}

@@ -12,8 +12,10 @@
 /build
 /dist
 
-# fetched metro source dumps (regenerate with npm run update-data)
-/src/data/raw
+# Optional: large intermediate dumps can be regenerated with fetch scripts.
+# Official Shanghai Metro dump under src/data/official/ IS committed (runtime offline).
+# Uncomment to keep raw Amap dumps out of git:
+# /src/data/raw
 
 # misc
 .DS_Store

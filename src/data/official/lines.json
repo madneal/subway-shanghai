@@ -1,0 +1,105 @@
+{
+  "fetchedAt": "2026-07-26T10:20:45.242Z",
+  "lines": [
+    {
+      "line_no": 1,
+      "color": "#e3002b",
+      "bgcolor": "#fdeae9"
+    },
+    {
+      "line_no": 2,
+      "color": "#8cc220",
+      "bgcolor": "#EBF7EC"
+    },
+    {
+      "line_no": 3,
+      "color": "#fcd600",
+      "bgcolor": "#fffee5"
+    },
+    {
+      "line_no": 4,
+      "color": "#461d84",
+      "bgcolor": "#f1ebf4"
+    },
+    {
+      "line_no": 5,
+      "color": "#944d9a",
+      "bgcolor": "#e8d2f0"
+    },
+    {
+      "line_no": 6,
+      "color": "#d40068",
+      "bgcolor": "#ffcae4"
+    },
+    {
+      "line_no": 7,
+      "color": "#ed6f00",
+      "bgcolor": "#ffcc99"
+    },
+    {
+      "line_no": 8,
+      "color": "#0094d8",
+      "bgcolor": "#60b7d4"
+    },
+    {
+      "line_no": 9,
+      "color": "#87caed",
+      "bgcolor": "#85C6DA"
+    },
+    {
+      "line_no": 10,
+      "color": "#c6afd4",
+      "bgcolor": "#e0c5f0"
+    },
+    {
+      "line_no": 11,
+      "color": "#871c2b",
+      "bgcolor": "#BB8866"
+    },
+    {
+      "line_no": 12,
+      "color": "#007a60",
+      "bgcolor": "#99CBC1"
+    },
+    {
+      "line_no": 13,
+      "color": "#e999c0",
+      "bgcolor": "#f4b8d2"
+    },
+    {
+      "line_no": 14,
+      "color": "#616020",
+      "bgcolor": "#9a982f"
+    },
+    {
+      "line_no": 15,
+      "color": "#c8b38e",
+      "bgcolor": "#f9e7c8"
+    },
+    {
+      "line_no": 16,
+      "color": "#98d1c0",
+      "bgcolor": "#C6E8DF"
+    },
+    {
+      "line_no": 17,
+      "color": "#bb796f",
+      "bgcolor": "#ebd6d3"
+    },
+    {
+      "line_no": 18,
+      "color": "#C09453",
+      "bgcolor": "#C09453"
+    },
+    {
+      "line_no": 41,
+      "color": "#b5b6b6",
+      "bgcolor": "#f2f7f7"
+    },
+    {
+      "line_no": 51,
+      "color": "#cccccc",
+      "bgcolor": "#dddddd"
+    }
+  ]
+}

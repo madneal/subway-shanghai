@@ -86,9 +86,12 @@ describe('labels & meta', () => {
     expect(lineLabels.length).toBeGreaterThan(15);
   });
 
-  it('meta viewBox matches generated bounds', () => {
+  it('meta viewBox matches generated bounds and is offline', () => {
     expect(meta.viewBox).toMatch(/^0 0 \d+ \d+$/);
     expect(meta.lines).toBe(Object.keys(linePath).length);
-    expect(meta.source.draw).toContain('3100_drw_shanghai');
+    expect(meta.runtimeNetwork).toBe(false);
+    expect(meta.sources.facilitiesAndTimes).toContain('official');
+    expect(meta.matchedOfficial).toBeGreaterThan(300);
+    expect(meta.withFacilities).toBeGreaterThan(300);
   });
 });

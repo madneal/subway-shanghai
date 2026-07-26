@@ -17,6 +17,8 @@
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
     "test:all": "npm run test && npm run build && npm run test:e2e",
+    "fetch-official": "node scripts/fetch-official-data.mjs",
+    "fetch-amap": "node scripts/fetch-amap-data.mjs",
     "update-data": "node scripts/update-metro-data.mjs"
   },
   "dependencies": {

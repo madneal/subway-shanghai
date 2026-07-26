@@ -8,26 +8,30 @@
 
 早期版本用原生 JS，后用 Create React App 重构，现已迁移到 Vite。
 
-## 地图数据
+## 地图数据（运行时完全离线）
 
-线路示意图与首末班车时间来自 **高德地图** 公开地铁接口（上海 `3100`）：
+前端**不会**请求上海地铁官网或高德接口。线路图、时刻表、卫生间/电梯/出入口全部使用仓库内 **本地 JSON**。
 
-| 文件 | 作用 |
+| 路径 | 作用 |
 |------|------|
-| `src/data/Data.js` | 线路颜色、名称、SVG 路径 |
-| `src/data/stations.json` | 普通站点 |
-| `src/data/transfers.json` | 换乘站 |
-| `src/data/labels.json` | 线路/站名文字 |
-| `src/data/stationInfo.json` | 各站时刻表等 |
-| `src/data/meta.json` | 边界、viewBox、生成信息 |
+| `src/data/Data.js` 等 | 给页面用的构建结果 |
+| `src/data/official/` | **已提交的官方站点数据快照**（来自 [厕所与无障碍图](https://m.shmetro.com/workspace/shmetrotest/view_csdt.aspx)） |
+| `src/data/raw/` | 本地示意图几何快照（高德） |
 
-从上游刷新：
+### 开发者更新数据
 
 ```bash
-npm run update-data   # scripts/update-metro-data.mjs
+# 1）仅此步骤联网：抓取官方站点数据 → src/data/official/
+npm run fetch-official
+
+# 2）可选联网：更新示意图几何 → src/data/raw/
+npm run fetch-amap
+
+# 3）纯离线：合并生成本地 app 数据（无 HTTP）
+npm run update-data
 ```
 
-会重新拉取高德绘图与 info 数据并覆盖上述文件（含 **1–18 号线**、**浦江线**、**磁浮线**、**市域机场线**）。卫生间/电梯/出入口等设施字段不在高德接口中，可能为空，后续可再接官方数据源。
+`fetch-official` 对应官方页使用的接口（`stationInfo` / `fltimeA` / `lines`），结果落盘后，网站与 CI 只读文件，不再访问 `m.shmetro.com`。
 
 ## 组件结构
 

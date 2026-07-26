@@ -8,26 +8,38 @@ Interactive Shanghai metro map.
 
 Originally a native JS map, later rewritten with Create React App, and now on Vite.
 
-## Map data
+## Map data (fully offline at runtime)
 
-Schematic geometry and first/last train times are generated from **Amap** public subway APIs (Shanghai `3100`):
+The web app **never** calls Shanghai Metro or Amap APIs. All station geometry, times, and facilities are **local JSON** under `src/data/`.
 
-| File | Role |
+| Path | Role |
 |------|------|
-| `src/data/Data.js` | Line colors, display names, SVG path geometry |
-| `src/data/stations.json` | Non-transfer station dots |
-| `src/data/transfers.json` | Transfer station markers |
-| `src/data/labels.json` | Line + station text labels |
-| `src/data/stationInfo.json` | Per-station timesheets (and facility fields when available) |
-| `src/data/meta.json` | Bounds, viewBox, generation metadata |
+| `src/data/Data.js` | Line colors, names, SVG paths (built) |
+| `src/data/stations.json` / `transfers.json` / `labels.json` | Map pins & text (built) |
+| `src/data/stationInfo.json` | Timesheet + toilet / elevator / entrance (built) |
+| `src/data/official/` | **Committed dump** from [上海地铁官方站点页](https://m.shmetro.com/workspace/shmetrotest/view_csdt.aspx) |
+| `src/data/raw/` | Local Amap schematic snapshot (geometry) |
 
-Refresh from upstream anytime:
+### Refresh pipeline (developers only)
 
 ```bash
-npm run update-data   # scripts/update-metro-data.mjs
+# 1) Network once: download official station dump → src/data/official/
+npm run fetch-official
+
+# 2) Network once (optional): refresh schematic geometry → src/data/raw/
+npm run fetch-amap
+
+# 3) Offline: merge local dumps into app JSON (no HTTP)
+npm run update-data
 ```
 
-This pulls the latest Amap drawing + info JSON and rewrites the files above (includes lines **1–18**, **浦江线**, **磁浮线**, **市域机场线**). Facility details (toilet / elevator / exit) from the old static dump are not in the Amap feed and may be empty until another source is added.
+Official APIs used only inside `fetch-official` (same as the csdt page):
+
+- `metromap.aspx?func=stationInfo&station_code=…` — 卫生间 / 电梯 / 出入口  
+- `metromap.aspx?func=fltimeA&station_code=…` — 首末班车  
+- `metromap.aspx` / `func=lines` — 站点列表与线路色  
+
+After step 1, those payloads live on disk; the site and CI only read files.
 
 ## Component structure
 
