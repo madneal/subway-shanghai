@@ -1,7 +1,15 @@
+.map {
+  width: 100%;
+  overflow: auto;
+  background: #fafafa;
+}
+
 .svg {
-  font-size: 12px;
-  font-family: 微软雅黑;
-  width: 2000px;
-  height: 2000px;
-  transform: translateX(-200px) translateY(-300px);
+  font-size: 11px;
+  font-family: "PingFang SC", "Microsoft YaHei", "微软雅黑", sans-serif;
+  width: min(100%, 1600px);
+  height: auto;
+  min-width: 960px;
+  display: block;
+  margin: 0 auto;
 }

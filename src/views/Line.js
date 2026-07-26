@@ -7,8 +7,9 @@ class Line extends React.Component {
 
     for (const key in linePath) {
       const path = linePath[key];
-      const lineNum = key.match(/\d+/)[0];
-      const color = lineColor[lineNum];
+      if (!path) continue;
+      // Prefer exact key, then numeric prefix (e.g. 10a → 10 color already stored on key).
+      const color = lineColor[key] || lineColor[key.match(/^\d+/)?.[0]] || '#999999';
       linePaths.push(
         <path
           d={path}
@@ -16,11 +17,12 @@ class Line extends React.Component {
           strokeWidth="6"
           stroke={color}
           key={key}
+          data-line={key}
         />
       );
     }
 
-    return <g>{linePaths}</g>;
+    return <g className="lines">{linePaths}</g>;
   }
 }
 

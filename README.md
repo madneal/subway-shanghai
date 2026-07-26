@@ -8,6 +8,39 @@ Interactive Shanghai metro map.
 
 Originally a native JS map, later rewritten with Create React App, and now on Vite.
 
+## Map data (fully offline at runtime)
+
+The web app **never** calls Shanghai Metro or Amap APIs. All station geometry, times, and facilities are **local JSON** under `src/data/`.
+
+| Path | Role |
+|------|------|
+| `src/data/Data.js` | Line colors, names, SVG paths (built) |
+| `src/data/stations.json` / `transfers.json` / `labels.json` | Map pins & text (built) |
+| `src/data/stationInfo.json` | Timesheet + toilet / elevator / entrance (built) |
+| `src/data/official/` | **Committed dump** from [上海地铁官方站点页](https://m.shmetro.com/workspace/shmetrotest/view_csdt.aspx) |
+| `src/data/raw/` | Local Amap schematic snapshot (geometry) |
+
+### Refresh pipeline (developers only)
+
+```bash
+# 1) Network once: download official station dump → src/data/official/
+npm run fetch-official
+
+# 2) Network once (optional): refresh schematic geometry → src/data/raw/
+npm run fetch-amap
+
+# 3) Offline: merge local dumps into app JSON (no HTTP)
+npm run update-data
+```
+
+Official APIs used only inside `fetch-official` (same as the csdt page):
+
+- `metromap.aspx?func=stationInfo&station_code=…` — 卫生间 / 电梯 / 出入口  
+- `metromap.aspx?func=fltimeA&station_code=…` — 首末班车  
+- `metromap.aspx` / `func=lines` — 站点列表与线路色  
+
+After step 1, those payloads live on disk; the site and CI only read files.
+
 ## Component structure
 
 The map is a `Map` with four child pieces:

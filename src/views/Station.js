@@ -66,12 +66,14 @@ class Station extends React.Component {
       y: +y + 70,
     };
     const statId = this.getAttVal(attributes, 'statid');
-    const stationInfo = stationInfos[statId];
-    if (!stationInfo || !stationInfo.timesheet) {
-      return;
-    }
+    const stationInfo = stationInfos[statId] || {
+      timesheet: [],
+      elevator: '',
+      entranceInfo: '',
+      toiletPosition: '',
+    };
 
-    let timesheet = formatTimesheet(stationInfo.timesheet);
+    const timesheet = formatTimesheet(stationInfo.timesheet || []);
     const infoCard = {
       show: true,
       stationName,

@@ -1,0 +1,50 @@
+{
+  "generatedAt": "2026-07-26T10:21:17.030Z",
+  "sources": {
+    "geometry": "local:src/data/raw/amap-draw.json",
+    "facilitiesAndTimes": "local:src/data/official/",
+    "officialFetchedAt": "2026-07-26T10:20:47.333Z",
+    "officialPage": "https://m.shmetro.com/workspace/shmetrotest/view_csdt.aspx"
+  },
+  "runtimeNetwork": false,
+  "lines": 24,
+  "stations": 285,
+  "transfers": 133,
+  "labels": 442,
+  "stationInfo": 418,
+  "matchedOfficial": 415,
+  "withFacilities": 415,
+  "bounds": {
+    "minX": 0,
+    "minY": 115,
+    "maxX": 3000,
+    "maxY": 2425
+  },
+  "viewBox": "0 0 3080 2505",
+  "lineNames": {
+    "1": "1号线",
+    "2": "2号线",
+    "3": "3号线",
+    "4": "4号线",
+    "5": "5号线",
+    "6": "6号线",
+    "7": "7号线",
+    "8": "8号线",
+    "9": "9号线",
+    "10": "10号线",
+    "11": "11号线",
+    "12": "12号线",
+    "13": "13号线",
+    "14": "14号线",
+    "15": "15号线",
+    "16": "16号线",
+    "17": "17号线",
+    "18": "18号线",
+    "pujiang": "浦江线",
+    "maglev": "磁浮线",
+    "5a": "5号线",
+    "10a": "10号线",
+    "11a": "11号线",
+    "airport": "市域机场线"
+  }
+}

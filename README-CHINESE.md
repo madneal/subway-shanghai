@@ -8,6 +8,31 @@
 
 早期版本用原生 JS，后用 Create React App 重构，现已迁移到 Vite。
 
+## 地图数据（运行时完全离线）
+
+前端**不会**请求上海地铁官网或高德接口。线路图、时刻表、卫生间/电梯/出入口全部使用仓库内 **本地 JSON**。
+
+| 路径 | 作用 |
+|------|------|
+| `src/data/Data.js` 等 | 给页面用的构建结果 |
+| `src/data/official/` | **已提交的官方站点数据快照**（来自 [厕所与无障碍图](https://m.shmetro.com/workspace/shmetrotest/view_csdt.aspx)） |
+| `src/data/raw/` | 本地示意图几何快照（高德） |
+
+### 开发者更新数据
+
+```bash
+# 1）仅此步骤联网：抓取官方站点数据 → src/data/official/
+npm run fetch-official
+
+# 2）可选联网：更新示意图几何 → src/data/raw/
+npm run fetch-amap
+
+# 3）纯离线：合并生成本地 app 数据（无 HTTP）
+npm run update-data
+```
+
+`fetch-official` 对应官方页使用的接口（`stationInfo` / `fltimeA` / `lines`），结果落盘后，网站与 CI 只读文件，不再访问 `m.shmetro.com`。
+
 ## 组件结构
 
 将整个地图看作一个 `Map` 组件，再拆成 4 个子组件：
