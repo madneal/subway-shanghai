@@ -2,7 +2,7 @@
 
 Interactive Shanghai metro map. Originally rebuilt on Create React App; now runs on **Vite + React 18**.
 
-Live site: https://neal1991.github.io/subway-shanghai/
+Live site: https://madneal.com/subway-shanghai/
 
 ## Component structure
 
@@ -24,8 +24,31 @@ npm install
 npm start          # Vite dev server (http://localhost:5173/subway-shanghai/)
 npm run build      # production build → dist/
 npm run preview    # serve the production build locally
-npm run deploy     # build + publish dist/ to gh-pages
+npm run deploy     # optional local deploy via gh-pages branch (prefer Actions)
 ```
+
+## Deploy with GitHub Actions
+
+Pushing to `master` runs two workflows:
+
+| Workflow | File | When | What |
+|----------|------|------|------|
+| **CI** | `.github/workflows/ci.yml` | PR + push to `master` | `npm test` + `npm run build` |
+| **Deploy GitHub Pages** | `.github/workflows/deploy-pages.yml` | push to `master` / manual | test → build → publish Pages |
+
+### One-time GitHub settings
+
+1. Open **Settings → Pages**.
+2. Under **Build and deployment → Source**, choose **GitHub Actions** (not “Deploy from a branch”).
+3. If you use a custom domain (`madneal.com`):
+   - Set **Custom domain** to `madneal.com`
+   - Keep DNS pointing at GitHub and enable **Enforce HTTPS**
+4. Under **Settings → Actions → General → Workflow permissions**, allow the default workflow `GITHUB_TOKEN` to deploy Pages (the workflow already sets `pages: write` + `id-token: write`).
+
+### First deploy / redeploy
+
+- Merge to `master`, or open **Actions → Deploy GitHub Pages → Run workflow**.
+- After it is green, open https://madneal.com/subway-shanghai/ and confirm the HTML loads `/subway-shanghai/assets/index-*.js` (Vite), not `/static/js/main.*.chunk.js` (old CRA).
 
 ## Test
 
@@ -47,4 +70,4 @@ npx playwright install chromium
 
 ## LICENSE
 
-[MIT](https://github.com/neal1991/subway-shanghai/blob/master/LICENSE.md)
+[MIT](https://github.com/madneal/subway-shanghai/blob/master/LICENSE.md)

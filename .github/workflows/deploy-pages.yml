@@ -1,0 +1,74 @@
+# Build the Vite app and publish to GitHub Pages.
+#
+# One-time repo setup (required before the first successful deploy):
+#   1. Settings → Pages → Build and deployment → Source: "GitHub Actions"
+#   2. (Optional) Settings → Pages → Custom domain: madneal.com
+#      Keep DNS CNAME / A records pointed at GitHub; enforce HTTPS.
+#   3. Settings → Actions → General → Workflow permissions:
+#      allow "Read and write permissions" (or rely on the permissions: block below).
+#
+# Site URL after deploy:
+#   https://madneal.com/subway-shanghai/
+#   https://madneal.github.io/subway-shanghai/
+
+name: Deploy GitHub Pages
+
+on:
+  push:
+    branches: [master]
+  # Allow manual redeploy from the Actions tab
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One active deploy at a time; do not cancel an in-flight production deploy
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Test
+        run: npm test
+
+      - name: Build
+        run: npm run build
+        # vite.config.js base is /subway-shanghai/ — required for project Pages path
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
