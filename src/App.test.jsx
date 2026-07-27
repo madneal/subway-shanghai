@@ -34,6 +34,9 @@ describe('App', () => {
     const card = container.querySelector('.info-card');
     expect(card).toBeInTheDocument();
     expect(card).toHaveStyle({ display: 'block' });
+    // Anchored near the click (map-relative px), not fixed legacy offsets
+    expect(card.style.left).toMatch(/px$/);
+    expect(card.style.top).toMatch(/px$/);
     expect(within(card).getByText(target.id)).toBeInTheDocument();
     expect(screen.getByText('方向')).toBeInTheDocument();
     expect(screen.getByText('周日-周四')).toBeInTheDocument();

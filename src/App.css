@@ -1,7 +1,9 @@
 .map {
+  position: relative;
   width: 100%;
   overflow: auto;
   background: #fafafa;
+  min-height: 70vh;
 }
 
 .svg {
@@ -12,4 +14,30 @@
   min-width: 960px;
   display: block;
   margin: 0 auto;
+}
+
+/* Line names: white halo so they stay readable off the colored tracks */
+.svg .line-label {
+  font-size: 13px;
+  font-weight: 700;
+  paint-order: stroke fill;
+  stroke: #ffffff;
+  stroke-width: 3.5px;
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+
+.svg .station-label {
+  font-size: 10px;
+  fill: #333;
+  paint-order: stroke fill;
+  stroke: #ffffff;
+  stroke-width: 2.5px;
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+
+.svg .station-dot,
+.svg .station-transfer {
+  cursor: pointer;
 }

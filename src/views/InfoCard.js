@@ -24,11 +24,33 @@ class InfoCard extends React.Component {
     };
   }
 
+  componentDidUpdate(prevProps) {
+    // Reset facility tabs when opening another station.
+    const prevId = prevProps.infoCard?.statId;
+    const nextId = this.props.infoCard?.statId;
+    if (nextId && nextId !== prevId) {
+      this.setState({
+        toiletPosition: false,
+        elevator: false,
+        entranceInfo: false,
+        info: null,
+        lastClickId: null,
+        line: null,
+        timesheetActive: true,
+      });
+    }
+  }
+
   getStyle(infoCard) {
+    if (!infoCard.show) {
+      return { display: 'none' };
+    }
+    const x = infoCard.stationPosition?.x;
+    const y = infoCard.stationPosition?.y;
     return {
-      display: infoCard.show ? 'block' : 'none',
-      left: +infoCard.stationPosition.x - 130 + 'px',
-      top: +infoCard.stationPosition.y - 20 + 'px',
+      display: 'block',
+      left: (x != null ? x : 16) + 'px',
+      top: (y != null ? y : 16) + 'px',
     };
   }
 
@@ -107,7 +129,11 @@ class InfoCard extends React.Component {
     const infoCard = this.props.infoCard;
 
     return (
-      <div className="info-card" style={this.getStyle(this.props.infoCard)}>
+      <div
+        className="info-card"
+        style={this.getStyle(this.props.infoCard)}
+        onClick={(e) => e.stopPropagation()}
+      >
         <img
           src={closeIcon}
           className="close"

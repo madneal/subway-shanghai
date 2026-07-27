@@ -1,46 +1,58 @@
 .info-card {
   position: absolute;
-  background-color: transparent;
-  border: none;
-  margin-left: -148px;
-  top: 476px;
-  margin-top: -219px;
   z-index: 200;
   display: none;
-  max-width: 25rem;
-  min-width: 22rem;
+  /* Anchored in map scroll coordinates (set via inline left/top). */
+  margin: 0;
+  transform: none;
+  max-width: 22rem;
+  min-width: 18rem;
   box-sizing: border-box;
-  border-radius: 3px;
-  padding: 15px .2rem 10px;
-  background-color: RGB(255,255,255);
-  box-shadow: -3px 0 3px #d1d1d1,4px 0 4px #d1d1d1,0 -1px 1px #d1d1d1,-4px 6px 6px #d1d1d1;
-  transform: translateX(-200px) translateY(-300px);
+  border-radius: 6px;
+  padding: 12px 14px 10px;
+  background-color: #fff;
+  box-shadow:
+    0 4px 16px rgba(0, 0, 0, 0.14),
+    0 1px 3px rgba(0, 0, 0, 0.08);
+  pointer-events: auto;
 }
 
 .info-card .header {
-  font-size: 20px;
+  font-size: 18px;
   color: #000;
-  font-weight: 700
+  font-weight: 700;
+  padding-right: 1.5rem;
 }
 
 .icons {
   position: relative;
-  top: .5rem;
+  top: 0.35rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15rem;
 }
 
 .icons img {
-  width: 25px;
-  height: 25px;
-  margin: 0 .5rem;
+  width: 24px;
+  height: 24px;
+  margin: 0 0.35rem;
+  cursor: pointer;
 }
 
 .container .info-container {
-  margin-top: .5rem;
-  padding: .5rem;
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  font-size: 13px;
+  line-height: 1.45;
+  max-height: 14rem;
+  overflow: auto;
 }
 
 .close {
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 6px;
+  right: 6px;
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
 }
