@@ -1,39 +1,38 @@
 import { describe, expect, it } from 'vitest';
-import { render, screen, within } from '@testing-library/react';
+import { fireEvent, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from './App';
-import stations from './data/stations.json';
-import transfers from './data/transfers.json';
 import stationInfos from './data/stationInfo.json';
 
 function findClickableStation() {
-  return stations.find(
-    (s) => s.id && s.statid && stationInfos[s.statid]?.timesheet?.length
+  return Object.entries(stationInfos).find(
+    ([, info]) => info.name_cn && info.timesheet?.length
   );
 }
 
 describe('App', () => {
-  it('renders the subway map svg', () => {
+  it('renders the supplied reference map', () => {
     const { container } = render(<App />);
-    const svg = container.querySelector('svg.svg');
-    expect(svg).toBeInTheDocument();
-    expect(svg.querySelectorAll('path').length).toBeGreaterThan(10);
-    expect(svg.querySelectorAll('circle').length).toBeGreaterThan(100);
-    expect(svg.querySelectorAll('.station-transfer-backdrop')).toHaveLength(
-      transfers.length
+    const map = container.querySelector('object.reference-map');
+    expect(map).toBeInTheDocument();
+    expect(map).toHaveAttribute(
+      'data',
+      '/subway-shanghai/shanghai-metro-map.svg'
     );
+    expect(map).toHaveAccessibleName('上海轨道交通线路图');
   });
 
-  it('opens an info card when a station with timetable data is clicked', async () => {
-    const user = userEvent.setup();
-    const target = findClickableStation();
+  it('opens an info card when a station with timetable data is clicked', () => {
+    const [, target] = findClickableStation();
     expect(target).toBeTruthy();
 
     const { container } = render(<App />);
-    const circle = container.querySelector(`circle[id="${target.id}"]`);
-    expect(circle).toBeTruthy();
-
-    await user.click(circle);
+    fireEvent.click(
+      within(container.querySelector('.station-access-list')).getByRole(
+        'button',
+        { name: target.name_cn }
+      )
+    );
 
     const card = container.querySelector('.info-card');
     expect(card).toBeInTheDocument();
@@ -41,17 +40,21 @@ describe('App', () => {
     // Anchored near the click (map-relative px), not fixed legacy offsets
     expect(card.style.left).toMatch(/px$/);
     expect(card.style.top).toMatch(/px$/);
-    expect(within(card).getByText(target.id)).toBeInTheDocument();
+    expect(within(card).getByText(target.name_cn)).toBeInTheDocument();
     expect(screen.getByText('方向')).toBeInTheDocument();
     expect(screen.getByText('周日-周四')).toBeInTheDocument();
   });
 
   it('closes the info card via the close button', async () => {
     const user = userEvent.setup();
-    const target = findClickableStation();
+    const [, target] = findClickableStation();
     const { container } = render(<App />);
 
-    await user.click(container.querySelector(`circle[id="${target.id}"]`));
+    fireEvent.click(
+      within(container.querySelector('.station-access-list')).getByRole('button', {
+        name: target.name_cn,
+      })
+    );
     const card = container.querySelector('.info-card');
     expect(card).toHaveStyle({ display: 'block' });
 
