@@ -2,42 +2,60 @@
   position: relative;
   width: 100%;
   overflow: auto;
-  background: #fafafa;
+  background: #fff;
   min-height: 70vh;
 }
 
-.svg {
-  font-size: 11px;
-  font-family: "PingFang SC", "Microsoft YaHei", "微软雅黑", sans-serif;
+.reference-map-shell {
+  position: relative;
   width: min(100%, 1600px);
-  height: auto;
   min-width: 960px;
-  display: block;
+  aspect-ratio: 2638.57 / 3692.52;
   margin: 0 auto;
+  background: #fff;
 }
 
-/* Line names: white halo so they stay readable off the colored tracks */
-.svg .line-label {
-  font-size: 13px;
-  font-weight: 700;
-  paint-order: stroke fill;
-  stroke: #ffffff;
-  stroke-width: 3.5px;
-  stroke-linejoin: round;
+.reference-map {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
   pointer-events: none;
 }
 
-.svg .station-label {
-  font-size: 10px;
-  fill: #333;
-  paint-order: stroke fill;
-  stroke: #ffffff;
-  stroke-width: 2.5px;
-  stroke-linejoin: round;
-  pointer-events: none;
+.reference-station-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
 }
 
-.svg .station-dot,
-.svg .station-transfer {
+.reference-station-hit {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  transform: translate(-50%, -50%);
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background: transparent;
   cursor: pointer;
+}
+
+.reference-station-hit:hover,
+.reference-station-hit:focus-visible {
+  border-color: rgba(0, 0, 0, 0.58);
+  background: rgba(255, 255, 255, 0.5);
+  outline: none;
+}
+
+.station-access-list {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
