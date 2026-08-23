@@ -124,12 +124,20 @@ function pointsToSvgPath(points) {
 function separateCoincidentTracks(key, points) {
   const corrected = points.map((point) => ({ ...point }));
 
-  if (key === '14') {
-    const join = corrected.findIndex(
-      (point) => point.x === 1520 && point.y === 1286
+  if (key === '1') {
+    const shaanxiSouth = corrected.findIndex(
+      (point) => point.x === 1482 && point.y === 1286
     );
-    if (join !== -1) {
-      corrected.splice(join, 1, { x: 1520, y: 1278 }, { x: 1616, y: 1278 });
+    if (shaanxiSouth !== -1) {
+      corrected.splice(
+        shaanxiSouth,
+        1,
+        { x: 1608, y: 1304 },
+        { x: 1580, y: 1320 },
+        { x: 1530, y: 1320 },
+        { x: 1500, y: 1314 },
+        { x: 1482, y: 1296 }
+      );
     }
   }
 
