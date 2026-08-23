@@ -160,19 +160,33 @@ class Station extends React.Component {
     for (let i = 0; i < transfers.length; i++) {
       const transfer = transfers[i];
       transferEles.push(
-        <image
-          x={transfer.x}
-          y={transfer.y}
-          dataid={transfer['data-id']}
-          href={transferPath}
-          xlinkHref={transferPath}
-          statid={transfer.statid}
-          key={transfer['data-id'] + i}
-          height="16"
-          width="16"
-          className="station-transfer"
-          style={{ cursor: 'pointer' }}
-        />
+        <g key={transfer['data-id'] + i}>
+          {/*
+            * Keep intersecting tracks visually separate at interchanges. The
+            * bitmap badge has transparent edges, which otherwise lets two
+            * differently coloured tracks appear to be one overlapping line.
+            */}
+          <circle
+            cx={Number(transfer.x) + 8}
+            cy={Number(transfer.y) + 8}
+            r="10"
+            fill="white"
+            pointerEvents="none"
+            className="station-transfer-backdrop"
+          />
+          <image
+            x={transfer.x}
+            y={transfer.y}
+            dataid={transfer['data-id']}
+            href={transferPath}
+            xlinkHref={transferPath}
+            statid={transfer.statid}
+            height="16"
+            width="16"
+            className="station-transfer"
+            style={{ cursor: 'pointer' }}
+          />
+        </g>
       );
     }
 

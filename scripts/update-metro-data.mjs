@@ -117,6 +117,41 @@ function pointsToSvgPath(points) {
 }
 
 /**
+ * Separate Amap path segments that leave an interchange along the same pixels.
+ * The source geometry occasionally gives two unrelated lines a shared "stem",
+ * which makes the later SVG path completely cover the earlier one.
+ */
+function separateCoincidentTracks(key, points) {
+  const corrected = points.map((point) => ({ ...point }));
+
+  if (key === '14') {
+    const join = corrected.findIndex(
+      (point) => point.x === 1520 && point.y === 1286
+    );
+    if (join !== -1) {
+      corrected.splice(join, 1, { x: 1520, y: 1278 }, { x: 1616, y: 1278 });
+    }
+  }
+
+  if (key === '4') {
+    const sharedStem = corrected.findIndex(
+      (point) => point.x === 1987 && point.y === 1307
+    );
+    if (sharedStem !== -1) corrected.splice(sharedStem, 1);
+  }
+
+  if (
+    key === '6' &&
+    corrected.at(-1)?.x === 2395 &&
+    corrected.at(-1)?.y === 546
+  ) {
+    corrected.pop();
+  }
+
+  return corrected;
+}
+
+/**
  * Place a line name offset from the track (perpendicular to the path),
  * so labels don't sit on top of the colored stroke.
  */
@@ -290,7 +325,8 @@ function build() {
     lsToKey[line.ls] = key;
     if (!lineColor[key]) lineColor[key] = color;
     lineNames[key] = name;
-    linePath[key] = pointsToSvgPath(parsePoints(line.c));
+    const points = separateCoincidentTracks(key, parsePoints(line.c));
+    linePath[key] = pointsToSvgPath(points);
 
     for (const st of line.st || []) {
       if (!st.si || !st.p) continue;

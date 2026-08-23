@@ -3,6 +3,7 @@ import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from './App';
 import stations from './data/stations.json';
+import transfers from './data/transfers.json';
 import stationInfos from './data/stationInfo.json';
 
 function findClickableStation() {
@@ -18,6 +19,9 @@ describe('App', () => {
     expect(svg).toBeInTheDocument();
     expect(svg.querySelectorAll('path').length).toBeGreaterThan(10);
     expect(svg.querySelectorAll('circle').length).toBeGreaterThan(100);
+    expect(svg.querySelectorAll('.station-transfer-backdrop')).toHaveLength(
+      transfers.length
+    );
   });
 
   it('opens an info card when a station with timetable data is clicked', async () => {

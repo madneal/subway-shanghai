@@ -6,6 +6,29 @@ import labels from './labels.json';
 import stationInfos from './stationInfo.json';
 import meta from './meta.json';
 
+function pathPoints(path) {
+  return [...path.matchAll(/[ML](-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?)/g)].map(
+    ([, x, y]) => ({ x: Number(x), y: Number(y) })
+  );
+}
+
+function collinearOverlap(a, b, c, d) {
+  const cross = (p, q, r) =>
+    (q.x - p.x) * (r.y - p.y) - (q.y - p.y) * (r.x - p.x);
+  if (cross(a, b, c) !== 0 || cross(a, b, d) !== 0) return false;
+
+  const axis = Math.abs(a.x - b.x) >= Math.abs(a.y - b.y) ? 'x' : 'y';
+  const overlapStart = Math.max(
+    Math.min(a[axis], b[axis]),
+    Math.min(c[axis], d[axis])
+  );
+  const overlapEnd = Math.min(
+    Math.max(a[axis], b[axis]),
+    Math.max(c[axis], d[axis])
+  );
+  return overlapEnd - overlapStart > 2;
+}
+
 describe('line path / color data', () => {
   it('covers modern Shanghai network (14/15/18 + branches)', () => {
     expect(Object.keys(linePath).length).toBeGreaterThanOrEqual(20);
@@ -27,6 +50,37 @@ describe('line path / color data', () => {
   it('line colors are hex strings', () => {
     for (const [line, color] of Object.entries(lineColor)) {
       expect(color, `line ${line}`).toMatch(/^#[0-9A-Fa-f]{6}$/);
+    }
+  });
+
+  it('does not draw unrelated lines on top of each other', () => {
+    const keys = Object.keys(linePath);
+    const geometry = Object.fromEntries(
+      keys.map((key) => [key, pathPoints(linePath[key])])
+    );
+
+    for (let i = 0; i < keys.length; i++) {
+      for (let j = i + 1; j < keys.length; j++) {
+        const first = keys[i];
+        const second = keys[j];
+        // Branch keys such as 10/10a intentionally share their trunk.
+        if (first.replace(/[a-z]+$/, '') === second.replace(/[a-z]+$/, '')) {
+          continue;
+        }
+        for (let a = 1; a < geometry[first].length; a++) {
+          for (let b = 1; b < geometry[second].length; b++) {
+            expect(
+              collinearOverlap(
+                geometry[first][a - 1],
+                geometry[first][a],
+                geometry[second][b - 1],
+                geometry[second][b]
+              ),
+              `lines ${first} and ${second} share a visible path segment`
+            ).toBe(false);
+          }
+        }
+      }
     }
   });
 });
