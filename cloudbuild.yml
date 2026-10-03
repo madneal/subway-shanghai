@@ -1,6 +1,7 @@
 substitutions:
   _LOCATION: asia-southeast1
   _REPOSITORY: security-gate
+  _SERVICE: subway-shanghai
 
 steps:
   - id: sast
@@ -39,6 +40,22 @@ steps:
     args:
       - push
       - ${_LOCATION}-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/subway-shanghai:latest
+
+  - id: deploy
+    name: gcr.io/google.com/cloudsdktool/cloud-sdk
+    waitFor:
+      - push
+    entrypoint: gcloud
+    args:
+      - run
+      - deploy
+      - ${_SERVICE}
+      - --image=${_LOCATION}-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/subway-shanghai:latest
+      - --region=${_LOCATION}
+      - --platform=managed
+      - --port=8080
+      - --allow-unauthenticated
+      - --quiet
 
 images:
   - ${_LOCATION}-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/subway-shanghai:latest
